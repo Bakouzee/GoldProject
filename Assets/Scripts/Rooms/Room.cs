@@ -11,16 +11,14 @@ namespace GoldProject.Rooms
 
         private bool lighten;
         public bool IsLighten => lighten;
-        
-        [Header("Objects")]
-        public Curtain[] curtains;
-        [SerializeReference]
-        public FrighteningEventBase[] frighteningEvents;
+
+        [Header("Objects")] public Curtain[] curtains;
+        [SerializeReference] public FrighteningEventBase[] frighteningEvents;
         public List<Garlic> garlics;
-        
-        [Header("Colliders")]
-        [Tooltip("GameObject contaning all the colliders of the room")]
+
+        [Header("Colliders")] [Tooltip("GameObject contaning all the colliders of the room")]
         public Transform roomCollidersTransform;
+
         private Collider2D[] roomColliders;
 
         public void Initialize()
@@ -28,6 +26,9 @@ namespace GoldProject.Rooms
             // Initialize curtains
             foreach (Curtain curtain in curtains)
             {
+                if (curtain == null)
+                    continue;
+
                 curtain.SetOpened(true);
                 curtain.onStateChanged = UpdateLightState;
             }
@@ -38,6 +39,7 @@ namespace GoldProject.Rooms
                 Debug.LogWarning($"Room colliders tranform of room named '{name}' is not given");
                 return;
             }
+
             roomColliders = roomCollidersTransform.GetComponentsInChildren<Collider2D>();
             foreach (Collider2D roomCollider in roomColliders)
                 roomCollider.isTrigger = true;
@@ -45,6 +47,12 @@ namespace GoldProject.Rooms
 
         private void UpdateLightState()
         {
+            if (curtains.Length == 0)
+            {
+                lighten = false;
+                return;
+            }
+
             foreach (var curtain in curtains)
             {
                 if (!curtain.IsOpened)
@@ -53,12 +61,13 @@ namespace GoldProject.Rooms
                     return;
                 }
             }
+
             lighten = true;
         }
 
         public bool IsRoomCollider(Collider2D collider)
         {
-            if (!collider.isTrigger)
+            if (!collider.isTrigger || roomColliders.Length == 0)
                 return false;
 
             foreach (var roomCollider in roomColliders)
@@ -77,6 +86,7 @@ namespace GoldProject.Rooms
                 if (garlic.IsInRange(pos))
                     return true;
             }
+
             return false;
         }
     }
