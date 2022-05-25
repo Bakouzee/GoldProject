@@ -11,13 +11,11 @@ namespace GoldProject.Rooms
         protected override void Awake()
         {
             base.Awake();
-            Debug.Log(rooms.Length);
             FirstRoom = rooms[0];
         }
 
         private void Start()
         {
-            
             foreach (var room in rooms)
             {
                 room.Initialize();
