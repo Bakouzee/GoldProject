@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Tilemaps;
@@ -8,7 +9,6 @@ namespace GridSystem
 {
     public class GridManager : SingletonBase<GridManager>
     {
-        [SerializeField] private Vector2Int levelDimensions;
         [SerializeField] private Tile tilePrefab;
         [SerializeField] private Tilemap tilemap;
         private Tile[,] tiles;
@@ -19,13 +19,6 @@ namespace GridSystem
 
         private void Start()
         {
-            Camera camera = Camera.main;
-            Vector2 centerPos = levelDimensions;
-            centerPos *= 0.5f;
-
-            camera.transform.position = new Vector3(centerPos.x, centerPos.y, camera.transform.position.z);
-            camera.orthographicSize = levelDimensions.x * 0.28f;
-            
             GenerateGrid();
         }
 
@@ -47,6 +40,9 @@ namespace GridSystem
 
         void GenerateGrid()
         {
+            Vector2 mapSize = RoomsManager.Instance.mapSize;
+            Vector2Int levelDimensions = new Vector2Int( Mathf.CeilToInt(mapSize.x), Mathf.CeilToInt(mapSize.y));
+            
             tiles = new Tile[levelDimensions.x, levelDimensions.y];
             for (int x = 0; x < levelDimensions.x; x++)
             {
@@ -54,7 +50,7 @@ namespace GridSystem
                 {
                     if (tilemap.HasTile(new Vector3Int(x, y, 0)))
                     {
-                        Tile newTile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, transform);
+                        Tile newTile = Instantiate(tilePrefab, new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity, transform);
                         tiles[x, y] = newTile;
                         newTile.name = "{" + x + ";" + y + "}";
                     }

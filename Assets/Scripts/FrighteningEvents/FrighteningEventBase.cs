@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace GoldProject.FrighteningEvents
+namespace GoldProject.FrighteningEvent
 {
-    public abstract class FrighteningEvent : MonoBehaviour, IInteractable
+    public abstract class FrighteningEventBase : MonoBehaviour, IInteractable
     {
         protected bool isTriggered = false;
+        public bool IsTriggered => isTriggered;
         protected bool inProgress = false;
 
         #region Do
