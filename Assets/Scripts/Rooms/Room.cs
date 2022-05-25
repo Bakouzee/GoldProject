@@ -8,6 +8,8 @@ namespace GoldProject.Rooms
     public class Room
     {
         public string name;
+        public Vector2 position;
+        public Vector2Int size;
 
         private bool lighten;
         public bool IsLighten => lighten;
@@ -18,7 +20,6 @@ namespace GoldProject.Rooms
 
         [Header("Colliders")] [Tooltip("GameObject contaning all the colliders of the room")]
         public Transform roomCollidersTransform;
-
         private Collider2D[] roomColliders;
 
         public void Initialize()
@@ -39,10 +40,10 @@ namespace GoldProject.Rooms
                 Debug.LogWarning($"Room colliders tranform of room named '{name}' is not given");
                 return;
             }
-
             roomColliders = roomCollidersTransform.GetComponentsInChildren<Collider2D>();
             foreach (Collider2D roomCollider in roomColliders)
                 roomCollider.isTrigger = true;
+            
         }
 
         private void UpdateLightState()

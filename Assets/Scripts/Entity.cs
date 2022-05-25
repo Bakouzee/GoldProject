@@ -20,11 +20,16 @@ namespace GoldProject
                 if (newRoom != null)
                 {
                     currentRoom = newRoom;
-                    Debug.Log(newRoom.name);
+                    OnEnterRoom();
                 }
 
                 lastCollider2D = other;
             }
+        }
+
+        protected virtual void OnEnterRoom()
+        {
+            
         }
     }
 }
