@@ -1,4 +1,5 @@
-﻿using GoldProject.FrighteningEvent;
+﻿using System.Collections.Generic;
+using GoldProject.FrighteningEvent;
 using UnityEngine;
 
 namespace GoldProject.Rooms
@@ -15,6 +16,7 @@ namespace GoldProject.Rooms
         public Curtain[] curtains;
         [SerializeReference]
         public FrighteningEventBase[] frighteningEvents;
+        public List<Garlic> garlics;
         
         [Header("Colliders")]
         [Tooltip("GameObject contaning all the colliders of the room")]
@@ -66,6 +68,16 @@ namespace GoldProject.Rooms
             }
 
             return false;
-        } 
+        }
+
+        public bool IsInGarlicRange(Vector2 pos)
+        {
+            foreach (Garlic garlic in garlics)
+            {
+                if (garlic.IsInRange(pos))
+                    return true;
+            }
+            return false;
+        }
     }
 }
