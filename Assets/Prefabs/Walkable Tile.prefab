@@ -100,6 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlight: {fileID: 5468731981934432064}
+  HCost: 0
 --- !u!61 &9213156901143428317
 BoxCollider2D:
   m_ObjectHideFlags: 0
