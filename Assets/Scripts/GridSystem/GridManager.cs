@@ -11,14 +11,23 @@ namespace GridSystem
     {
         [SerializeField] private Tile tilePrefab;
         [SerializeField] private Tilemap tilemap;
-        private Tile[,] tiles;
+        private Vector2Int gridSize;
+        public Tile[,] tiles;
+        public bool IsInGrid(Vector2Int gridPos) =>
+            0 <= gridPos.x && gridPos.x < gridSize.x && 0 <= gridPos.y && gridPos.y < gridSize.y;
+        public bool HasTile(Vector2Int gridPos)
+        {
+            if (!IsInGrid(gridPos))
+                return false;
+            return tiles[gridPos.x, gridPos.y] != null;
+        }
 
         private bool testAI;
         private Vector2 testStart, testAimed;
 
-
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
             GenerateGrid();
         }
 
@@ -41,12 +50,12 @@ namespace GridSystem
         void GenerateGrid()
         {
             Vector2 mapSize = RoomsManager.Instance.mapSize;
-            Vector2Int levelDimensions = new Vector2Int( Mathf.CeilToInt(mapSize.x), Mathf.CeilToInt(mapSize.y));
+            gridSize = new Vector2Int(Mathf.CeilToInt(mapSize.x), Mathf.CeilToInt(mapSize.y));
             
-            tiles = new Tile[levelDimensions.x, levelDimensions.y];
-            for (int x = 0; x < levelDimensions.x; x++)
+            tiles = new Tile[gridSize.x, gridSize.y];
+            for (int x = 0; x < gridSize.x; x++)
             {
-                for (int y = 0; y < levelDimensions.y; y++)
+                for (int y = 0; y < gridSize.y; y++)
                 {
                     if (tilemap.HasTile(new Vector3Int(x, y, 0)))
                     {
