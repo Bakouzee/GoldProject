@@ -29,13 +29,6 @@ namespace GridSystem
             GenerateGrid();
         }
 
-        private void Update() {
-
-            if (Input.GetKeyDown(KeyCode.Space) && testAI) 
-                GetPath(testStart, testAimed);
-            
-        }
-
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
@@ -97,13 +90,16 @@ namespace GridSystem
             if(testStart == testAimed) {
                 Debug.Log("chemin généré a 100%");
                 testAI = false;
+                return path;
             }
+
+
 
             testStart = smallestTile.transform.position;
 
             
 
-            return path;
+            return GetPath(testStart,testAimed);
         }
 
         private int GetDistance(Tile first,Tile second) {
