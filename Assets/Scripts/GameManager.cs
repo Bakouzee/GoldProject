@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -28,4 +29,19 @@ public class GameManager : SingletonBase<GameManager>
     {
 
     }
+
+    #region UI Methods
+
+    public void ActivateTrap(Button trapButton)
+    {
+        // Have to reset if the player reactivates the trap
+        ColorBlock colorTrapActivated = new ColorBlock();
+        colorTrapActivated.disabledColor = Color.green;
+        colorTrapActivated.colorMultiplier = 1;
+        trapButton.interactable = false;
+        trapButton.colors = colorTrapActivated;
+        Debug.Log("Trap Activated");
+    }
+
+    #endregion
 }
