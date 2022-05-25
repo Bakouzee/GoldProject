@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : SingletonBase<PlayerHealth>
 {
     public int maxHealth = 100;
 
@@ -29,7 +29,19 @@ public class PlayerHealth : MonoBehaviour
             TakeDamage(20);
         }
     }
+    public void HealPlayer(int healAmount)
+    {
+        if((currentHealth + healAmount) > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        else
+        {
+            currentHealth += healAmount;
 
+        }
+        healthBar.SetHealth(currentHealth);
+    }
     public void TakeDamage(int damage)
     {
         if (!IsInvincible)
