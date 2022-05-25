@@ -8,13 +8,13 @@ public class PlayerHealth : SingletonBase<PlayerHealth>
 
     public int currentHealth;
 
-    //public bool IsInOnionZone = false;
+    public bool IsInOnionZone = false;
 
-    //public bool IsInWindowZone = false;
+    public bool IsInWindowZone = false;
 
     public float invincibilityFlash = 0.2f;
 
-    private bool IsInvincible = false;
+    public bool IsInvincible = false;
 
     public HealthBar healthBar;
 
@@ -94,7 +94,7 @@ public class PlayerHealth : SingletonBase<PlayerHealth>
 
     public IEnumerator InvincibillityFlash()
     {
-        if (IsInvincible)
+        while (IsInvincible == true)
         {
             sprite.color = new Color(1f, 1f, 1f, 0f);
             yield return new WaitForSeconds(invincibilityFlash);
@@ -105,7 +105,7 @@ public class PlayerHealth : SingletonBase<PlayerHealth>
     }
     public IEnumerator BurningFlash()
     {
-        if (IsInvincible)
+        while (IsInWindowZone)
         {
             sprite.color = new Color(1f, 0f, 0f, 1f);
             yield return new WaitForSeconds(invincibilityFlash);
@@ -117,7 +117,7 @@ public class PlayerHealth : SingletonBase<PlayerHealth>
 
     public IEnumerator StinkFlash()
     {
-        if (IsInvincible)
+        while (IsInOnionZone)
         {
             sprite.color = new Color(0.3332994f, 0.76f, 0f, 1f);
             yield return new WaitForSeconds(invincibilityFlash);
