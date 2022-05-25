@@ -24,16 +24,29 @@ namespace GridSystem
         private void OnMouseEnter()
         {
             highlight.SetActive(true);
+
+            Vector2Int tileCoords = GridManager.Instance.GetTileCoords(this);
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "{" + tileCoords.x + ";" + tileCoords.y + "}";
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "G:" +GCost;
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "H:" + HCost;
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "F:" + FCost;
         }
 
         private void OnMouseDown()
         {
             GridManager.Instance.GetPath(GameObject.FindGameObjectWithTag("Player").transform.position,transform.position);
+            transform.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
         }
 
         private void OnMouseExit()
         {
             highlight.SetActive(false);
+
+
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
         }
     }
 }

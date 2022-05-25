@@ -16,6 +16,7 @@ namespace GridSystem
         private bool testAI;
         private Vector2 testStart, testAimed;
 
+
         private void Start()
         {
             Camera camera = Camera.main;
@@ -28,10 +29,11 @@ namespace GridSystem
             GenerateGrid();
         }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.Space) && testAI)
-                GetPath(testStart,testAimed);           
+        private void Update() {
+
+            if (Input.GetKeyDown(KeyCode.Space) && testAI) 
+                GetPath(testStart, testAimed);
+            
         }
 
         private void OnDrawGizmos()
@@ -54,6 +56,7 @@ namespace GridSystem
                     {
                         Tile newTile = Instantiate(tilePrefab, new Vector3(x, y, 0), Quaternion.identity, transform);
                         tiles[x, y] = newTile;
+                        newTile.name = "{" + x + ";" + y + "}";
                     }
                 }
             }
@@ -64,58 +67,68 @@ namespace GridSystem
         {
             Stack<Direction> path = new Stack<Direction>();
 
-            Debug.Log("direct path");
-
             testAI = true;
             testStart = startPos;
             testAimed = aimedPos;
 
-            // Il faut que a chaque fois on génére les 4 tiles dans chacune direction
-            // Puis calcule du H et du G
+            Tile origin = GetTileFromObjectPosition(testStart);
+            Tile end = GetTileFromObjectPosition(testAimed);
 
-            Tile origin = GetTileFromObjectPosition(startPos);
-            Tile end = GetTileFromObjectPosition(aimedPos);
+            origin.GetComponent<SpriteRenderer>().color = Color.green;
 
-            Debug.Log("length: " + FindTilesNear(origin).Length);
-            
+            Tile smallestTile = null;
+
+
             foreach(Tile tile in FindTilesNear(origin)) {
-                Debug.Log("tile: " + tile);
-                if(tile != null) {
-                    tile.GCost = GetDistance(origin, tile);
-                    tile.HCost = GetDistance(tile, end);
+               if (tile != null) {
+                   tile.GCost = GetDistance(origin, tile);
+                   tile.HCost = GetDistance(tile, end);
 
-                    Debug.Log("GCost: " + tile.GCost);
-                    Debug.Log("HCost: " + tile.HCost);
-                    Debug.Log("FCost: " + tile.FCost);
-                }
+                   tile.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+
+                   if(smallestTile == null || smallestTile.FCost > tile.FCost) 
+                       smallestTile = tile;          
+                   else if(smallestTile.FCost == tile.FCost) 
+                       smallestTile = smallestTile.HCost > tile.HCost ? tile : smallestTile;
+                    
+               }
             }
+
+            if(testStart == testAimed) {
+                Debug.Log("chemin généré a 100%");
+                testAI = false;
+            }
+
+            testStart = smallestTile.transform.position;
+
+            
 
             return path;
         }
 
         private int GetDistance(Tile first,Tile second) {
 
-            Vector2Int firstCoord = FindTileCoords(first);
-            Vector2Int secondCoord = FindTileCoords(second);
+            Vector2Int firstCoord = GetTileCoords(first);
+            Vector2Int secondCoord = GetTileCoords(second);
             
-            return Mathf.Abs((secondCoord.x - firstCoord.x) + (secondCoord.y - firstCoord.y));
+            return Mathf.Abs(secondCoord.x - firstCoord.x) + Mathf.Abs(secondCoord.y - firstCoord.y);
         }
 
         private Tile[] FindTilesNear(Tile origin) {
             Tile[] nearTiles = new Tile[4];
 
-            Vector2Int tileOriginCoords = FindTileCoords(origin);
+            Vector2Int tileOriginCoords = GetTileCoords(origin);
 
-            nearTiles[0] = FindTileWithTileCoords(new int[] { tileOriginCoords.x,tileOriginCoords.y + 1});
+           // nearTiles[0] = FindTileWithTileCoords(new int[] { tileOriginCoords.x,tileOriginCoords.y - 1});
             nearTiles[1] = FindTileWithTileCoords(new int[] { tileOriginCoords.x - 1, tileOriginCoords.y });
             nearTiles[2] = FindTileWithTileCoords(new int[] { tileOriginCoords.x + 1, tileOriginCoords.y });
-            nearTiles[3] = FindTileWithTileCoords(new int[] { tileOriginCoords.x, tileOriginCoords.y - 1 });
+            nearTiles[3] = FindTileWithTileCoords(new int[] { tileOriginCoords.x, tileOriginCoords.y + 1 });
 
             return nearTiles;
 
         }
 
-        private Vector2Int FindTileCoords(Tile tile)  {
+        public Vector2Int GetTileCoords(Tile tile)  {
             Vector2Int tileCoords = new Vector2Int();
 
             for(int x = 0; x < tiles.GetLength(0);x++) {
@@ -133,7 +146,7 @@ namespace GridSystem
 
         private Tile FindTileWithTileCoords(int[] coords) {
             foreach(Tile tile in tiles) {
-                if(FindTileCoords(tile)[0] == coords[0] && FindTileCoords(tile)[1] == 1)          
+                if(GetTileCoords(tile)[0] == coords[0] && GetTileCoords(tile)[1] == coords[1])          
                     return tile;   
             }
 
@@ -142,24 +155,11 @@ namespace GridSystem
 
         // Permet de trouver la tile a la position donner 
         private Tile GetTileFromObjectPosition(Vector3 objPosition) { // Position = coordonnées joueurs 
-            Tile tile = null;
+            Tile tile = null;   
 
-            foreach (Tile currentTile in tiles) {
-
-                if(currentTile != null && currentTile.TryGetComponent<SpriteRenderer>(out SpriteRenderer renderer)) {
-                    Vector3[] corners = { renderer.transform.TransformPoint(renderer.sprite.bounds.max), // topRight 
-                        renderer.transform.TransformPoint(new Vector3(renderer.sprite.bounds.max.x, renderer.sprite.bounds.min.y, 0)),// topLeft
-                        renderer.transform.TransformPoint(renderer.sprite.bounds.min), // bottomLeft
-                    };
-
-                    if ((int)objPosition.x >= (int)corners[1].x && (int)objPosition.x <= (int)corners[0].x)  {
-                        if ((int)objPosition.y >= corners[0].y && (int)objPosition.y <= corners[2].y)  {
-                            tile = currentTile;
-                            break;
-                        }
-                    }
-                }
-            }
+            RaycastHit2D hit = Physics2D.Raycast(objPosition,Vector3.right,1f);
+            if (hit.collider != null)  
+                tile = hit.collider.gameObject.GetComponent<Tile>();
 
             return tile;
         }
