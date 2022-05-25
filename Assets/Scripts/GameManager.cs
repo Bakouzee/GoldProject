@@ -25,9 +25,12 @@ public class GameManager : SingletonBase<GameManager>
         EnemyManager.enemies.Clear(); // Reset all enemies in the list
     }
 
-    public void MoveAllEnemies(List<GameObject> enemies)
+    public void MoveAllEnemies()
     {
-
+        foreach (var enemy in EnemyManager.enemies)
+        {
+            // Do something
+        }
     }
 
     #region UI Methods
