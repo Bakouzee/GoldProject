@@ -5,13 +5,28 @@ using UnityEngine.UI;
 
 public class GameManager : SingletonBase<GameManager>
 {
+    RawImage rawimg;
    public enum DayState
     {
         DAY,
         NIGHT
     };
 
+    public GameObject trap;
+    public GameObject trapButton;
+    public Camera minimapCam;
+    private RectTransform rectT;
     public static DayState dayState = DayState.DAY;
+
+    private void Update()
+    {
+       /* if (Input.GetMouseButtonDown(0))
+        {
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rectT, Input.mousePosition, null, out Vector2 localPoint);
+            *//*localPoint.y = (rectT.rect.yMin*//*
+            Debug.Log(localPoint);
+        }*/
+    }
 
     public void StartDay()
     {
