@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerManager : SingletonBase<PlayerManager>
 {
-    public Canvas map;
-    private bool mapSeen = false;
+    public GameObject miniMap;
+    public GameObject mainCam;
+    public static bool mapSeen = false;
 
     private void Start()
     {
-        map.enabled = false;
+        miniMap.SetActive(false);
     }
 
     private void Update()
@@ -24,14 +25,16 @@ public class PlayerManager : SingletonBase<PlayerManager>
 
     private void ShowMap(bool canSeeMap)
     {
-        if (map != null)
+        if (miniMap != null)
         {
             if (canSeeMap)
             {
-                map.enabled = true;
+                miniMap.SetActive(true);
+                mainCam.SetActive(false);
             } else
             {
-                map.enabled = false;
+                mainCam.SetActive(true);
+                miniMap.SetActive(false);
             }
         }
     }

@@ -27,8 +27,11 @@ namespace GridSystem
 
         public bool IsInGrid(Vector2Int gridPos) =>
             0 <= gridPos.x && gridPos.x < gridSize.x && 0 <= gridPos.y && gridPos.y < gridSize.y;
+
         public bool HasTile(Vector2Int gridPos)
         {
+
+           
             if (!IsInGrid(gridPos))
                 return false;
             return tiles[gridPos.x, gridPos.y] != null;
@@ -40,7 +43,6 @@ namespace GridSystem
         {
             base.Awake();
             GenerateGrid();
-        }
 
         void GenerateGrid()
         {
@@ -99,7 +101,6 @@ namespace GridSystem
                     tile.GCost = GetManhattanDistance(origin, tile);
                     tile.HCost = GetManhattanDistance(tile, end);
 
-                   tile.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
 
                     if (smallestTile == null || smallestTile.FCost > tile.FCost)
                         smallestTile = tile;
@@ -150,5 +151,7 @@ namespace GridSystem
 
             return nearTiles;
         }
+
+   
     }
 }

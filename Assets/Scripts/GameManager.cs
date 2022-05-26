@@ -11,6 +11,8 @@ public class GameManager : SingletonBase<GameManager>
         NIGHT
     };
 
+    public Camera minimapCam;
+    
     public static DayState dayState = DayState.DAY;
 
     public void StartDay()

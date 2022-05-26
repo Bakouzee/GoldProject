@@ -15,6 +15,7 @@ namespace GridSystem
         protected virtual void Start()
         {
             gridManager = GridManager.Instance;
+            gridPosition = new Vector2Int((int)transform.position.x, (int) transform.position.y);
         }
 
         public bool SetVelocity(Vector2Int direction)
@@ -41,7 +42,8 @@ namespace GridSystem
         {
             // Try to move in the direction
             Vector2Int dir = Direction.ToVector2Int(direction);
-            if (SetPosition(gridPosition + dir))
+
+            if (SetPosition(dir))
             {
                 // Rotate in move direction
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;

@@ -69,7 +69,7 @@ namespace GoldProject.Rooms
 
         public bool IsRoomCollider(Collider2D collider)
         {
-            if (!collider.isTrigger || roomColliders.Length == 0)
+            if ( !collider.isTrigger || (roomColliders == null || roomColliders.Length == 0))
                 return false;
 
             foreach (var roomCollider in roomColliders)
