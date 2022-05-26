@@ -32,12 +32,6 @@ namespace GridSystem
             GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "F:" + FCost;
         }
 
-        private void OnMouseDown()
-        {
-            GridManager.Instance.GetPath(GameObject.FindGameObjectWithTag("Player").transform.position,transform.position);
-            transform.gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
-        }
-
         private void OnMouseExit()
         {
             highlight.SetActive(false);
