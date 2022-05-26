@@ -3,31 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InteractWithTraps : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerMoveHandler
+public class InteractWithTraps : MonoBehaviour //, IPointerClickHandler, IPointerDownHandler, IPointerMoveHandler
 {
     public Camera playerCamera;
-    private RectTransform _screenRectTransform;
-
-    private void Awake()
-    {
-        _screenRectTransform = GetComponent<RectTransform>();
-    }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && PlayerManager.mapSeen)
         {
-            RaycastHit2D rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
-            Debug.Log(rayHit.transform.name);
-
+            ActivateTrap();   
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    private void ActivateTrap()
     {
-        //Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
+        /*RaycastHit2D rayHit = Physics2D.GetRayIntersection(Camera.main.ScreenPointToRay(Input.mousePosition));
+            Debug.Log(rayHit.transform.name);*/
+        Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
 
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.back, 500);
+        if (hit)
+        {
+            if (hit.collider.CompareTag("Trap"))
+            {
+                Debug.Log("TOUCHED");
+                // Activate Trap touched
+            }
+            else
+            {
+                Debug.Log("NOPE");
+            }
+        }
+    }
+}
+
+    /*public void OnPointerDown(PointerEventData eventData)
+    {
+
+        *//*Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, Vector3.forward * 100, Color.yellow);
         //Debug.Log(mousePos);
         
@@ -41,33 +54,12 @@ public class InteractWithTraps : MonoBehaviour, IPointerClickHandler, IPointerDo
             {
                 Debug.Log("Dommage le man");
             }
-        }
-
-       /* RectTransformUtility.ScreenPointToLocalPointInRectangle(_screenRectTransform, eventData.position, null, out Vector2 localClick);
-        localClick.y = (_screenRectTransform.rect.yMin * -1) - (localClick.y * -1);
-        Debug.Log(localClick);
-
-        Vector2 viewportClick = new Vector2(localClick.x / _screenRectTransform.rect.xMax, localClick.y / (_screenRectTransform.rect.yMin * -1));
-        Debug.Log(viewportClick);
-
-        Ray ray = playerCamera.ViewportPointToRay(new Vector3(viewportClick.x, viewportClick.y, 0));
-
-        if (Physics.Raycast(ray, out RaycastHit hit))
-        {
-            if (hit.collider.CompareTag("Test"))
-            {
-                Debug.Log("Touched");
-            }
-            else
-            {
-                Debug.Log("Nope");
-            }
-        }*/
+        }*//*
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        *//*Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, Vector3.forward * 100, Color.yellow);
         //Debug.Log(mousePos);
 
@@ -82,15 +74,15 @@ public class InteractWithTraps : MonoBehaviour, IPointerClickHandler, IPointerDo
             {
                 Debug.Log("Dommage le man");
             }
-        }
+        }*//*
     }
 
     public void OnPointerMove(PointerEventData eventData)
-    {
+    {*//*
         Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
-        Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
+        *//*Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(mousePos, Vector3.forward * 100, Color.yellow);
-        //Debug.Log(mousePos);
+        //Debug.Log(mousePos);*//*
 
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.forward * 100);
 
@@ -105,6 +97,5 @@ public class InteractWithTraps : MonoBehaviour, IPointerClickHandler, IPointerDo
             {
                 Debug.Log("Dommage le man");
             }
-        }
-    }
-}
+        }*//*
+    }*/
