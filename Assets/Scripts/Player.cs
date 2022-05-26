@@ -75,6 +75,14 @@ namespace GoldProject
             moveCoroutine = null;
         }
 
+        protected override void OnMoved()
+        {
+            if (currentRoom.IsInGarlicRange(transform.position))
+            {
+                Debug.Log("Garlic in range");
+            }
+        }
+
         protected override void OnEnterRoom()
         {
             cameraController.ZoomToRoom(currentRoom);

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GoldProject.Rooms;
-using Unity.PlasticSCM.Editor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 namespace GridSystem
@@ -16,6 +13,7 @@ namespace GridSystem
         // Grid size is defined by taking the mapSize from the RoomsManager in Awake/Start
         private Vector2Int gridSize;
         private Tile[,] tiles;
+        private Transform tilesParent;
 
         #region Get Tile at Position
 
@@ -49,6 +47,9 @@ namespace GridSystem
             Vector2 mapSize = RoomsManager.Instance.mapSize;
             gridSize = new Vector2Int(Mathf.CeilToInt(mapSize.x), Mathf.CeilToInt(mapSize.y));
 
+            tilesParent = new GameObject("Tiles").transform;
+            tilesParent.SetParent(transform);
+
             tiles = new Tile[gridSize.x, gridSize.y];
             for (int x = 0; x < gridSize.x; x++)
             {
@@ -56,19 +57,13 @@ namespace GridSystem
                 {
                     if (tilemap.HasTile(new Vector3Int(x, y, 0)))
                     {
-                        Tile newTile = Instantiate(tilePrefab, new Vector3(x + 0.5f, y + 0.5f, 0f),
-                            Quaternion.identity,
-                            transform);
+                        Tile newTile = Instantiate(
+                            tilePrefab, 
+                        new Vector3(x + 0.5f, y + 0.5f, 0f),
+                            Quaternion.identity
+                        );
                         newTile.SetGridPos(new Vector2Int(x, y));
                         tiles[x, y] = newTile;
-
-                        if (debug)
-                        {
-                            newTile.gameObject.transform.localScale = new Vector3(2f, 2f, 0f);
-                            newTile.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>()
-                                    .color =
-                                Color.white;
-                        }
                     }
                 }
             }

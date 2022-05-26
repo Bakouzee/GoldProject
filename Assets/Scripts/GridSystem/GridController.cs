@@ -49,12 +49,19 @@ namespace GridSystem
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
                 transform.eulerAngles = new Vector3(0, 0, angle);
                 
+                OnMoved();
+                
                 // It is a success
                 return true;
             }
             
             // Failed to move
             return false;
+        }
+
+        protected virtual void OnMoved()
+        {
+            
         }
     }
 }

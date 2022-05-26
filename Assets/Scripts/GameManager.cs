@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using GoldProject;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,10 +12,21 @@ public class GameManager : SingletonBase<GameManager>
         DAY,
         NIGHT
     };
+    public static DayState dayState = DayState.DAY;
 
     public Camera minimapCam;
-    
-    public static DayState dayState = DayState.DAY;
+    [SerializeField] private Cooldown turnCooldown;
+
+    private void Start()
+    {
+        turnCooldown.SetCooldown();
+    }
+
+    private void Update()
+    {
+        if (turnCooldown.HasCooldown())
+            MoveAllEnemies();
+    }
 
     public void StartDay()
     {
@@ -29,10 +42,12 @@ public class GameManager : SingletonBase<GameManager>
 
     public void MoveAllEnemies()
     {
+        Debug.Log("Enemy turn");
         foreach (var enemy in EnemyManager.enemies)
         {
             // Do something
         }
+        turnCooldown.SetCooldown();
     }
 
     #region UI Methods
