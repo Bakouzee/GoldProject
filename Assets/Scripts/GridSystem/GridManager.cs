@@ -11,26 +11,35 @@ namespace GridSystem
     {
         [SerializeField] private Tile tilePrefab;
         [SerializeField] private Tilemap tilemap;
-        private Vector2Int gridSize;
+
+        public Vector2Int gridSize; // A remttre en privé
         public Tile[,] tiles;
         public bool IsInGrid(Vector2Int gridPos) =>
             0 <= gridPos.x && gridPos.x < gridSize.x && 0 <= gridPos.y && gridPos.y < gridSize.y;
+
         public bool HasTile(Vector2Int gridPos)
         {
+
+           
             if (!IsInGrid(gridPos))
                 return false;
             return tiles[gridPos.x, gridPos.y] != null;
         }
 
         private Vector2 originPos, targetPos;
-        private Stack<Direction> path;
+
+
+        public Dictionary<Tile,Direction> path;
+
+        [SerializeField]
+        private bool debug;
 
         protected override void Awake()
         {
             base.Awake();
             GenerateGrid();
 
-            path = new Stack<Direction>();
+            path = new Dictionary<Tile,Direction>();
         }
 
         private void OnDrawGizmos()
@@ -54,16 +63,21 @@ namespace GridSystem
                 {
                     if (tilemap.HasTile(new Vector3Int(x, y, 0)))
                     {
-                        Tile newTile = Instantiate(tilePrefab, new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity, transform);
+                        Tile newTile = Instantiate(tilePrefab, new Vector3(x + 0.5f, y + 0.5f, 0f), Quaternion.identity, transform);
                         tiles[x, y] = newTile;
                         newTile.name = "{" + x + ";" + y + "}";
+                        
+                        if (debug)  {
+                            newTile.gameObject.transform.localScale = new Vector3(2f, 2f, 0f);
+                            newTile.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color = Color.white;
+                        }
                     }
                 }
             }
             tilemap.gameObject.SetActive(false);
         }
 
-        public Stack<Direction> GetPath(Vector2 startPos, Vector2 aimedPos) {
+        public Dictionary<Tile,Direction> GetPath(Vector2 startPos, Vector2 aimedPos) {
             
             originPos = startPos;
             targetPos = aimedPos;
@@ -71,18 +85,18 @@ namespace GridSystem
             Tile origin = GetTileFromObjectPosition(originPos);
             Tile end = GetTileFromObjectPosition(targetPos);
 
-            origin.GetComponent<SpriteRenderer>().color = Color.green;
+            if(debug)
+                origin.GetComponent<SpriteRenderer>().color = Color.green;
 
             Tile smallestTile = null;
 
-            foreach(Tile tile in FindTilesNear(origin)) {
-               if (tile != null) {
+            foreach (Tile tile in FindTilesNear(origin)) {
+                if (tile != null) {
                    tile.GCost = GetDistance(origin, tile);
                    tile.HCost = GetDistance(tile, end);
 
-                   tile.gameObject.GetComponent<SpriteRenderer>().color = Color.red;
 
-                   if(smallestTile == null || smallestTile.FCost > tile.FCost) 
+                    if (smallestTile == null || smallestTile.FCost > tile.FCost) 
                        smallestTile = tile;          
                    else if(smallestTile.FCost == tile.FCost) 
                        smallestTile = smallestTile.HCost > tile.HCost ? tile : smallestTile;
@@ -90,13 +104,19 @@ namespace GridSystem
                }
             }
 
-            Direction dir = new Direction(ConvertDirection(origin, smallestTile));
-            path.Push(dir);
+            
+
 
             if (originPos == targetPos) {
                 Debug.Log("chemin généré a 100%");
                 return path;
-            }         
+            }
+
+            Direction dir = new Direction(ConvertDirection(origin, smallestTile));
+            path.Add(smallestTile,dir);
+
+
+            smallestTile.gameObject.GetComponent<SpriteRenderer>().color = new Color(Color.green.r, Color.green.g, Color.green.b,0.3f);
 
             originPos = smallestTile.transform.position;
 
@@ -171,14 +191,17 @@ namespace GridSystem
         }
 
         // Permet de trouver la tile a la position donner 
-        private Tile GetTileFromObjectPosition(Vector3 objPosition) { // Position = coordonnées joueurs 
+        public Tile GetTileFromObjectPosition(Vector3 objPosition) { // Position = coordonnées joueurs 
             Tile tile = null;   
 
             RaycastHit2D hit = Physics2D.Raycast(objPosition,Vector3.right,1f);
+
             if (hit.collider != null)  
                 tile = hit.collider.gameObject.GetComponent<Tile>();
 
             return tile;
         }
+
+   
     }
 }
