@@ -35,10 +35,10 @@ namespace GridSystem
         {
             highlight.SetActive(true);
             
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "{" + gridPos.x + ";" + gridPos.y + "}";
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "G:" +GCost;
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "H:" + HCost;
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "F:" + FCost;
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "{" + gridPos.x + ";" + gridPos.y + "}";
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "G:" +GCost;
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "H:" + HCost;
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "F:" + FCost;
         }
 
         private void OnMouseExit()
@@ -46,10 +46,10 @@ namespace GridSystem
             highlight.SetActive(false);
 
 
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
+            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
         }
     }
 }

@@ -23,6 +23,7 @@ namespace GridSystem
             GetTileAtPosition(new Vector2Int((int) worldPosition.x, (int) worldPosition.y));
 
         public Tile GetTileAtPosition(Vector2Int gridPos) => tiles[gridPos.x, gridPos.y];
+
         #endregion
 
         public bool IsInGrid(Vector2Int gridPos) =>
@@ -30,8 +31,6 @@ namespace GridSystem
 
         public bool HasTile(Vector2Int gridPos)
         {
-
-           
             if (!IsInGrid(gridPos))
                 return false;
             return tiles[gridPos.x, gridPos.y] != null;
@@ -43,6 +42,7 @@ namespace GridSystem
         {
             base.Awake();
             GenerateGrid();
+        }
 
         void GenerateGrid()
         {
@@ -56,7 +56,8 @@ namespace GridSystem
                 {
                     if (tilemap.HasTile(new Vector3Int(x, y, 0)))
                     {
-                        Tile newTile = Instantiate(tilePrefab, new Vector3(x + 0.5f, y + 0.5f, 0f), Quaternion.identity,
+                        Tile newTile = Instantiate(tilePrefab, new Vector3(x + 0.5f, y + 0.5f, 0f),
+                            Quaternion.identity,
                             transform);
                         newTile.SetGridPos(new Vector2Int(x, y));
                         tiles[x, y] = newTile;
@@ -64,7 +65,8 @@ namespace GridSystem
                         if (debug)
                         {
                             newTile.gameObject.transform.localScale = new Vector3(2f, 2f, 0f);
-                            newTile.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().color =
+                            newTile.gameObject.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>()
+                                    .color =
                                 Color.white;
                         }
                     }
@@ -81,9 +83,9 @@ namespace GridSystem
                 Debug.Log("chemin généré a 100%");
                 return null;
             }
-            
+
             List<Direction> path = new List<Direction>();
-            
+
             // Get tiles
             Tile origin = GetTileAtPosition(startGridPos);
             Tile end = GetTileAtPosition(aimedGridPos);
@@ -91,7 +93,7 @@ namespace GridSystem
             // Set startTile green
             if (debug)
                 origin.GetComponent<SpriteRenderer>().color = Color.green;
-            
+
             // Get the best tile
             Tile smallestTile = null;
             foreach (Tile tile in GetTouchingTiles(origin))
@@ -116,15 +118,16 @@ namespace GridSystem
             // Add to path
             // path.Add(smallestTile, dir);
             path.Add(dir);
-            
-            if(debug) smallestTile.gameObject.GetComponent<SpriteRenderer>().color =
-                new Color(Color.green.r, Color.green.g, Color.green.b, 0.3f);
+
+            if (debug)
+                smallestTile.gameObject.GetComponent<SpriteRenderer>().color =
+                    new Color(Color.green.r, Color.green.g, Color.green.b, 0.3f);
 
 
             // If already reached target
-            if ((Vector2)smallestTile.GridPos == aimedGridPos)
+            if ((Vector2) smallestTile.GridPos == aimedGridPos)
                 return path;
-            
+
             path.AddRange(GetPath(smallestTile.GridPos, aimedGridPos));
             return path;
         }
@@ -136,6 +139,7 @@ namespace GridSystem
 
         public int GetManhattanDistance(Tile a, Tile b) =>
             GetManhattanDistance(a.GridPos, b.GridPos);
+
         #endregion
 
         private Tile[] GetTouchingTiles(Tile tile)
@@ -151,7 +155,5 @@ namespace GridSystem
 
             return nearTiles;
         }
-
-   
     }
 }

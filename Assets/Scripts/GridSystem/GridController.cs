@@ -43,7 +43,7 @@ namespace GridSystem
             // Try to move in the direction
             Vector2Int dir = Direction.ToVector2Int(direction);
 
-            if (SetPosition(dir))
+            if (SetPosition(gridPosition + dir))
             {
                 // Rotate in move direction
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;

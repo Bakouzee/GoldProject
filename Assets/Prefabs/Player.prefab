@@ -47,7 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823b1b31cad448fd9347cee78bfcdd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnGridPos: {x: 0, y: 0}
+  speed: 1
+  moveCooldown: 0.5
 --- !u!212 &1519083190786363592
 SpriteRenderer:
   m_ObjectHideFlags: 0
