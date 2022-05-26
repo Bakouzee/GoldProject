@@ -414,6 +414,41 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.5}
   m_EdgeRadius: 0
+--- !u!114 &516499704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516499700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 823b1b31cad448fd9347cee78bfcdd33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  moveCooldown: 0.2
+--- !u!50 &516499705
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 516499700}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &516921243
 GameObject:
   m_ObjectHideFlags: 0
@@ -933,6 +968,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1375983399}
   - component: {fileID: 1375983398}
+  - component: {fileID: 1375983400}
+  - component: {fileID: 1375983401}
   m_Layer: 0
   m_Name: GridManager
   m_TagString: Untagged
@@ -955,6 +992,7 @@ MonoBehaviour:
   levelDimensions: {x: 40, y: 20}
   tilePrefab: {fileID: 5468731981610478603, guid: adedbd071a321604abf93a17f14254b3, type: 3}
   tilemap: {fileID: 1774718386}
+  debug: 0
 --- !u!4 &1375983399
 Transform:
   m_ObjectHideFlags: 0
@@ -970,6 +1008,49 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1375983400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375983397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64df268b5c734bcdb0c0c78fbdb38636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapSize: {x: 39, y: 19}
+  rooms:
+  - name: Ffhjkhjk
+    isCorridor: 0
+    position: {x: 5.99, y: 9.99}
+    size: {x: 13, y: 19}
+    curtains: []
+    frighteningEvents: []
+    garlics: []
+    roomCollidersTransform: {fileID: 0}
+  FirstRoom:
+    name: 
+    isCorridor: 0
+    position: {x: 0, y: 0}
+    size: {x: 0, y: 0}
+    curtains: []
+    frighteningEvents: []
+    garlics: []
+    roomCollidersTransform: {fileID: 0}
+--- !u!114 &1375983401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1375983397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebc64a348f663e746a9a037236d8cb0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1479992702
 GameObject:
   m_ObjectHideFlags: 0

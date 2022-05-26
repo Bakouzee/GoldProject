@@ -6,23 +6,37 @@ namespace GridSystem
 {
     public abstract class GridController : MonoBehaviour
     {
-        private GridManager gridManager;
-        private Vector2Int gridPosition;
+        protected GridManager gridManager;
+        protected Vector2Int gridPosition;
+        protected Tile currentTile => gridManager.GetTileAtPosition(gridPosition);
+
+        public int speed;
+
         protected virtual void Start()
         {
             gridManager = GridManager.Instance;
         }
 
+        public bool SetVelocity(Vector2Int direction)
+        {
+            if (TryGetComponent(out Rigidbody2D rb))
+            {
+                rb.velocity = direction * speed;
+                return true;
+            }
+            return false;
+        }
         public bool SetPosition(Vector2Int newGridPos)
         {
             if (!gridManager.HasTile(newGridPos))
                 return false;
             
             gridPosition = newGridPos;
-            transform.position = gridManager.tiles[gridPosition.x, gridPosition.y].transform.position;
+            transform.position = gridManager.GetTileAtPosition(gridPosition).transform.position;
             return true;
         }
 
+        public bool Move(Direction direction) => Move(direction.Value);
         public bool Move(string direction)
         {
             // Try to move in the direction

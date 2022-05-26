@@ -37,6 +37,6 @@ namespace GoldProject.Rooms
         }
 
         public Room GetColliderRoom(Collider2D collider2D) => rooms.FirstOrDefault(room => room.IsRoomCollider(collider2D));
-        public bool IsCorridor(Room room) => rooms[^1] == room;
+        public bool IsCorridor(Room room) => room.isCorridor;
     }
 }

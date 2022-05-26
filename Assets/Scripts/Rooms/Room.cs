@@ -8,6 +8,7 @@ namespace GoldProject.Rooms
     public class Room
     {
         public string name;
+        public bool isCorridor;
         public Vector2 position;
         public Vector2Int size;
 

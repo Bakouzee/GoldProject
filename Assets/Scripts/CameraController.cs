@@ -8,6 +8,7 @@ namespace GoldProject
     {
         private float zPos;
         private Camera camera;
+        public Camera Camera => camera;
         private Resolution resolution;
 
         private void Awake()
@@ -35,7 +36,7 @@ namespace GoldProject
             else
             {
                 // Focus only room
-                wantedPos = room.roomCollidersTransform.position;
+                wantedPos = room.position;
                 size = room.size;
             }
             transform.position = new Vector3(wantedPos.x, wantedPos.y, zPos);
