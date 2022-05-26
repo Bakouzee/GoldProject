@@ -22,21 +22,23 @@ namespace GridSystem
             return tiles[gridPos.x, gridPos.y] != null;
         }
 
-        private bool testAI;
-        private Vector2 testStart, testAimed;
+        private Vector2 originPos, targetPos;
+        private Stack<Direction> path;
 
         protected override void Awake()
         {
             base.Awake();
             GenerateGrid();
+
+            path = new Stack<Direction>();
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Vector2 centerPos = levelDimensions;
+            Vector2 centerPos = gridSize;
             centerPos *= 0.5f;
-            Vector2 cubeSize = levelDimensions;
+            Vector2 cubeSize = gridSize;
             Gizmos.DrawWireCube(centerPos, cubeSize);
         }
 
@@ -61,21 +63,17 @@ namespace GridSystem
             tilemap.gameObject.SetActive(false);
         }
 
-        public Stack<Direction> GetPath(Vector2 startPos, Vector2 aimedPos)
-        {
-            Stack<Direction> path = new Stack<Direction>();
+        public Stack<Direction> GetPath(Vector2 startPos, Vector2 aimedPos) {
+            
+            originPos = startPos;
+            targetPos = aimedPos;
 
-            testAI = true;
-            testStart = startPos;
-            testAimed = aimedPos;
-
-            Tile origin = GetTileFromObjectPosition(testStart);
-            Tile end = GetTileFromObjectPosition(testAimed);
+            Tile origin = GetTileFromObjectPosition(originPos);
+            Tile end = GetTileFromObjectPosition(targetPos);
 
             origin.GetComponent<SpriteRenderer>().color = Color.green;
 
             Tile smallestTile = null;
-
 
             foreach(Tile tile in FindTilesNear(origin)) {
                if (tile != null) {
@@ -92,19 +90,37 @@ namespace GridSystem
                }
             }
 
-            if(testStart == testAimed) {
+            Direction dir = new Direction(ConvertDirection(origin, smallestTile));
+            path.Push(dir);
+
+            if (originPos == targetPos) {
                 Debug.Log("chemin généré a 100%");
-                testAI = false;
                 return path;
-            }
+            }         
 
+            originPos = smallestTile.transform.position;
 
+            return GetPath(originPos,targetPos);
+        }
 
-            testStart = smallestTile.transform.position;
+        private string ConvertDirection(Tile last,Tile actual) {
+            Vector2Int lastCoord = GetTileCoords(last);
+            Vector2Int actualCoord = GetTileCoords(actual);
 
-            
+            int diffX = actualCoord.x - lastCoord.x;
+            int diffY = actualCoord.y - lastCoord.y;
 
-            return GetPath(testStart,testAimed);
+            if (diffX == 1)
+                return "Right";
+            else if (diffX == -1)
+                return "Left";
+
+            if (diffY == 1)
+                return "Up";
+            else if (diffY == -1)
+                return "Down";     
+
+            return "";
         }
 
         private int GetDistance(Tile first,Tile second) {

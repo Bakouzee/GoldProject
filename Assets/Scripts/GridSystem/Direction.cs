@@ -4,12 +4,15 @@ namespace GridSystem
 {
     public class Direction
     {
-        private string value;
+        public string value;
         
         public const string Up = "Up";
         public const string Left = "Left";
         public const string Right = "Right";
         public const string Down = "Down";
+
+        public Direction(string _value) => value = _value;
+        
 
         public static Vector2Int ToVector2Int(string direction)
         {
