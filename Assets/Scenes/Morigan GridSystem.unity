@@ -5906,6 +5906,21 @@ MonoBehaviour:
   turnCooldown:
     cooldownDuration: 1
     time: 0
+  enemyTypesAndPrefabs:
+  - type: 0
+    prefab: {fileID: 0}
+  - type: 1
+    prefab: {fileID: 0}
+  waves:
+  - enemyCounts: []
+  - enemyCounts:
+    - enemyType: 0
+      count: 5
+  - enemyCounts:
+    - enemyType: 0
+      count: 6
+    - enemyType: 1
+      count: 1
 --- !u!1001 &74132701132128158
 PrefabInstance:
   m_ObjectHideFlags: 0

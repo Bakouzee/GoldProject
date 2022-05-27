@@ -17,6 +17,9 @@ public class GameManager : SingletonBase<GameManager>
     public Camera minimapCam;
     [SerializeField] private Cooldown turnCooldown;
 
+    [Space(10), SerializeField] private TypeAndPrefab[] enemyTypesAndPrefabs;
+    [Space(10), SerializeField] private Wave[] waves;
+
     private void Start()
     {
         turnCooldown.SetCooldown();
@@ -64,4 +67,17 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     #endregion
+
+    [System.Serializable]
+    public struct Wave
+    {
+        public EnemyCount[] enemyCounts;
+    }
+
+    [System.Serializable]
+    public struct EnemyCount
+    {
+        public Enemies.EnemyType enemyType;
+        public int count;
+    }
 }
