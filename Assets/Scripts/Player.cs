@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace GoldProject
 {
     public class Player : Entity
     {
+        public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
 
         [SerializeField] private float moveCooldown;
@@ -77,9 +77,10 @@ namespace GoldProject
 
         protected override void OnMoved()
         {
-            if (currentRoom.IsInGarlicRange(transform.position))
+            if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
             {
                 Debug.Log("Garlic in range");
+                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
             }
         }
 

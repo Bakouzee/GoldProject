@@ -81,14 +81,17 @@ namespace GoldProject.Rooms
             return false;
         }
 
-        public bool IsInGarlicRange(Vector2 worldPosition)
+        public bool IsInGarlicRange(Vector2 worldPosition, out Garlic damagingGarlic)
         {
             foreach (Garlic garlic in garlics)
             {
                 if (garlic.IsInRange(worldPosition))
+                {
+                    damagingGarlic = garlic;
                     return true;
+                }
             }
-
+            damagingGarlic = null;
             return false;
         }
     }

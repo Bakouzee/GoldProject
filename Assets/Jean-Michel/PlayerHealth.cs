@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : SingletonBase<PlayerHealth>
+public class PlayerHealth : MonoBehaviour
 {
+    public PlayerManager PlayerManager { private get; set; }
     public int maxHealth = 100;
 
     public int currentHealth;
