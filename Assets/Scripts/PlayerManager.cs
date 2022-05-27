@@ -25,7 +25,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
 
     private void Start()
     {
-        miniMap.SetActive(false);
+        if(miniMap) miniMap.SetActive(false);
     }
 
     private void Update()

@@ -54,7 +54,10 @@ public class PlayerHealth : MonoBehaviour
 
     void Death()
     {
-        Time.timeScale = 0;
+        // Temporary just for apk
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            .buildIndex);
+        // Time.timeScale = 0;
     }
 
     

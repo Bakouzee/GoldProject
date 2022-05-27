@@ -22,7 +22,7 @@ namespace Enemies
         {
             // Debug.Log($"{enemy.GridPosition} // {targetGridPos}");
             directions = new Queue<Direction>(GridManager.Instance
-                .GetPath(enemy.GridPosition, targetGridPos));
+                .TempGetPath(enemy.GridPosition, targetGridPos));
         }
 
         public EnemyBaseState(EnemyBase enemy)
