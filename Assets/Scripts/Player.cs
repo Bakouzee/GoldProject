@@ -19,15 +19,6 @@ namespace GoldProject
         {
             base.Start();
             cameraController = FindObjectOfType<CameraController>();
-
-            // Set current room
-            currentRoom = RoomsManager.Instance.FirstRoom;
-            OnEnterRoom();
-
-            // Set position on grid
-            var position = transform.position;
-            Vector2Int spawnGridPos = new Vector2Int((int) position.x, (int) position.y);
-            SetPosition(spawnGridPos);
         }
 
         private void Update()
@@ -84,9 +75,9 @@ namespace GoldProject
             }
         }
 
-        protected override void OnEnterRoom()
+        protected override void OnEnterRoom(Room room)
         {
-            cameraController.ZoomToRoom(currentRoom);
+            cameraController.ZoomToRoom(room);
         }
     }
 }

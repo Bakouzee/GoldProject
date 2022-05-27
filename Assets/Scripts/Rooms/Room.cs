@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Enemies;
 using GoldProject.FrighteningEvent;
 using UnityEngine;
 
@@ -12,15 +13,28 @@ namespace GoldProject.Rooms
         public Vector2 position;
         public Vector2Int size;
 
+        public bool IsInside(Vector2 worldPosition)
+        {
+            int halfLength = size.x;
+            int halfHeight = size.y;
+            return position.x - halfLength < worldPosition.x &&
+                   worldPosition.x < position.x + halfLength && 
+                   position.y - halfHeight < worldPosition.y &&
+                   worldPosition.y < position.y + halfHeight;
+        }
+
         private bool lighten;
         public bool IsLighten => lighten;
 
         [Header("Objects")] public Curtain[] curtains;
         [SerializeReference] public FrighteningEventBase[] frighteningEvents;
-        public List<Garlic> garlics;
+        [Attributes.ReadOnly] public List<Garlic> garlics;
+        [Attributes.ReadOnly] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        public Transform[] pathPoints;
 
         [Header("Colliders")] [Tooltip("GameObject contaning all the colliders of the room")]
         public Transform roomCollidersTransform;
+
         private Collider2D[] roomColliders;
 
         public void Initialize()
@@ -41,10 +55,10 @@ namespace GoldProject.Rooms
                 Debug.LogWarning($"Room colliders tranform of room named '{name}' is not given");
                 return;
             }
+
             roomColliders = roomCollidersTransform.GetComponentsInChildren<Collider2D>();
             foreach (Collider2D roomCollider in roomColliders)
                 roomCollider.isTrigger = true;
-            
         }
 
         private void UpdateLightState()
@@ -69,7 +83,7 @@ namespace GoldProject.Rooms
 
         public bool IsRoomCollider(Collider2D collider)
         {
-            if ( !collider.isTrigger || (roomColliders == null || roomColliders.Length == 0))
+            if (!collider.isTrigger || (roomColliders == null || roomColliders.Length == 0))
                 return false;
 
             foreach (var roomCollider in roomColliders)
@@ -91,6 +105,7 @@ namespace GoldProject.Rooms
                     return true;
                 }
             }
+
             damagingGarlic = null;
             return false;
         }

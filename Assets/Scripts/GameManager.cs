@@ -31,7 +31,7 @@ public class GameManager : SingletonBase<GameManager>
     public void StartDay()
     {
         dayState = DayState.DAY;
-        EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
+        // EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
     }
     
     public void StartNight()
@@ -45,7 +45,7 @@ public class GameManager : SingletonBase<GameManager>
         Debug.Log("Enemy turn");
         foreach (var enemy in EnemyManager.enemies)
         {
-            // Do something
+            enemy.DoAction();
         }
         turnCooldown.SetCooldown();
     }

@@ -8,6 +8,7 @@ namespace GridSystem
     {
         protected GridManager gridManager;
         protected Vector2Int gridPosition;
+        public Vector2Int GridPosition => gridPosition; 
         protected Tile currentTile => gridManager.GetTileAtPosition(gridPosition);
 
         public int speed;
@@ -15,7 +16,8 @@ namespace GridSystem
         protected virtual void Start()
         {
             gridManager = GridManager.Instance;
-            gridPosition = new Vector2Int((int)transform.position.x, (int) transform.position.y);
+            gridPosition = gridManager.GetGridPosition(transform.position);
+            SetPosition(gridPosition);
         }
 
         public bool SetVelocity(Vector2Int direction)
@@ -33,7 +35,7 @@ namespace GridSystem
                 return false;
             
             gridPosition = newGridPos;
-            transform.position = gridManager.GetTileAtPosition(gridPosition).transform.position;
+            transform.position = (Vector2)gridManager.GetTileAtPosition(gridPosition).transform.position;
             return true;
         }
 

@@ -15,10 +15,13 @@ namespace GridSystem
         private Tile[,] tiles;
         private Transform tilesParent;
 
-        #region Get Tile at Position
 
+        public Vector2Int GetGridPosition(Vector3 worldPosition) =>
+            new Vector2Int((int) worldPosition.x, (int) worldPosition.y);
+        
+        #region Get Tile at Position
         public Tile GetTileAtPosition(Vector3 worldPosition) =>
-            GetTileAtPosition(new Vector2Int((int) worldPosition.x, (int) worldPosition.y));
+            GetTileAtPosition(GetGridPosition(worldPosition));
 
         public Tile GetTileAtPosition(Vector2Int gridPos) => tiles[gridPos.x, gridPos.y];
 
@@ -59,8 +62,9 @@ namespace GridSystem
                     {
                         Tile newTile = Instantiate(
                             tilePrefab, 
-                        new Vector3(x + 0.5f, y + 0.5f, 0f),
-                            Quaternion.identity
+                        new Vector3(x + 0.5f, y + 0.5f, 5f),
+                            Quaternion.identity,
+                            tilesParent
                         );
                         newTile.SetGridPos(new Vector2Int(x, y));
                         tiles[x, y] = newTile;
