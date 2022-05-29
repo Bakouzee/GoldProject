@@ -8,6 +8,7 @@ namespace GridSystem
     {
         protected GridManager gridManager;
         protected Vector2Int gridPosition;
+        public Vector2Int GridPosition => gridPosition; 
         protected Tile currentTile => gridManager.GetTileAtPosition(gridPosition);
 
         public int speed;
@@ -15,7 +16,8 @@ namespace GridSystem
         protected virtual void Start()
         {
             gridManager = GridManager.Instance;
-            gridPosition = new Vector2Int((int)transform.position.x, (int) transform.position.y);
+            gridPosition = gridManager.GetGridPosition(transform.position);
+            SetPosition(gridPosition);
         }
 
         public bool SetVelocity(Vector2Int direction)
@@ -33,7 +35,7 @@ namespace GridSystem
                 return false;
             
             gridPosition = newGridPos;
-            transform.position = gridManager.GetTileAtPosition(gridPosition).transform.position;
+            transform.position = (Vector2)gridManager.GetTileAtPosition(gridPosition).transform.position;
             return true;
         }
 
@@ -43,11 +45,13 @@ namespace GridSystem
             // Try to move in the direction
             Vector2Int dir = Direction.ToVector2Int(direction);
 
-            if (SetPosition(dir))
+            if (SetPosition(gridPosition + dir))
             {
                 // Rotate in move direction
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
                 transform.eulerAngles = new Vector3(0, 0, angle);
+                
+                OnMoved();
                 
                 // It is a success
                 return true;
@@ -55,6 +59,11 @@ namespace GridSystem
             
             // Failed to move
             return false;
+        }
+
+        protected virtual void OnMoved()
+        {
+            
         }
     }
 }

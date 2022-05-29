@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1519083190786363592}
   - component: {fileID: 1519083190786363589}
   - component: {fileID: 1519083190786363594}
+  - component: {fileID: 28784895}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -47,7 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 823b1b31cad448fd9347cee78bfcdd33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnGridPos: {x: 0, y: 0}
+  speed: 1
+  moveCooldown: 0.5
 --- !u!212 &1519083190786363592
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -137,3 +139,23 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &28784895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519083190786363598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64796371289fab94dbc64465771a7bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
+  IsInOnionZone: 0
+  IsInWindowZone: 0
+  invincibilityFlash: 0.2
+  IsInvincible: 0
+  healthBar: {fileID: 0}
+  sprite: {fileID: 1519083190786363592}

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : SingletonBase<PlayerHealth>
+public class PlayerHealth : MonoBehaviour
 {
+    public PlayerManager PlayerManager { private get; set; }
     public int maxHealth = 100;
 
     public int currentHealth;
@@ -53,7 +54,10 @@ public class PlayerHealth : SingletonBase<PlayerHealth>
 
     void Death()
     {
-        Time.timeScale = 0;
+        // Temporary just for apk
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+            .buildIndex);
+        // Time.timeScale = 0;
     }
 
     

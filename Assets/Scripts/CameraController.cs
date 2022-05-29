@@ -7,13 +7,13 @@ namespace GoldProject
     public class CameraController : MonoBehaviour
     {
         private float zPos;
-        private Camera camera;
-        public Camera Camera => camera;
+        private Camera _camera;
+        public Camera Camera => _camera;
         private Resolution resolution;
 
         private void Awake()
         {
-            camera = GetComponent<Camera>();
+            _camera = GetComponent<Camera>();
         }
 
         private void Start()
@@ -27,7 +27,7 @@ namespace GoldProject
             RoomsManager roomsManager = RoomsManager.Instance;
             Vector2 wantedPos;
             Vector2 size;
-            if (roomsManager.IsCorridor(room))
+            if (room.isCorridor)
             {
                 // Focus all map
                 size = roomsManager.mapSize;
@@ -40,7 +40,7 @@ namespace GoldProject
                 size = room.size;
             }
             transform.position = new Vector3(wantedPos.x, wantedPos.y, zPos);
-            camera.orthographicSize = GetOrthographicSizeDesired(size);
+            _camera.orthographicSize = GetOrthographicSizeDesired(size);
         }
 
         private float GetOrthographicSizeDesired(Vector2 size)
