@@ -169,7 +169,7 @@ public class GameManager : SingletonBase<GameManager>
         }
 
         // Else if it isn't chief --> Spawn enemy
-        if (enemySpawned < enemiesToSpawn.Length)
+        if (enemySpawned < /*enemiesToSpawn.Length*/ 1)
         {
             EnemyBase prefab = enemiesDef.dict[enemiesToSpawn[enemySpawned]];
             Instantiate(prefab, enemySpawnPoint.position, Quaternion.identity);

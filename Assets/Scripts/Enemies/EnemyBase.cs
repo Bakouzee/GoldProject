@@ -54,7 +54,25 @@ namespace Enemies
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
-        public void DoAction() => currentState?.DoAction();
+
+        public void DoAction() {
+
+           // currentState?.DoAction();
+
+            Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
+
+            Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
+ 
+            Vector3 sight = transform.up * 3;
+
+            float angle = Vector2.Angle(playerToSightCenter, sight);
+
+
+            if (angle < 90 && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= 3)
+                Debug.Log("je vois le joueur");
+ 
+
+        }
         
         public void Afraid()
         {
@@ -92,5 +110,14 @@ namespace Enemies
         {
             // Take Damage
         }
+
+        private void OnDrawGizmos() {
+            Handles.color = new Color(Color.yellow.r,Color.yellow.g,Color.yellow.b,0.1f);
+            Transform viewTransform = transform.GetChild(0);
+
+            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,180,3); // 180 a changer par une valeur du so
+        }
+
+        
     }
 }
