@@ -289,7 +289,9 @@ namespace GridSystem
 
         public int GetManhattanDistance(Tile a, Tile b) =>
             GetManhattanDistance(a.GridPos, b.GridPos);
-
+        public int GetManhattanDistance(Vector3 a, Vector3 b) => 
+            GetManhattanDistance(GetGridPosition(a), GetGridPosition(b));
         #endregion
+
     }
 }

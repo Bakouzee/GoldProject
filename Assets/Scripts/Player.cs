@@ -36,23 +36,36 @@ namespace GoldProject
                 {
                     // Do nothing if clicking UI
                     if (GameManager.eventSystem.IsPointerOverGameObject())
-                    {
                         return;
-                    }
                     
                     Vector3 mousePosition = cameraController.Camera.ScreenToWorldPoint(Input.mousePosition);
 
-                    RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector3.right, 0.1f);
-
-                    if (!hit)
+                    RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.right, 0.1f);
+                    if (hits.Length == 0)
                         return;
-                    if (hit.collider.gameObject.TryGetComponent(out Tile tile))
+                    
+                    // Look for IInteractable or Tile or... and break if found
+                    foreach (var hit in hits)
                     {
-                        if (gridPosition == tile.GridPos)
-                            return;
-                            
-                        if(gridManager.GetManhattanDistance(gridPosition, tile.GridPos) <= movementRange)
-                            StartPath(tile.GridPos);
+                        if (hit.transform.TryGetComponent(out IInteractable interactable))
+                        {
+                            if (interactable.IsInteractable && gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
+                            {
+                                interactable.Interact();
+                                break;
+                            }
+                        }
+                        else if (hit.transform.TryGetComponent(out Tile tile))
+                        {
+                            if (gridPosition == tile.GridPos)
+                                continue;
+
+                            if (gridManager.GetManhattanDistance(gridPosition, tile.GridPos) <= movementRange)
+                            {
+                                StartPath(tile.GridPos);
+                                break;
+                            }
+                        }
                     }
                 }
         }
