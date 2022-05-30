@@ -19,8 +19,8 @@ namespace Enemies.States
             pathPointsVerified = new bool[enemy.CurrentRoom.pathPoints.Length];
             
             // Choose target with random index
-            ChooseTargetOfIndex(enemy.CurrentRoom, 
-                UnityEngine.Random.Range(0, enemy.CurrentRoom.pathPoints.Length));
+            ChooseTargetOfIndex(RoomsManager.Instance.GetRandomRoom(), 
+            UnityEngine.Random.Range(0, enemy.CurrentRoom.pathPoints.Length));
         }
 
         public override IEnumerator OnStateEnter()

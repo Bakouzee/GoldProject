@@ -94,7 +94,7 @@ namespace GoldProject
                 PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
             }
             
-            GameManager.Instance.MoveAllEnemies();
+            GameManager.Instance.LaunchTurn();
         }
 
         private void OnStoppedMoving()

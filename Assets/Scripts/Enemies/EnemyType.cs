@@ -6,4 +6,10 @@
         Knight,
         Priest
     }
+
+    public enum EnemyChiefType
+    {
+        Mayor,
+        BlackKnight
+    }
 }

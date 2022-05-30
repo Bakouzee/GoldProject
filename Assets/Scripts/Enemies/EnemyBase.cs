@@ -6,6 +6,7 @@ using Mono.Cecil;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Enemies
 {
@@ -28,7 +29,7 @@ namespace Enemies
         protected override void Start()
         {   
             base.Start();
-            
+
             DefineStates();
             SetState(explorationState);
         }

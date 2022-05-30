@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GoldProject.Editor
 {
-    [CustomPropertyDrawer(typeof(TypeAndPrefab))]
+    [CustomPropertyDrawer(typeof(TypeAndPrefab<>))]
     public class TypeAndPrefabPropertyDrawer : UnityEditor.PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property,
