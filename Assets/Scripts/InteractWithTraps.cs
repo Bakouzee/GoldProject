@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using GoldProject.FrighteningEvent;
 
-public class InteractWithTraps : MonoBehaviour //, IPointerClickHandler, IPointerDownHandler, IPointerMoveHandler
+public class InteractWithTraps : FrighteningEventBase //, IPointerClickHandler, IPointerDownHandler, IPointerMoveHandler
 {
     public Camera playerCamera;
 
@@ -27,13 +28,25 @@ public class InteractWithTraps : MonoBehaviour //, IPointerClickHandler, IPointe
             if (hit.collider.CompareTag("Trap"))
             {
                 Debug.Log("TOUCHED");
-                // Activate Trap touched
+                StartCoroutine(DoActionCoroutine());
             }
             else
             {
                 Debug.Log("NOPE");
             }
         }
+    }
+
+    protected override IEnumerator DoActionCoroutine()
+    {
+        
+        yield return null;
+        //throw new System.NotImplementedException();
+    }
+
+    protected override IEnumerator UndoActionCoroutine()
+    {
+        throw new System.NotImplementedException();
     }
 }
 
