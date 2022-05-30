@@ -2,6 +2,7 @@
 using Enemies;
 using GoldProject.FrighteningEvent;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace GoldProject.Rooms
 {
@@ -15,8 +16,8 @@ namespace GoldProject.Rooms
 
         public bool IsInside(Vector2 worldPosition)
         {
-            int halfLength = size.x;
-            int halfHeight = size.y;
+            float halfLength = size.x * 0.5f;
+            float halfHeight = size.y * 0.5f;
             return position.x - halfLength < worldPosition.x &&
                    worldPosition.x < position.x + halfLength && 
                    position.y - halfHeight < worldPosition.y &&
