@@ -21,6 +21,8 @@ namespace Enemies
         protected EnemyBaseState currentState;
         protected ExplorationStateBase explorationState;
 
+
+
         
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
@@ -32,6 +34,7 @@ namespace Enemies
 
             DefineStates();
             SetState(explorationState);
+
         }
         
         /// <summary>
@@ -41,6 +44,8 @@ namespace Enemies
         protected virtual void DefineStates()
         {
             explorationState = new ExplorationStateBase(this);
+
+            
         }
         
         protected virtual void Update() => currentState?.OnStateUpdate();
