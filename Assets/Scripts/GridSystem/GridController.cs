@@ -36,6 +36,12 @@ namespace GridSystem
             
             gridPosition = newGridPos;
             transform.position = (Vector2)gridManager.GetTileAtPosition(gridPosition).transform.position;
+
+            Vector2Int position = new Vector2Int((int)transform.position.x, (int)transform.position.y);
+
+            if (position == GameManager.Instance.levelEnd)
+                Destroy(transform.gameObject);
+
             return true;
         }
 

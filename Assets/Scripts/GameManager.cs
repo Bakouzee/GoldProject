@@ -24,6 +24,8 @@ public class GameManager : SingletonBase<GameManager>
     private int currentDay;
     private System.Action<int> OnDayChanged;
 
+    public Vector2Int levelEnd;
+
     private int CurrentDay
     {
         get => currentDay;
@@ -79,6 +81,8 @@ public class GameManager : SingletonBase<GameManager>
 
         // Init days
         CurrentDay = 1;
+
+        levelEnd = new Vector2Int((int)transform.GetChild(1).position.x, (int)transform.GetChild(1).position.y);
     }
 
     private void Update()
