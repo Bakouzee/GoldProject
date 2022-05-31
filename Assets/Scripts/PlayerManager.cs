@@ -28,20 +28,11 @@ public class PlayerManager : SingletonBase<PlayerManager>
         if(miniMap) miniMap.SetActive(false);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            mapSeen = !mapSeen;
-            ShowMap(mapSeen);
-        }
-    }
-
-    private void ShowMap(bool canSeeMap)
+    public void ShowMap()
     {
         if (miniMap != null)
         {
-            if (canSeeMap)
+            if (!mapSeen)
             {
                 miniMap.SetActive(true);
                 mainCam.SetActive(false);
@@ -51,5 +42,6 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 miniMap.SetActive(false);
             }
         }
+        mapSeen = !mapSeen;
     }
 }

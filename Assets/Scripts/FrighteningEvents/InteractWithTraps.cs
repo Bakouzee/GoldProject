@@ -4,9 +4,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using GoldProject.FrighteningEvent;
 
+
+// Trap Manager -> once we activate a trap, we go directly into the correct script like "NoiseEvent" to manage one by one every trap
 public class InteractWithTraps : FrighteningEventBase //, IPointerClickHandler, IPointerDownHandler, IPointerMoveHandler
 {
     public Camera playerCamera;
+    public LayerMask trapMask;
+    private static GameObject trapActivated;
 
     void Update()
     {
@@ -22,13 +26,14 @@ public class InteractWithTraps : FrighteningEventBase //, IPointerClickHandler, 
             Debug.Log(rayHit.transform.name);*/
         Vector3 mousePos = playerCamera.ScreenToWorldPoint(Input.mousePosition);
 
-        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.back, 500);
+        RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector3.back, 500, trapMask);
         if (hit)
         {
-            if (hit.collider.CompareTag("Trap"))
+            if (hit.collider != null)
             {
                 Debug.Log("TOUCHED");
-                StartCoroutine(DoActionCoroutine());
+                trapActivated = hit.collider.gameObject;
+                Do();
             }
             else
             {
@@ -39,14 +44,35 @@ public class InteractWithTraps : FrighteningEventBase //, IPointerClickHandler, 
 
     protected override IEnumerator DoActionCoroutine()
     {
-        
-        yield return null;
+        switch (trapActivated.tag)
+        {
+            case "SurprisingNoise":
+                TrapEventsManager.Instance.NoiseEvent();
+                break;
+            case "Knight":
+                TrapEventsManager.Instance.KnightEvent();
+                break;
+            case "Puppet":
+                TrapEventsManager.Instance.PuppetEvent();
+                break;
+            case "FakeMirror":
+                TrapEventsManager.Instance.MirrorEvent();
+                break;
+            case "WatchingPainting":
+                TrapEventsManager.Instance.PaintingEvent();
+                break;
+            default:
+                break;
+        }
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Done");
         //throw new System.NotImplementedException();
     }
 
     protected override IEnumerator UndoActionCoroutine()
     {
-        throw new System.NotImplementedException();
+        Debug.Log("Undoing");
+        yield return null;
     }
 }
 

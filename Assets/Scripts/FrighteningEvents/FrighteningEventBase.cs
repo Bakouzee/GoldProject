@@ -43,7 +43,7 @@ namespace GoldProject.FrighteningEvent
         }
         #endregion
 
-        public bool IsInteractable => isTriggered && !inProgress;
+        public bool IsInteractable => true; //isTriggered && !inProgress;
         public virtual void Interact()
         {
             if (!IsInteractable)
