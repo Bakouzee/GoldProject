@@ -97,6 +97,8 @@ public class GameManager : SingletonBase<GameManager>
         // EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
         StartSpawningWave();
         Debug.Log("Day");
+        
+        PlayerManager.Instance.Player.UnTransform();
     }
 
     public void StartNight()
@@ -105,6 +107,8 @@ public class GameManager : SingletonBase<GameManager>
         dayState = DayState.NIGHT;
         // EnemyManager.enemies.Clear(); // Reset all enemies in the list
         Debug.Log("Night");
+        
+        PlayerManager.Instance.Player.Transform();
     }
 
     private void StartPhaseBase()

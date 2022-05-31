@@ -70,6 +70,25 @@ namespace GoldProject
                 }
         }
 
+        private bool transformed;
+        public void Transform()
+        {
+            if (transformed)
+                return;
+            transformed = true;
+            
+            // TODO: Waiting for Frighten method in enemies
+            // Frighten enemies in the room
+            // foreach (var enemy in currentRoom.enemies)
+                // enemy.Frighten();
+        }
+        public void UnTransform()
+        {
+            if(!transformed)
+                return;
+            transformed = false;
+        }
+
         private void StartPath(Vector2Int aimedGridPos)
         {
             if (hasPath || moveCoroutine != null)
