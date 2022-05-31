@@ -1,17 +1,27 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace GoldProject.Rooms
 {
     public class Curtain : MonoBehaviour, IInteractable
     {
+        static List<Curtain> curtains = new List<Curtain>();
+        [SerializeField] private Animator animator;
+
         private bool opened;
         public bool IsOpened => opened;
         public System.Action onStateChanged;
 
-        public bool IsInteractable => opened;
+        private void Awake() => curtains.Add(this);
+        private void OnDestroy() => curtains.Remove(this);
+        private void Start() => animator.SetBool("day", true);
+
+
+        public bool IsInteractable => true;//opened;
         public void Interact()
         {
-            Close();
+            SetOpened(!opened);
         }
 
         public void SetOpened(bool newOpened)
@@ -25,7 +35,8 @@ namespace GoldProject.Rooms
                 return;
             opened = true;
             
-            //TODO: animations + lights
+            animator.SetTrigger("open");
+            //TODO: lights
             
             onStateChanged?.Invoke();
         }
@@ -35,9 +46,16 @@ namespace GoldProject.Rooms
                 return;
             opened = false;
             
-            //TODO: animations + lights
+            animator.SetTrigger("close");
+            //TODO: lights
             
             onStateChanged?.Invoke();
+        }
+
+        public static void SetDay(bool day)
+        {
+            foreach (var curtain in curtains)
+                curtain.animator.SetBool("day", day);
         }
     }
 }
