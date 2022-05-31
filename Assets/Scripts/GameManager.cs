@@ -88,7 +88,6 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     #region Start phases
-
     public void StartDay()
     {
         StartPhaseBase();

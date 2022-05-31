@@ -64,9 +64,18 @@ namespace GridSystem
 
         public Tile GetTileAtPosition(Vector3 worldPosition) =>
             GetTileAtPosition(GetGridPosition(worldPosition));
-
-        public Tile GetTileAtPosition(Vector2Int gridPos) => tiles[gridPos.x, gridPos.y];
-        public Tile GetTileAtPosition(int x, int y) => tiles[x, y];
+        public Tile GetTileAtPosition(Vector2Int gridPos) => GetTileAtPosition(gridPos.x, gridPos.y);
+        public Tile GetTileAtPosition(int x, int y)
+        {
+            try
+            {
+                return tiles[x, y];
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         #endregion
 
@@ -101,7 +110,6 @@ namespace GridSystem
         }
 
         #region Pathfinding
-
         public List<Direction> GetPath(Vector2Int startGridPos, Vector2Int aimedGridPos)
         {
             if (startGridPos == aimedGridPos)
@@ -283,7 +291,6 @@ namespace GridSystem
         #endregion
 
         #region Get Manhattan Distance
-
         public int GetManhattanDistance(Vector2Int a, Vector2Int b) =>
             Mathf.Abs(a.x - b.x) + Mathf.Abs(a.y - b.y);
 
@@ -292,6 +299,5 @@ namespace GridSystem
         public int GetManhattanDistance(Vector3 a, Vector3 b) => 
             GetManhattanDistance(GetGridPosition(a), GetGridPosition(b));
         #endregion
-
     }
 }

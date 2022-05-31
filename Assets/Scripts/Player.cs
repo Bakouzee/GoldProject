@@ -13,17 +13,35 @@ namespace GoldProject
     {
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
-
+        
+        [Header("Movements")]
         [SerializeField] private float moveCooldown;
-        private int movementRange = 3;
+        [SerializeField] private int defaultMoveRange = 1;
+        [SerializeField] private int transformedMoveRange = 3;
+        private int currentMoveRange;
+        private int CurrentMoveRange
+        {
+            get => currentMoveRange;
+            set
+            {
+                currentMoveRange = value;
+                Tile.ResetWalkableTiles();
+                gridManager.SetNeighborTilesWalkable(currentTile, currentMoveRange);
+            }
+        }
+        
         private bool hasPath;
         private List<Direction> path = new List<Direction>();
+        [Header("Others"), SerializeField] 
+        private int lightDamage;
 
         protected override void Start()
         {
             base.Start();
+
             cameraController = FindObjectOfType<CameraController>();
-            gridManager.SetNeighborTilesWalkable(currentTile, movementRange);
+            
+            CurrentMoveRange = defaultMoveRange;
         }
 
         private void Update()
@@ -37,21 +55,23 @@ namespace GoldProject
                     // Do nothing if clicking UI
                     if (GameManager.eventSystem.IsPointerOverGameObject())
                         return;
-                    
+
                     Vector3 mousePosition = cameraController.Camera.ScreenToWorldPoint(Input.mousePosition);
 
                     RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.right, 0.1f);
                     if (hits.Length == 0)
                         return;
-                    
+
                     // Look for IInteractable or Tile or... and break if found
                     foreach (var hit in hits)
                     {
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
-                            if (interactable.IsInteractable && gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
+                            if (interactable.IsInteractable &&
+                                gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
                             {
                                 interactable.Interact();
+                                GameManager.Instance.LaunchTurn();
                                 break;
                             }
                         }
@@ -60,9 +80,15 @@ namespace GoldProject
                             if (gridPosition == tile.GridPos)
                                 continue;
 
-                            if (gridManager.GetManhattanDistance(gridPosition, tile.GridPos) <= movementRange)
+                            if (gridManager.GetManhattanDistance(gridPosition, tile.GridPos) <= CurrentMoveRange)
                             {
-                                StartPath(tile.GridPos);
+                                // StartPath(tile.GridPos);
+                                
+                                Tile.ResetWalkableTiles();
+                                SetPosition(tile.GridPos);
+                                OnMoved();
+                                GameManager.Instance.LaunchTurn();
+                                gridManager.SetNeighborTilesWalkable(currentTile, CurrentMoveRange);
                                 break;
                             }
                         }
@@ -71,22 +97,28 @@ namespace GoldProject
         }
 
         private bool transformed;
+
         public void Transform()
         {
             if (transformed)
                 return;
             transformed = true;
-            
+
             // TODO: Waiting for Frighten method in enemies
             // Frighten enemies in the room
             // foreach (var enemy in currentRoom.enemies)
-                // enemy.Frighten();
+            // enemy.Frighten();
+
+            CurrentMoveRange = transformedMoveRange;
         }
+
         public void UnTransform()
         {
-            if(!transformed)
+            if (!transformed)
                 return;
             transformed = false;
+
+            CurrentMoveRange = defaultMoveRange;
         }
 
         private void StartPath(Vector2Int aimedGridPos)
@@ -105,7 +137,7 @@ namespace GoldProject
         IEnumerator MoveCoroutine()
         {
             Tile.ResetWalkableTiles();
-            
+
             foreach (Direction direction in path)
             {
                 Move(direction);
@@ -125,13 +157,18 @@ namespace GoldProject
                 Debug.Log("Garlic in range");
                 PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
             }
-            
-            GameManager.Instance.LaunchTurn();
+
+            if (currentRoom.IsLighten)
+            {
+                Debug.Log("Room is lighten");
+                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
+            }
+            // GameManager.Instance.LaunchTurn();
         }
 
         private void OnStoppedMoving()
         {
-            gridManager.SetNeighborTilesWalkable(currentTile, movementRange);
+            gridManager.SetNeighborTilesWalkable(currentTile, CurrentMoveRange);
         }
 
         protected override void OnEnterRoom(Room room)
@@ -140,10 +177,12 @@ namespace GoldProject
         }
 
         #region UI Methods
+
         public void MoveLeft() => TryMove(Vector2Int.left);
         public void MoveRight() => TryMove(Vector2Int.right);
         public void MoveUp() => TryMove(Vector2Int.up);
         public void MoveDown() => TryMove(Vector2Int.down);
+
         public void TryMove(Vector2Int vec)
         {
             if (hasPath)
@@ -153,6 +192,7 @@ namespace GoldProject
             Move(Direction.FromVector2Int(vec));
             OnStoppedMoving();
         }
+
         #endregion
     }
 }
