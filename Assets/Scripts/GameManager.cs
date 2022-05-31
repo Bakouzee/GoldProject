@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Enemies;
 using GoldProject;
+using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -88,7 +89,6 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     #region Start phases
-
     public void StartDay()
     {
         StartPhaseBase();
@@ -97,7 +97,8 @@ public class GameManager : SingletonBase<GameManager>
         // EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
         StartSpawningWave();
         Debug.Log("Day");
-        
+
+        Curtain.SetDay(true);
         PlayerManager.Instance.Player.UnTransform();
     }
 
@@ -108,6 +109,7 @@ public class GameManager : SingletonBase<GameManager>
         // EnemyManager.enemies.Clear(); // Reset all enemies in the list
         Debug.Log("Night");
         
+        Curtain.SetDay(false);
         PlayerManager.Instance.Player.Transform();
     }
 
