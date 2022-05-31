@@ -24,11 +24,12 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
-    void Resume()
+    public void Resume()
     {
         pauseMenuUI.SetActive(false);
         Time.timeScale = 1f;
         gameIsPaused = false;
+
 
     }
 
@@ -53,6 +54,6 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("Jean-Michel");
     }
 }
