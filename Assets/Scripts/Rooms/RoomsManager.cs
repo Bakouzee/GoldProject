@@ -8,7 +8,12 @@ namespace GoldProject.Rooms
     {
         public Vector2 mapSize;
         [SerializeField] private Room[] rooms;
+        #region Rooms getter/setter
+        public Room[] Rooms => rooms;
+        public Room GetRandomRoom() => GetRoom(UnityEngine.Random.Range(0, rooms.Length));
+        public Room GetRoom(int index) => rooms[index % rooms.Length];
         [HideInInspector] public Room FirstRoom;
+        #endregion
 
         protected override void Awake()
         {

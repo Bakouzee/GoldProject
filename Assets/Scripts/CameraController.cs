@@ -27,7 +27,7 @@ namespace GoldProject
             RoomsManager roomsManager = RoomsManager.Instance;
             Vector2 wantedPos;
             Vector2 size;
-            if (roomsManager.IsCorridor(room))
+            if (room.isCorridor)
             {
                 // Focus all map
                 size = roomsManager.mapSize;

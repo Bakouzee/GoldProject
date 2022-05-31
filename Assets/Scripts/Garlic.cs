@@ -6,9 +6,9 @@ public class Garlic : MonoBehaviour
     [Range(1,20)]
     public float range;
 
-    public float damage;
+    public int damage;
 
-    public float durationInDays;
+    public int durationInDays;
 
     private void OnDrawGizmos()
     {

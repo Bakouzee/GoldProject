@@ -10,7 +10,7 @@ public class HealPowerUp : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            PlayerHealth.Instance.HealPlayer(healAmount);
+            collision.GetComponent<PlayerHealth>().HealPlayer(healAmount);
             Destroy(gameObject);
         }
         
