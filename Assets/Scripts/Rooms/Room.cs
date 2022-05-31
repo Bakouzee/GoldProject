@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Enemies;
 using GoldProject.FrighteningEvent;
+using GridSystem;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
@@ -45,9 +46,14 @@ namespace GoldProject.Rooms
             {
                 if (curtain == null)
                     continue;
-
-                curtain.SetOpened(true);
+                curtain.SetOpened(false);
                 curtain.onStateChanged = UpdateLightState;
+            }
+            
+            // Initialize frightening events
+            foreach (var frighteningEventBase in frighteningEvents)
+            {
+                frighteningEventBase.CurrentRoom = this;
             }
 
             // Initialize colliders
@@ -82,6 +88,24 @@ namespace GoldProject.Rooms
             lighten = true;
         }
 
+        public EnemyBase GetClosestEnemy(Vector2 worldPosition)
+        {
+            GridManager gridManager = GridManager.Instance;
+            
+            int closestDistanceIndex = 0;
+            int closestDistance = gridManager.GetManhattanDistance(worldPosition, enemies[0].transform.position);
+            for (int i = 1; i < enemies.Count; i++)
+            {
+                int distance = gridManager.GetManhattanDistance(worldPosition, enemies[i].transform.position);
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestDistanceIndex = i;
+                }
+            }
+            return enemies[closestDistanceIndex];
+        }
+        
         public bool IsRoomCollider(Collider2D collider)
         {
             if (!collider.isTrigger || (roomColliders == null || roomColliders.Length == 0))
@@ -108,6 +132,19 @@ namespace GoldProject.Rooms
             }
 
             damagingGarlic = null;
+            return false;
+        }
+
+        public bool IsInLight(Vector2 worldPosition)
+        {
+            if (lighten)
+                return true;
+
+            foreach (var curtain in curtains)
+            {
+                
+            }
+
             return false;
         }
     }
