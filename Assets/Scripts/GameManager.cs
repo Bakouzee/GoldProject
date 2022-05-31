@@ -24,7 +24,6 @@ public class GameManager : SingletonBase<GameManager>
     private int actionCount;
     private int currentDay;
     private System.Action<int> OnDayChanged;
-
     private int CurrentDay
     {
         get => currentDay;

@@ -53,6 +53,8 @@ namespace GoldProject.Rooms
             // Initialize frightening events
             foreach (var frighteningEventBase in frighteningEvents)
             {
+                if (frighteningEventBase == null)
+                    continue;
                 frighteningEventBase.CurrentRoom = this;
             }
 
@@ -88,6 +90,11 @@ namespace GoldProject.Rooms
             lighten = true;
         }
 
+        /// <summary>
+        /// Give the closest enemy from a given position in this room
+        /// </summary>
+        /// <param name="worldPosition"></param>
+        /// <returns></returns>
         public EnemyBase GetClosestEnemy(Vector2 worldPosition)
         {
             GridManager gridManager = GridManager.Instance;
@@ -106,6 +113,11 @@ namespace GoldProject.Rooms
             return enemies[closestDistanceIndex];
         }
         
+        /// <summary>
+        /// Tell if a collider is the collider of the room
+        /// </summary>
+        /// <param name="collider"></param>
+        /// <returns></returns>
         public bool IsRoomCollider(Collider2D collider)
         {
             if (!collider.isTrigger || (roomColliders == null || roomColliders.Length == 0))
@@ -120,6 +132,12 @@ namespace GoldProject.Rooms
             return false;
         }
 
+        /// <summary>
+        /// Tell if a given position is inside the range of any garlic in the room
+        /// </summary>
+        /// <param name="worldPosition"></param>
+        /// <param name="damagingGarlic"></param>
+        /// <returns></returns>
         public bool IsInGarlicRange(Vector2 worldPosition, out Garlic damagingGarlic)
         {
             foreach (Garlic garlic in garlics)
@@ -135,14 +153,26 @@ namespace GoldProject.Rooms
             return false;
         }
 
+        /// <summary>
+        /// Tell if a given position is inside the light of any window of the room
+        /// </summary>
+        /// <param name="worldPosition"></param>
+        /// <returns></returns>
         public bool IsInLight(Vector2 worldPosition)
         {
+            if (GameManager.dayState != GameManager.DayState.DAY)
+                return false;
+            
             if (lighten)
                 return true;
-
+            
             foreach (var curtain in curtains)
             {
+                if (!curtain.IsOpened)
+                    continue;
                 
+                if (curtain.IsInsideLight(worldPosition))
+                    return true;
             }
 
             return false;

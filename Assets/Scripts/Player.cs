@@ -158,11 +158,12 @@ namespace GoldProject
                 PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
             }
 
-            if (currentRoom.IsLighten)
+            if (currentRoom.IsInLight(transform.position))
             {
-                Debug.Log("Room is lighten");
+                Debug.Log("Take damage from light");
                 PlayerManager.PlayerHealth.TakeDamage(lightDamage);
             }
+            
             // GameManager.Instance.LaunchTurn();
         }
 

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using GoldProject.Rooms;
 using UnityEngine;
 
 namespace GoldProject.FrighteningEvent
@@ -75,5 +76,7 @@ namespace GoldProject.FrighteningEvent
             
             // To override
         }
+
+        public Room CurrentRoom;
     }
 }
