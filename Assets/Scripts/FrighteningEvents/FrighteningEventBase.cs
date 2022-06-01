@@ -18,6 +18,10 @@ namespace GoldProject.FrighteningEvent
     /// </summary>
     public abstract class FrighteningEventBase : MonoBehaviour, IInteractable
     {
+        protected Rooms.Room currentRoom;
+
+        public Rooms.Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
+
         private bool isTriggered = false;
         public bool IsTriggered => isTriggered;
         private bool inProgress = false;
