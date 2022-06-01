@@ -51,6 +51,7 @@ namespace GoldProject.Rooms
             {
                 if (curtain == null)
                     continue;
+                
                 curtain.SetOpened(false);
                 curtain.onStateChanged = UpdateLightState;
             }
@@ -88,6 +89,9 @@ namespace GoldProject.Rooms
 
             foreach (var curtain in curtains)
             {
+                if (curtain == null)
+                    continue;
+                
                 if (!curtain.IsOpened)
                 {
                     lighten = false;
@@ -105,6 +109,9 @@ namespace GoldProject.Rooms
         /// <returns></returns>
         public EnemyBase GetClosestEnemy(Vector2 worldPosition)
         {
+            if (enemies.Count == 0)
+                return null;
+            
             GridManager gridManager = GridManager.Instance;
 
             int closestDistanceIndex = 0;
@@ -151,6 +158,9 @@ namespace GoldProject.Rooms
         {
             foreach (Garlic garlic in garlics)
             {
+                if (garlic == null)
+                    continue;
+                
                 if (garlic.IsInRange(worldPosition))
                 {
                     damagingGarlic = garlic;
@@ -177,6 +187,9 @@ namespace GoldProject.Rooms
 
             foreach (var curtain in curtains)
             {
+                if (curtain == null)
+                    continue;
+                
                 if (!curtain.IsOpened)
                     continue;
 
