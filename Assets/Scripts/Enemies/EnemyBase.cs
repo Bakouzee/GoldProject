@@ -34,7 +34,9 @@ namespace Enemies
         [Range(0,10)]
         public int sightRange;
 
-        private Color stateColor;
+        public Color stateColor;
+
+        public bool isAlerted;
         
         
         // Add and remove self automatically from the static enemies list
@@ -77,7 +79,7 @@ namespace Enemies
 
         public void DoAction() {
 
-            currentState?.DoAction();
+            
 
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
             Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
@@ -85,18 +87,35 @@ namespace Enemies
 
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
-            if (angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange)  {
-                SetState(new ChaseState(this, PlayerManager.Instance.Player));
-                stateColor = Color.red;
-                stateColor.a = 0.1f;
+
+            bool isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
+
+        /*    Debug.Log("=========================");
+            Debug.Log("name " + name);
+            Debug.Log("isAlerted " + isAlerted);
+            Debug.Log("isInSight " + isInSight);
+            */
+
+            if (isInSight || isAlerted) {              
+                if(!(currentState is ChaseState)) {
+                    SetState(new ChaseState(this, PlayerManager.Instance.Player));
+                    stateColor = Color.red;
+                    stateColor.a = 0.1f;
+                }
+
+                
             }
             else {
                 if(currentState is ChaseState) {
+                    
                     SetState(explorationState);
                     stateColor = Color.yellow;
                     stateColor.a = 0.1f;
+
                 }
             }
+
+            currentState?.DoAction();
         }
         
         public void Afraid()

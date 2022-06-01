@@ -102,7 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   afraidToLeave: 0
   sightAngle: 90
-  sightRange: 3
+  sightRange: 5
+  stateColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!58 &2110391225984441415
 CircleCollider2D:
   m_ObjectHideFlags: 0
