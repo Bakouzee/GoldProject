@@ -46,23 +46,6 @@ namespace GoldProject
             CurrentMoveRange = defaultMoveRange;
         }
 
-        private void OnMoved(Vector2Int obj)
-        {
-            if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
-            {
-                Debug.Log("Garlic in range");
-                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
-            }
-
-            if (currentRoom.IsInLight(transform.position))
-            {
-                Debug.Log("Take damage from light");
-                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
-            }
-            
-            // GameManager.Instance.LaunchTurn();
-        }
-
         private void Update()
         {
             if (hasPath)
@@ -168,6 +151,23 @@ namespace GoldProject
             moveCoroutine = null;
         }
         
+        private void OnMoved(Vector2Int newGridPos)
+        {
+            if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
+            {
+                Debug.Log("Garlic in range");
+                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
+            }
+
+            if (currentRoom.IsInLight(transform.position))
+            {
+                Debug.Log("Take damage from light");
+                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
+            }
+            
+            // GameManager.Instance.LaunchTurn();
+        }
+        
         private void OnStoppedMoving()
         {
             gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
@@ -179,7 +179,6 @@ namespace GoldProject
         }
 
         #region UI Methods
-
         public void MoveLeft() => TryMove(Vector2Int.left);
         public void MoveRight() => TryMove(Vector2Int.right);
         public void MoveUp() => TryMove(Vector2Int.up);

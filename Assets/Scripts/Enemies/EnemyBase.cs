@@ -31,9 +31,6 @@ namespace Enemies
         {   
             base.Start();
 
-            if(gridController == null)
-                Debug.Log("jojhrkjrkhgjr");
-            
             DefineStates();
             SetState(explorationState);
         }

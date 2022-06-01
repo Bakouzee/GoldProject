@@ -34,7 +34,8 @@ public class GameManager : SingletonBase<GameManager>
         }
     }
 
-    [SerializeField] private Cooldown turnCooldown;
+    [SerializeField] private Vector2 dayNightTurnCooldown;
+    private Cooldown turnCooldown;
     public Camera minimapCam;
 
     [Header("Waves and enemy spawns")]
@@ -71,7 +72,7 @@ public class GameManager : SingletonBase<GameManager>
         eventSystem = FindObjectOfType<EventSystem>();
 
         // Set turn cooldown
-        turnCooldown.SetCooldown();
+        turnCooldown = new Cooldown(dayNightTurnCooldown.x);
 
         // Initialize dictionnaries <EnemyType, EnemyBase>
         enemiesDef.Init();
@@ -97,6 +98,9 @@ public class GameManager : SingletonBase<GameManager>
         StartSpawningWave();
         Debug.Log("Day");
 
+        // Set turn cooldown
+        turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
+        
         Curtain.SetDay(true);
         PlayerManager.Instance.Player.UnTransform();
     }
@@ -107,6 +111,9 @@ public class GameManager : SingletonBase<GameManager>
         dayState = DayState.NIGHT;
         // EnemyManager.enemies.Clear(); // Reset all enemies in the list
         Debug.Log("Night");
+        
+        // Set turn cooldown
+        turnCooldown.cooldownDuration = dayNightTurnCooldown.y;        
         
         Curtain.SetDay(false);
         PlayerManager.Instance.Player.Transform();

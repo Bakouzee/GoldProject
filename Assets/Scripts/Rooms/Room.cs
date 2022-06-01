@@ -2,6 +2,7 @@
 using Enemies;
 using GoldProject.FrighteningEvent;
 using GridSystem;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
@@ -21,7 +22,7 @@ namespace GoldProject.Rooms
             float halfLength = size.x * 0.5f;
             float halfHeight = size.y * 0.5f;
             return position.x - halfLength < worldPosition.x &&
-                   worldPosition.x < position.x + halfLength && 
+                   worldPosition.x < position.x + halfLength &&
                    position.y - halfHeight < worldPosition.y &&
                    worldPosition.y < position.y + halfHeight;
         }
@@ -29,15 +30,11 @@ namespace GoldProject.Rooms
         private bool lighten;
         public bool IsLighten => lighten;
 
-        [HideInInspector]
-        public Curtain[] curtains;
-        [HideInInspector]
-        public FrighteningEventBase[] frighteningEvents;
-        [HideInInspector] 
-        public List<Garlic> garlics;
-        
-        [HideInInspector] 
-        public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        [HideInInspector] public Curtain[] curtains;
+        [HideInInspector] public FrighteningEventBase[] frighteningEvents;
+        [HideInInspector] public List<Garlic> garlics;
+
+        [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         public Transform[] pathPoints;
 
         [FormerlySerializedAs("roomCollidersTransform"), Header("Colliders"),
@@ -48,8 +45,8 @@ namespace GoldProject.Rooms
 
         public void Initialize()
         {
-            // TODO: look for curtains, frightening events, garlics
             // Initialize curtains
+            curtains = roomTransform.GetComponentsInChildren<Curtain>();
             foreach (Curtain curtain in curtains)
             {
                 if (curtain == null)
@@ -57,22 +54,25 @@ namespace GoldProject.Rooms
                 curtain.SetOpened(false);
                 curtain.onStateChanged = UpdateLightState;
             }
-            
+
             // Initialize frightening events
+            FrighteningEventBase[] events = roomTransform.GetComponentsInChildren<FrighteningEventBase>();
             foreach (var frighteningEventBase in frighteningEvents)
             {
                 if (frighteningEventBase == null)
                     continue;
                 frighteningEventBase.CurrentRoom = this;
             }
-
+            
+            // Find garlics
+            garlics = new List<Garlic>(roomTransform.GetComponentsInChildren<Garlic>());
+            
             // Initialize colliders
             if (!roomTransform)
             {
                 Debug.LogWarning($"Room colliders tranform of room named '{name}' is not given");
                 return;
             }
-
             roomColliders = roomTransform.GetComponentsInChildren<Collider2D>();
             foreach (Collider2D roomCollider in roomColliders)
                 roomCollider.isTrigger = true;
@@ -106,7 +106,7 @@ namespace GoldProject.Rooms
         public EnemyBase GetClosestEnemy(Vector2 worldPosition)
         {
             GridManager gridManager = GridManager.Instance;
-            
+
             int closestDistanceIndex = 0;
             int closestDistance = gridManager.GetManhattanDistance(worldPosition, enemies[0].transform.position);
             for (int i = 1; i < enemies.Count; i++)
@@ -118,9 +118,10 @@ namespace GoldProject.Rooms
                     closestDistanceIndex = i;
                 }
             }
+
             return enemies[closestDistanceIndex];
         }
-        
+
         /// <summary>
         /// Tell if a collider is the collider of the room
         /// </summary>
@@ -170,15 +171,15 @@ namespace GoldProject.Rooms
         {
             if (GameManager.dayState != GameManager.DayState.DAY)
                 return false;
-            
+
             if (lighten)
                 return true;
-            
+
             foreach (var curtain in curtains)
             {
                 if (!curtain.IsOpened)
                     continue;
-                
+
                 if (curtain.IsInsideLight(worldPosition))
                     return true;
             }
