@@ -4,6 +4,7 @@ using GoldProject.FrighteningEvent;
 using GridSystem;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 
 namespace GoldProject.Rooms
 {
@@ -28,19 +29,26 @@ namespace GoldProject.Rooms
         private bool lighten;
         public bool IsLighten => lighten;
 
-        [Header("Objects")] public Curtain[] curtains;
-        [SerializeReference] public FrighteningEventBase[] frighteningEvents;
-        [Attributes.ReadOnly] public List<Garlic> garlics;
-        [Attributes.ReadOnly] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        [HideInInspector]
+        public Curtain[] curtains;
+        [HideInInspector]
+        public FrighteningEventBase[] frighteningEvents;
+        [HideInInspector] 
+        public List<Garlic> garlics;
+        
+        [HideInInspector] 
+        public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         public Transform[] pathPoints;
 
-        [Header("Colliders")] [Tooltip("GameObject contaning all the colliders of the room")]
-        public Transform roomCollidersTransform;
+        [FormerlySerializedAs("roomCollidersTransform"), Header("Colliders"),
+         Tooltip("GameObject contaning all the colliders of the room")]
+        public Transform roomTransform;
 
         private Collider2D[] roomColliders;
 
         public void Initialize()
         {
+            // TODO: look for curtains, frightening events, garlics
             // Initialize curtains
             foreach (Curtain curtain in curtains)
             {
@@ -59,13 +67,13 @@ namespace GoldProject.Rooms
             }
 
             // Initialize colliders
-            if (!roomCollidersTransform)
+            if (!roomTransform)
             {
                 Debug.LogWarning($"Room colliders tranform of room named '{name}' is not given");
                 return;
             }
 
-            roomColliders = roomCollidersTransform.GetComponentsInChildren<Collider2D>();
+            roomColliders = roomTransform.GetComponentsInChildren<Collider2D>();
             foreach (Collider2D roomCollider in roomColliders)
                 roomCollider.isTrigger = true;
         }

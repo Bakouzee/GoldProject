@@ -858,17 +858,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1435f471065f39541a5f115ea8822c9a, type: 3}
---- !u!114 &674933468 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8170858042846163413, guid: 1435f471065f39541a5f115ea8822c9a, type: 3}
-  m_PrefabInstance: {fileID: 674933467}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75cc8681e07b4f83bd801e298ae0b537, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &710553643
 GameObject:
   m_ObjectHideFlags: 0
@@ -6944,6 +6933,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 74132703024466840, guid: 1da826d58796dd94a8ed260bc4569891, type: 3}
+      propertyPath: rooms.Array.data[2].curtains.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 74132703024466840, guid: 1da826d58796dd94a8ed260bc4569891, type: 3}
       propertyPath: rooms.Array.data[1].garlics.Array.data[0]
       value: 
       objectReference: {fileID: 662543792}
@@ -6958,7 +6951,7 @@ PrefabInstance:
     - target: {fileID: 74132703024466840, guid: 1da826d58796dd94a8ed260bc4569891, type: 3}
       propertyPath: rooms.Array.data[2].curtains.Array.data[2]
       value: 
-      objectReference: {fileID: 674933468}
+      objectReference: {fileID: 1408260702}
     - target: {fileID: 74132703024466843, guid: 1da826d58796dd94a8ed260bc4569891, type: 3}
       propertyPath: m_RootOrder
       value: 2

@@ -2,6 +2,7 @@
 using Enemies.States;
 using GoldProject;
 using GoldProject.Rooms;
+using GridSystem;
 using Mono.Cecil;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -20,8 +21,8 @@ namespace Enemies
         // States
         protected EnemyBaseState currentState;
         protected ExplorationStateBase explorationState;
+        public GridController GridController => gridController;
 
-        
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy() => EnemyManager.enemies.Remove(this);
@@ -30,6 +31,9 @@ namespace Enemies
         {   
             base.Start();
 
+            if(gridController == null)
+                Debug.Log("jojhrkjrkhgjr");
+            
             DefineStates();
             SetState(explorationState);
         }

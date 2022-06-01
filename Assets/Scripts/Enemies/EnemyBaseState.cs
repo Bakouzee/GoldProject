@@ -14,7 +14,8 @@ namespace Enemies
         protected EnemyBase enemy;
         protected GameObject gameObject => enemy.gameObject;
         protected Transform transform => enemy.transform;
-        protected Vector2Int gridPos => enemy.GridPosition;
+        protected GridController gridController => enemy.GridController;
+        protected Vector2Int gridPos => gridController.gridPosition;
 
         // For movements
         protected Queue<Direction> directions;
@@ -22,7 +23,7 @@ namespace Enemies
         {
             // Debug.Log($"{enemy.GridPosition} // {targetGridPos}");
             directions = new Queue<Direction>(GridManager.Instance
-                .TempGetPath(enemy.GridPosition, targetGridPos));
+                .TempGetPath(gridPos, targetGridPos));
         }
 
         public EnemyBaseState(EnemyBase enemy)

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using GoldProject.Rooms;
 using GridSystem;
@@ -26,7 +27,7 @@ namespace GoldProject
             {
                 currentMoveRange = value;
                 Tile.ResetWalkableTiles();
-                gridManager.SetNeighborTilesWalkable(currentTile, currentMoveRange);
+                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, currentMoveRange);
             }
         }
         
@@ -38,10 +39,28 @@ namespace GoldProject
         protected override void Start()
         {
             base.Start();
+            gridController.OnMoved += OnMoved;
 
             cameraController = FindObjectOfType<CameraController>();
             
             CurrentMoveRange = defaultMoveRange;
+        }
+
+        private void OnMoved(Vector2Int obj)
+        {
+            if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
+            {
+                Debug.Log("Garlic in range");
+                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
+            }
+
+            if (currentRoom.IsInLight(transform.position))
+            {
+                Debug.Log("Take damage from light");
+                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
+            }
+            
+            // GameManager.Instance.LaunchTurn();
         }
 
         private void Update()
@@ -68,7 +87,7 @@ namespace GoldProject
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
                             if (interactable.IsInteractable &&
-                                gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
+                                gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
                             {
                                 interactable.Interact();
                                 GameManager.Instance.LaunchTurn();
@@ -77,18 +96,18 @@ namespace GoldProject
                         }
                         else if (hit.transform.TryGetComponent(out Tile tile))
                         {
-                            if (gridPosition == tile.GridPos)
+                            if (gridController.gridPosition == tile.GridPos)
                                 continue;
 
-                            if (gridManager.GetManhattanDistance(gridPosition, tile.GridPos) <= CurrentMoveRange)
+                            if (gridController.gridManager.GetManhattanDistance(gridController.gridPosition, tile.GridPos) <= CurrentMoveRange)
                             {
                                 // StartPath(tile.GridPos);
                                 
                                 Tile.ResetWalkableTiles();
-                                SetPosition(tile.GridPos);
-                                OnMoved();
+                                gridController.SetPosition(tile.GridPos);
+                                gridController.OnMoved?.Invoke(gridController.gridPosition);
                                 GameManager.Instance.LaunchTurn();
-                                gridManager.SetNeighborTilesWalkable(currentTile, CurrentMoveRange);
+                                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
                                 break;
                             }
                         }
@@ -125,7 +144,7 @@ namespace GoldProject
         {
             if (hasPath || moveCoroutine != null)
                 return;
-            path = gridManager.TempGetPath(gridPosition, aimedGridPos);
+            path = gridController.gridManager.TempGetPath(gridController.gridPosition, aimedGridPos);
             hasPath = true;
 
             moveCoroutine = MoveCoroutine();
@@ -140,7 +159,7 @@ namespace GoldProject
 
             foreach (Direction direction in path)
             {
-                Move(direction);
+                gridController.Move(direction);
                 yield return new WaitForSeconds(moveCooldown);
             }
 
@@ -148,28 +167,10 @@ namespace GoldProject
             hasPath = false;
             moveCoroutine = null;
         }
-
-
-        protected override void OnMoved()
-        {
-            if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
-            {
-                Debug.Log("Garlic in range");
-                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
-            }
-
-            if (currentRoom.IsInLight(transform.position))
-            {
-                Debug.Log("Take damage from light");
-                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
-            }
-            
-            // GameManager.Instance.LaunchTurn();
-        }
-
+        
         private void OnStoppedMoving()
         {
-            gridManager.SetNeighborTilesWalkable(currentTile, CurrentMoveRange);
+            gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
         }
 
         protected override void OnEnterRoom(Room room)
@@ -190,7 +191,7 @@ namespace GoldProject
                 return;
 
             Tile.ResetWalkableTiles();
-            Move(Direction.FromVector2Int(vec));
+            gridController.Move(Direction.FromVector2Int(vec));
             OnStoppedMoving();
         }
 

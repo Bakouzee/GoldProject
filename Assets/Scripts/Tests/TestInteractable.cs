@@ -3,8 +3,11 @@ using UnityEngine;
 
 namespace GoldProject.Tests
 {
-    public class TestInteractable : GridController, IInteractable
+    public class TestInteractable : MonoBehaviour, IInteractable
     {
+        private GridController gridController;
+        private void Start() => gridController = new GridController(transform);
+
         public bool IsInteractable => true;
         public void Interact()
         {

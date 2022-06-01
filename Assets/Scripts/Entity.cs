@@ -6,14 +6,15 @@ using UnityEngine;
 
 namespace GoldProject
 {
-    public class Entity : GridController, ILocalizable
+    public class Entity : MonoBehaviour, ILocalizable
     {
+        protected GridController gridController;
         protected Room currentRoom;
         public Room CurrentRoom => currentRoom;
 
-        protected override void Start()
+        protected virtual void Start()
         {
-            base.Start();
+            gridController = new GridController(transform);
             
             // Find current room
             foreach (var room in RoomsManager.Instance.Rooms)
