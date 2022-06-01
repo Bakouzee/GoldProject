@@ -8,7 +8,7 @@ namespace GoldProject
 {
     public class Entity : MonoBehaviour, ILocalizable
     {
-        protected GridController gridController;
+        public GridController gridController;
         protected Room currentRoom;
         public Room CurrentRoom => currentRoom;
 
