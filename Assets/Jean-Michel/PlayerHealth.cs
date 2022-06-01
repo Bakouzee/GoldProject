@@ -60,29 +60,32 @@ public class PlayerHealth : MonoBehaviour
         // Time.timeScale = 0;
     }
 
-    
+    public void TakeFireDamage(int damage)
+    {
+        if (!IsInvincible)
+        {
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth);
+            IsInvincible = true;
+            StartCoroutine(BurningFlash());
+            StartCoroutine(InvincibillityDelay());
 
-    //public void TakeWindowDamage(int damage)
-    //{
-    //    if (IsInWindowZone)
-    //    {
-    //        currentHealth -= damage;
-    //        healthBar.SetHealth(currentHealth);            
-    //        StartCoroutine(BurningFlash());
-            
+        }
+    }
+    public void TakeStinkDamage(int damage)
+    {
+        if (!IsInvincible)
+        {
+            currentHealth -= damage;
+            healthBar.SetHealth(currentHealth);
+            IsInvincible = true;
+            StartCoroutine(StinkFlash());
+            StartCoroutine(InvincibillityDelay());
 
-    //    }
-    //}
-    //public void TakeOnionsDamage(int damage)
-    //{
-    //    if (IsInOnionZone)
-    //    {
-    //        currentHealth -= damage;
-    //        healthBar.SetHealth(currentHealth);
-    //        StartCoroutine(BurningFlash());
+        }
+    }
 
-    //    }
-    //}
+
     public void TakeDamage(int damage)
     {
         if (!IsInvincible)
@@ -109,7 +112,7 @@ public class PlayerHealth : MonoBehaviour
     }
     public IEnumerator BurningFlash()
     {
-        while (IsInWindowZone)
+        while (IsInvincible == true)
         {
             sprite.color = new Color(1f, 0f, 0f, 1f);
             yield return new WaitForSeconds(invincibilityFlash);
@@ -121,7 +124,7 @@ public class PlayerHealth : MonoBehaviour
 
     public IEnumerator StinkFlash()
     {
-        while (IsInOnionZone)
+        while (IsInvincible == true)
         {
             sprite.color = new Color(0.3332994f, 0.76f, 0f, 1f);
             yield return new WaitForSeconds(invincibilityFlash);
