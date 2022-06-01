@@ -76,7 +76,8 @@ public class GameManager : SingletonBase<GameManager>
         enemiesChiefDef.Init();
 
         // Init days
-        CurrentDay = 1;
+        currentDay = 0;
+        StartDay();
     }
 
     private void Update()

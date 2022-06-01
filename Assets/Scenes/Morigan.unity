@@ -6678,6 +6678,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: waves.Array.data[1].chief.spawnOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: waves.Array.data[2].chief.spawnOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: waves.Array.data[0].enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: waves.Array.data[2].enemies.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: waves.Array.data[0].enemies.Array.data[0].count
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: waves.Array.data[2].enemies.Array.data[0].count
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 6814087095047755687, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
       propertyPath: m_Name
       value: GameManager
