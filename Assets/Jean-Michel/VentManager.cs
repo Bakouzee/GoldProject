@@ -10,9 +10,7 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public GameObject ventTwo;
 
-    public GameObject red1;
 
-    public GameObject red2;
   
 
     public bool waitForVent = false;
@@ -47,20 +45,24 @@ public class VentManager : MonoBehaviour, IInteractable
     }    
 
     public IEnumerator VentDelay()
-    {        
-        
-        ventTwo.SetActive(false);
-        red1.SetActive(true);
-        red2.SetActive(true);
+    {
+
+        ventOne.GetComponent<BoxCollider2D>().enabled = false;
+        ventOne.GetComponent<SpriteRenderer>().color = Color.red;
+        ventTwo.GetComponent<BoxCollider2D>().enabled = false;
+        ventTwo.GetComponent<SpriteRenderer>().color = Color.red;
         
         yield return new WaitForSeconds(5f);
         waitForVent = false;
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
-        ventTwo.SetActive(true);
-        red1.SetActive(false);
-        red2.SetActive(false);
 
-        
+        ventOne.GetComponent<BoxCollider2D>().enabled = true;
+        ventOne.GetComponent<SpriteRenderer>().color = Color.white;
+        ventTwo.GetComponent<BoxCollider2D>().enabled = true;
+        ventTwo.GetComponent<SpriteRenderer>().color = Color.white;
+
+
+
 
 
     }
