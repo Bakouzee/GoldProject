@@ -15,12 +15,13 @@ namespace Enemies.States
 
         public ExplorationStateBase(EnemyBase enemy) : base(enemy)
         {
+            var randomRoom = RoomsManager.Instance.GetRandomRoom();
+            
             // Initiliaze path points
-            pathPointsVerified = new bool[enemy.CurrentRoom.pathPoints.Length];
+            pathPointsVerified = new bool[randomRoom.pathPoints.Length];
             
             // Choose target with random index
-            ChooseTargetOfIndex(RoomsManager.Instance.GetRandomRoom(), 
-            UnityEngine.Random.Range(0, enemy.CurrentRoom.pathPoints.Length));
+            ChooseTargetOfIndex(randomRoom, UnityEngine.Random.Range(0, randomRoom.pathPoints.Length));
         }
 
         public override IEnumerator OnStateEnter()
@@ -78,7 +79,7 @@ namespace Enemies.States
             // Reset verified path points array
             pathPointsVerified = new bool[newRoom.pathPoints.Length];
             int index = UnityEngine.Random.Range(0, newRoom.pathPoints.Length);
-            
+
             // Set target and path
             ChooseTargetOfIndex(newRoom, index);            
         }
@@ -95,6 +96,7 @@ namespace Enemies.States
             pathPointsVerified[index] = true;
 
             // Set target and path
+            // Debug.Log($"{enemy.name}: {room.pathPoints.Length} // {index}");
             targetGridPos = GridManager.Instance.GetGridPosition(room.pathPoints[index].position);
             DefinePath(targetGridPos);
         }

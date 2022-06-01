@@ -112,9 +112,11 @@ namespace GoldProject
                                     tile.GridPos);
                             if (manhattanDistance <= RemainingActions)
                             {
-                                gridController.SetPosition(tile.GridPos);
-                                RemainingActions -= manhattanDistance;
-                                break;
+                                if (gridController.SetPosition(tile.GridPos))
+                                {
+                                    RemainingActions -= manhattanDistance;
+                                    break;
+                                }
                             }
                         }
                     }
@@ -212,8 +214,9 @@ namespace GoldProject
             if (hasPath)
                 return;
 
-            gridController.Move(Direction.FromVector2Int(vec));
-            RemainingActions--;
+            if(gridController.Move(Direction.FromVector2Int(vec)))
+                // Only decrement remaining action if Move is a success
+                RemainingActions--;
         }
 
         #endregion
