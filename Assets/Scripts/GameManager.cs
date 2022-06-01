@@ -4,6 +4,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Enemies;
 using GoldProject;
+using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -36,7 +37,8 @@ public class GameManager : SingletonBase<GameManager>
         }
     }
 
-    [SerializeField] private Cooldown turnCooldown;
+    [SerializeField] private Vector2 dayNightTurnCooldown;
+    private Cooldown turnCooldown;
     public Camera minimapCam;
 
     [Header("Waves and enemy spawns")]
@@ -73,7 +75,7 @@ public class GameManager : SingletonBase<GameManager>
         eventSystem = FindObjectOfType<EventSystem>();
 
         // Set turn cooldown
-        turnCooldown.SetCooldown();
+        turnCooldown = new Cooldown(dayNightTurnCooldown.x);
 
         // Initialize dictionnaries <EnemyType, EnemyBase>
         enemiesDef.Init();
@@ -92,7 +94,6 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     #region Start phases
-
     public void StartDay()
     {
         StartPhaseBase();
@@ -101,6 +102,12 @@ public class GameManager : SingletonBase<GameManager>
         // EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
         StartSpawningWave();
         Debug.Log("Day");
+
+        // Set turn cooldown
+        turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
+        
+        Curtain.SetDay(true);
+        PlayerManager.Instance.Player.UnTransform();
     }
 
     public void StartNight()
@@ -109,6 +116,12 @@ public class GameManager : SingletonBase<GameManager>
         dayState = DayState.NIGHT;
         // EnemyManager.enemies.Clear(); // Reset all enemies in the list
         Debug.Log("Night");
+        
+        // Set turn cooldown
+        turnCooldown.cooldownDuration = dayNightTurnCooldown.y;        
+        
+        Curtain.SetDay(false);
+        PlayerManager.Instance.Player.Transform();
     }
 
     private void StartPhaseBase()

@@ -4,31 +4,23 @@ using UnityEngine;
 
 namespace GridSystem
 {
-    public abstract class GridController : MonoBehaviour
+    public class GridController
     {
-        protected GridManager gridManager;
-        protected Vector2Int gridPosition;
-        public Vector2Int GridPosition => gridPosition; 
-        protected Tile currentTile => gridManager.GetTileAtPosition(gridPosition);
+        protected Transform transform;
+        public GridManager gridManager;
+        public Vector2Int gridPosition;
+        public Tile currentTile => gridManager.GetTileAtPosition(gridPosition);
 
         public int speed;
 
-        protected virtual void Start()
+        public GridController(Transform transform)
         {
-            gridManager = GridManager.Instance;
+            this.transform = transform;
+            this.gridManager = GridManager.Instance;
             gridPosition = gridManager.GetGridPosition(transform.position);
             SetPosition(gridPosition);
         }
-
-        public bool SetVelocity(Vector2Int direction)
-        {
-            if (TryGetComponent(out Rigidbody2D rb))
-            {
-                rb.velocity = direction * speed;
-                return true;
-            }
-            return false;
-        }
+        
         public bool SetPosition(Vector2Int newGridPos)
         {
             if (!gridManager.HasTile(newGridPos))
@@ -45,6 +37,7 @@ namespace GridSystem
             return true;
         }
 
+
         public bool Move(Direction direction) => Move(direction.Value);
         public bool Move(string direction)
         {
@@ -57,7 +50,7 @@ namespace GridSystem
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
                 transform.eulerAngles = new Vector3(0, 0, angle);
                 
-                OnMoved();
+                OnMoved?.Invoke(gridPosition);
                 
                 // It is a success
                 return true;
@@ -67,9 +60,6 @@ namespace GridSystem
             return false;
         }
 
-        protected virtual void OnMoved()
-        {
-            
-        }
+        public System.Action<Vector2Int> OnMoved;
     }
 }

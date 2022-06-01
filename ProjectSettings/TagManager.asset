@@ -5,6 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Trap
+  - SurprisingNoise
+  - Knight
+  - Puppet
+  - FakeMirror
+  - WatchingPainting
   layers:
   - Default
   - TransparentFX
@@ -12,7 +17,7 @@ TagManager:
   - Minimap
   - Water
   - UI
-  - 
+  - Trap
   - 
   - 
   - 

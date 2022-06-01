@@ -2,6 +2,7 @@
 using Enemies.States;
 using GoldProject;
 using GoldProject.Rooms;
+using GridSystem;
 using Mono.Cecil;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -22,6 +23,7 @@ namespace Enemies
         // States
         protected EnemyBaseState currentState;
         protected ExplorationStateBase explorationState;
+        public GridController GridController => gridController;
 
         public int afraidCount;
         

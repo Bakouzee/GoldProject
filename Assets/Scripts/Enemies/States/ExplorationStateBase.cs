@@ -30,8 +30,8 @@ namespace Enemies.States
 
         public override void DoAction()
         {
- 
-            enemy.Move(directions.Dequeue());
+            // Debug.Log("Do action");
+            gridController.Move(directions.Dequeue());
             if(directions.Count == 0)
                 ChooseNextTarget();
         }

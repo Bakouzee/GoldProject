@@ -11,15 +11,44 @@ public class VentManager : MonoBehaviour
 
     public bool IsIn = false;
 
+    public bool waitForVent = false;
 
+    public bool FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+
+
+    private void Start()
+    {
+        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+    }
 
     private void Update()
     {
-        if(IsIn == true && Input.GetKeyDown(KeyCode.P))
+        if (FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé == true)
         {
-            player.transform.position = ventTwo.transform.position;
+            WorkingVent();
         }
+        
     }
+
+    private void WorkingVent()
+    {
+        if (IsIn == true && Input.GetKeyDown(KeyCode.P))
+        {
+            if (!waitForVent)
+            {
+                player.transform.position = ventTwo.transform.position;
+                waitForVent = true;
+                FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
+            }
+            if (waitForVent)
+            {
+                StartCoroutine(VentDelay());
+            }
+        }
+
+
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.transform.CompareTag("Player"))
@@ -34,5 +63,13 @@ public class VentManager : MonoBehaviour
         {
             IsIn = false;
         }
+    }
+
+    public IEnumerator VentDelay()
+    {        
+        yield return new WaitForSeconds(5f);
+        waitForVent = false;
+        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+
     }
 }
