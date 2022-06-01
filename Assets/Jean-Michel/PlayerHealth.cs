@@ -55,7 +55,8 @@ public class PlayerHealth : Health
             OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(BurningFlash());
-            StartCoroutine(InvincibillityDelay());
+            IsInvincible = false;
+            // StartCoroutine(InvincibillityDelay());
 
         }
     }
@@ -67,7 +68,8 @@ public class PlayerHealth : Health
             OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(StinkFlash());
-            StartCoroutine(InvincibillityDelay());
+            // StartCoroutine(InvincibillityDelay());
+            IsInvincible = false;
 
         }
     }
@@ -81,7 +83,8 @@ public class PlayerHealth : Health
             OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(InvincibillityFlash());
-            StartCoroutine(InvincibillityDelay());
+            IsInvincible = false;
+            // StartCoroutine(InvincibillityDelay());
 
         }
     }
