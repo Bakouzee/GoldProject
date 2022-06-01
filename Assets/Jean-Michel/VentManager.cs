@@ -10,7 +10,10 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public GameObject ventTwo;
 
-    public bool IsIn = false;
+    public GameObject red1;
+
+    public GameObject red2;
+  
 
     public bool waitForVent = false;
 
@@ -36,36 +39,29 @@ public class VentManager : MonoBehaviour, IInteractable
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         }
         if (waitForVent)
-        {
+        {            
             StartCoroutine(VentDelay());
         }
-    }
-
-    
-
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.transform.CompareTag("Player"))
-        {
-            IsIn = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.transform.CompareTag("Player"))
-        {
-            IsIn = false;
-        }
-    }
+    }    
 
     public IEnumerator VentDelay()
     {        
+        
+        ventTwo.SetActive(false);
+        red1.SetActive(true);
+        red2.SetActive(true);
+        
         yield return new WaitForSeconds(5f);
         waitForVent = false;
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+        ventTwo.SetActive(true);
+        red1.SetActive(false);
+        red2.SetActive(false);
+
+        
+
 
     }
 
-    
+
 }
