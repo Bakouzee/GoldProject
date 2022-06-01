@@ -27,6 +27,8 @@ namespace GoldProject.Rooms
 
         public bool IsInteractable => true; //opened;
 
+        public bool NeedToBeInRange => true;
+
         public void Interact()
         {
             SetOpened(!opened);

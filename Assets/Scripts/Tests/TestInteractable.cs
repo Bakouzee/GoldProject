@@ -9,6 +9,9 @@ namespace GoldProject.Tests
         private void Start() => gridController = new GridController(transform);
 
         public bool IsInteractable => true;
+
+        public bool NeedToBeInRange => true;
+
         public void Interact()
         {
             Debug.Log($"Interacted with {name}");

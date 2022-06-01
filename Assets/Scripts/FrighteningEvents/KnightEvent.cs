@@ -8,10 +8,16 @@ public class KnightEvent : FrighteningEventBase
 {
     public List<Direction> directionKnight = new List<Direction>();
 
-    private void OnMouseDown()
+    public override void Interact()
     {
+        /*if (transform.parent != null && transform.parent.GetComponent<KnightEvent>())
+        {
+            transform.parent.GetComponent<KnightEvent>().Do();
+        }*/
+        Debug.Log("coucou0");
         Do();
     }
+
 
     //from a script to tell the knight where to move
     protected override IEnumerator DoActionCoroutine()
@@ -19,7 +25,7 @@ public class KnightEvent : FrighteningEventBase
         //get the closest enemy pos so the knight will move to the enemy --> HAVE TO MAKE THE KNIGHT MOVE AT
         // THE SAME TIME OF THE ENEMIES
         Vector2Int enemyToScare = CurrentRoom.GetClosestEnemy(transform.position).GridController.gridPosition;
-        Vector2Int knightPos = GridManager.Instance.GetGridPosition(transform.parent.position);
+        Vector2Int knightPos = GridManager.Instance.GetGridPosition(transform.position);
 
         //Get the path to do
         directionKnight = GridManager.Instance.TempGetPath(knightPos, enemyToScare);

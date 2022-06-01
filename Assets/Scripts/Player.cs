@@ -78,11 +78,18 @@ namespace GoldProject
                     {
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
-                            if (interactable.IsInteractable &&
-                                gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
+                            if (interactable.NeedToBeInRange)
+                            {
+                                if (gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1 && interactable.IsInteractable)
+                                {
+                                    interactable.Interact();
+                                    GameManager.Instance.LaunchTurn();
+                                    break;
+                                }
+                            }
+                            else
                             {
                                 interactable.Interact();
-                                RemainingActions--;
                                 break;
                             }
                         }

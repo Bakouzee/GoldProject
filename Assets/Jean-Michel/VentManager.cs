@@ -18,6 +18,8 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public bool IsInteractable => true;
 
+    public bool NeedToBeInRange => true;
+
     private void Start()
     {
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;

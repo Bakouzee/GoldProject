@@ -34,7 +34,7 @@ namespace GoldProject.Rooms
         [HideInInspector] public FrighteningEventBase[] frighteningEvents;
         [HideInInspector] public List<Garlic> garlics;
 
-        [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        /*[HideInInspector]*/ public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         public Transform[] pathPoints;
 
         [FormerlySerializedAs("roomCollidersTransform"), Header("Colliders"),
@@ -57,7 +57,7 @@ namespace GoldProject.Rooms
             }
 
             // Initialize frightening events
-            FrighteningEventBase[] events = roomTransform.GetComponentsInChildren<FrighteningEventBase>();
+            frighteningEvents = roomTransform.GetComponentsInChildren<FrighteningEventBase>();
             foreach (var frighteningEventBase in frighteningEvents)
             {
                 if (frighteningEventBase == null)
