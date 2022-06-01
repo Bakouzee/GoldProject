@@ -5,7 +5,6 @@ using UnityEngine.EventSystems;
 using GoldProject.FrighteningEvent;
 
 
-// Trap Manager -> once we activate a trap, we go directly into the correct script like "NoiseEvent" to manage one by one every trap
 public class InteractWithTraps : FrighteningEventBase //, IPointerClickHandler, IPointerDownHandler, IPointerMoveHandler
 {
     public Camera playerCamera;

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1519083190786363589}
   - component: {fileID: 1519083190786363594}
   - component: {fileID: 28784895}
-  - component: {fileID: 1945314731476804106}
+  - component: {fileID: 188906877}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -163,7 +163,7 @@ MonoBehaviour:
   IsInvincible: 0
   healthBar: {fileID: 0}
   sprite: {fileID: 1519083190786363592}
---- !u!114 &1945314731476804106
+--- !u!114 &188906877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
