@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2110391225984441411}
   - component: {fileID: 2110391225984441415}
   - component: {fileID: 2110391225984441408}
+  - component: {fileID: 1260435834159056000}
   m_Layer: 0
   m_Name: EnemyBase
   m_TagString: Untagged
@@ -99,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd6259d5a7464ce3853a031901df5caa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
 --- !u!58 &2110391225984441415
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -137,3 +137,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &1260435834159056000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110391225984441420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02274b8b32d246fba0567e314484da17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthMax: 100
