@@ -130,33 +130,38 @@ namespace GoldProject
             RemainingActions = defaultActionsPerTurn;
         }
 
-        private void StartPath(Vector2Int aimedGridPos)
-        {
-            if (hasPath || moveCoroutine != null)
-                return;
-            path = gridController.gridManager.TempGetPath(gridController.gridPosition, aimedGridPos);
-            hasPath = true;
-
-            moveCoroutine = MoveCoroutine();
-            StartCoroutine(moveCoroutine);
-        }
-
-        private IEnumerator moveCoroutine;
-
-        IEnumerator MoveCoroutine()
-        {
-            Tile.ResetWalkableTiles();
-
-            foreach (Direction direction in path)
-            {
-                gridController.Move(direction);
-                yield return new WaitForSeconds(moveCooldown);
-            }
-
-            OnStoppedMoving();
-            hasPath = false;
-            moveCoroutine = null;
-        }
+        // private void StartPath(Vector2Int aimedGridPos)
+        // {
+        //     if (hasPath || moveCoroutine != null)
+        //         return;
+        //     path = gridController.gridManager.TempGetPath(gridController.gridPosition, aimedGridPos);
+        //     hasPath = true;
+        //
+        //     moveCoroutine = MoveCoroutine();
+        //     StartCoroutine(moveCoroutine);
+        // }
+        //
+        // private IEnumerator moveCoroutine;
+        //
+        // IEnumerator MoveCoroutine()
+        // {
+        //     Tile.ResetWalkableTiles();
+        //
+        //     foreach (Direction direction in path)
+        //     {
+        //         gridController.Move(direction);
+        //         yield return new WaitForSeconds(moveCooldown);
+        //     }
+        //
+        //     OnStoppedMoving();
+        //     hasPath = false;
+        //     moveCoroutine = null;
+        // }
+        // private void OnStoppedMoving()
+        // {
+        //     gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, RemainingActions);
+        // }
+        
         
         private void OnMoved(Vector2Int newGridPos)
         {
@@ -175,10 +180,6 @@ namespace GoldProject
             // GameManager.Instance.LaunchTurn();
         }
         
-        private void OnStoppedMoving()
-        {
-            gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, RemainingActions);
-        }
 
         protected override void OnEnterRoom(Room room)
         {
@@ -196,9 +197,8 @@ namespace GoldProject
             if (hasPath)
                 return;
 
-            Tile.ResetWalkableTiles();
             gridController.Move(Direction.FromVector2Int(vec));
-            OnStoppedMoving();
+            RemainingActions--;
         }
 
         #endregion
