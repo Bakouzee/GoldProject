@@ -87,34 +87,38 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     #region Start phases
+
+    public System.Action OnDayStart;
+    public System.Action OnNightStart;
     public void StartDay()
     {
+        Debug.Log("Day");
         StartPhaseBase();
         CurrentDay++;
         dayState = DayState.DAY;
-        // EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
+        
         StartSpawningWave();
-        Debug.Log("Day");
 
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
         
         Curtain.SetDay(true);
-        PlayerManager.Instance.Player.UnTransform();
+        
+        OnDayStart?.Invoke();
     }
 
     public void StartNight()
     {
+        Debug.Log("Night");
         StartPhaseBase();
         dayState = DayState.NIGHT;
-        // EnemyManager.enemies.Clear(); // Reset all enemies in the list
-        Debug.Log("Night");
         
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.y;        
         
         Curtain.SetDay(false);
-        PlayerManager.Instance.Player.Transform();
+        
+        OnNightStart?.Invoke();
     }
 
     private void StartPhaseBase()

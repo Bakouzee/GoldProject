@@ -154,13 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64796371289fab94dbc64465771a7bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 0
+  healthMax: 100
   IsInOnionZone: 0
   IsInWindowZone: 0
   invincibilityFlash: 0.2
   IsInvincible: 0
-  healthBar: {fileID: 0}
   sprite: {fileID: 1519083190786363592}
 --- !u!114 &188906877
 MonoBehaviour:

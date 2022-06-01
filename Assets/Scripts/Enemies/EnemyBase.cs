@@ -18,6 +18,11 @@ namespace Enemies
     /// </summary>
     public class EnemyBase : Entity, IInteractable
     {
+        /// <summary>
+        /// Is the enemy the chief of exploration
+        /// </summary>
+        public bool chief;
+        
         protected Health health;
         
         // States
@@ -34,6 +39,16 @@ namespace Enemies
             base.Start();
 
             health = GetComponent<Health>();
+            
+            // Call EnemyManager.OnEnemyDeath when dead
+            health.OnDeath += () =>
+            {
+                EnemyManager.OnEnemyDeath?.Invoke(this);
+                // foreach (var enemy in currentRoom.enemies)
+                // {
+                //     enemy.Afraid();
+                // }
+            };
             
             DefineStates();
             SetState(explorationState);

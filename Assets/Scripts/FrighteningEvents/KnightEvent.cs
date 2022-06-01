@@ -30,7 +30,7 @@ public class KnightEvent : FrighteningEventBase
     //from a script to tell the knight where to move
     protected override IEnumerator DoActionCoroutine()
     {
-        EnemyManager.knights.Add(this);
+        Enemies.EnemyManager.knights.Add(this);
         index = 0;
 
         //get the closest enemy pos so the knight will move to the enemy --> HAVE TO MAKE THE KNIGHT MOVE AT

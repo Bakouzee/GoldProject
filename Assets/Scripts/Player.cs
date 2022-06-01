@@ -39,27 +39,36 @@ namespace GoldProject
         }
         private void ResetRemainingAction(int phaseActionCount) => RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
         
-        private bool hasPath;
-        private List<Direction> path = new List<Direction>();
         [Header("Others"), SerializeField] 
         private int lightDamage;
 
         protected override void Start()
         {
+            GameManager gameManager = GameManager.Instance;
+            
             base.Start();
             gridController.OnMoved += OnMoved;
 
             cameraController = FindObjectOfType<CameraController>();
+
+            // Transform or Untransform on day or night start
+            gameManager.OnDayStart += UnTransform;
+            gameManager.OnNightStart += Transform;
             
             RemainingActions = defaultActionsPerTurn;
-            GameManager.Instance.OnLaunchedTurn += ResetRemainingAction;
+            // When a turn is launched -> reset the number of remaining action
+            gameManager.OnLaunchedTurn += ResetRemainingAction;
+            
+            // Get the ability to transform if a chief leave or die
+            Enemies.EnemyManager.OnEnemyDisappeared += enemy =>
+            {
+                if (enemy.chief)
+                    canTransform = true;
+            };
         }
 
         private void Update()
         {
-            if (hasPath)
-                return;
-
             if (Input.touchCount > 0)
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
@@ -85,23 +94,28 @@ namespace GoldProject
                     // Look for IInteractable or Tile or... and break if found
                     foreach (var hit in hits)
                     {
+                        // Interactable objects
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
+                            // Just to not copy/paste
+                            System.Action interact = () => { interactable.Interact(); GameManager.Instance.LaunchTurn(); };
+                            
                             if (interactable.NeedToBeInRange)
                             {
                                 if (gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1 && interactable.IsInteractable)
                                 {
-                                    interactable.Interact();
-                                    GameManager.Instance.LaunchTurn();
+                                    interact.Invoke();
                                     break;
                                 }
                             }
                             else
                             {
-                                interactable.Interact();
+                                interact.Invoke();
                                 break;
                             }
                         }
+                        
+                        // Tiles
                         else if (hit.transform.TryGetComponent(out Tile tile))
                         {
                             if (gridController.gridPosition == tile.GridPos)
@@ -123,11 +137,14 @@ namespace GoldProject
                 }
         }
 
+        #region Transformation
         public static bool transformed;
+        private bool canTransform;
         public void Transform()
         {
-            if (transformed)
+            if (transformed || !canTransform)
                 return;
+            canTransform = false;
             transformed = true;
 
             // TODO: Waiting for Frighten method in enemies
@@ -137,7 +154,6 @@ namespace GoldProject
 
             RemainingActions = transformedActionsPerTurn;
         }
-
         public void UnTransform()
         {
             if (!transformed)
@@ -146,57 +162,22 @@ namespace GoldProject
 
             RemainingActions = defaultActionsPerTurn;
         }
+        #endregion
 
-        // private void StartPath(Vector2Int aimedGridPos)
-        // {
-        //     if (hasPath || moveCoroutine != null)
-        //         return;
-        //     path = gridController.gridManager.TempGetPath(gridController.gridPosition, aimedGridPos);
-        //     hasPath = true;
-        //
-        //     moveCoroutine = MoveCoroutine();
-        //     StartCoroutine(moveCoroutine);
-        // }
-        //
-        // private IEnumerator moveCoroutine;
-        //
-        // IEnumerator MoveCoroutine()
-        // {
-        //     Tile.ResetWalkableTiles();
-        //
-        //     foreach (Direction direction in path)
-        //     {
-        //         gridController.Move(direction);
-        //         yield return new WaitForSeconds(moveCooldown);
-        //     }
-        //
-        //     OnStoppedMoving();
-        //     hasPath = false;
-        //     moveCoroutine = null;
-        // }
-        // private void OnStoppedMoving()
-        // {
-        //     gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, RemainingActions);
-        // }
-        
-        
         private void OnMoved(Vector2Int newGridPos)
         {
             if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
             {
-                Debug.Log("Garlic in range");
+                // Take damage from garlic
                 PlayerManager.PlayerHealth.TakeStinkDamage(damagingGarlic.damage);
             }
 
             if (currentRoom.IsInLight(transform.position))
             {
-                Debug.Log("Take damage from light");
+                // Take damage from light
                 PlayerManager.PlayerHealth.TakeFireDamage(lightDamage);
             }
-            
-            // GameManager.Instance.LaunchTurn();
         }
-        
 
         protected override void OnEnterRoom(Room room)
         {
@@ -211,9 +192,6 @@ namespace GoldProject
 
         public void TryMove(Vector2Int vec)
         {
-            if (hasPath)
-                return;
-
             if(gridController.Move(Direction.FromVector2Int(vec)))
                 // Only decrement remaining action if Move is a success
                 RemainingActions--;
