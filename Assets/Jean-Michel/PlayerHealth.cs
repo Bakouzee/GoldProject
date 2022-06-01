@@ -17,22 +17,17 @@ public class PlayerHealth : MonoBehaviour
 
     public bool IsInvincible = false;
 
-    public HealthBar healthBar;
-
+    public System.Action<int> OnHealthUpdated;
+    
     public SpriteRenderer sprite;
 
     private void Start()
     {
         currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(20);
-        }
         if(currentHealth <= 0)
         {
             Death();
@@ -49,7 +44,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth += healAmount;
 
         }
-        healthBar.SetHealth(currentHealth);
+        OnHealthUpdated?.Invoke(currentHealth);
     }
 
     void Death()
@@ -65,7 +60,7 @@ public class PlayerHealth : MonoBehaviour
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(BurningFlash());
             StartCoroutine(InvincibillityDelay());
@@ -77,7 +72,7 @@ public class PlayerHealth : MonoBehaviour
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(StinkFlash());
             StartCoroutine(InvincibillityDelay());
@@ -91,7 +86,7 @@ public class PlayerHealth : MonoBehaviour
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);  
+            OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(InvincibillityFlash());
             StartCoroutine(InvincibillityDelay());

@@ -23,11 +23,11 @@ public class GameManager : SingletonBase<GameManager>
     [Header("Turns")] [SerializeField] private int actionPerPhase;
     private int actionCount;
     private int currentDay;
-    private System.Action<int> OnDayChanged;
-    private int CurrentDay
+    public System.Action<int> OnDayChanged;
+    public int CurrentDay
     {
         get => currentDay;
-        set
+        private set
         {
             currentDay = Mathf.Clamp(value, 1, int.MaxValue);
             OnDayChanged?.Invoke(currentDay);
@@ -64,11 +64,8 @@ public class GameManager : SingletonBase<GameManager>
     private Enemies.EnemyType[] enemiesToSpawn;
     private int enemySpawned = 0;
 
-    [Header("UI")] private DayCounter dayCounter;
-
     private void Start()
     {
-        InitUI();
         eventSystem = FindObjectOfType<EventSystem>();
 
         // Set turn cooldown
@@ -126,6 +123,7 @@ public class GameManager : SingletonBase<GameManager>
 
     #endregion
 
+    public System.Action<int> OnLaunchedTurn;
     public void LaunchTurn()
     {
         // Enemies make their turn
@@ -149,6 +147,8 @@ public class GameManager : SingletonBase<GameManager>
 
         // Cooldown of turn
         turnCooldown.SetCooldown();
+        
+        OnLaunchedTurn?.Invoke(actionCount);
     }
 
     private void StartSpawningWave()
@@ -194,14 +194,7 @@ public class GameManager : SingletonBase<GameManager>
         spawningEnemies = false;
     }
 
-    #region UI Methods
-
-    private void InitUI()
-    {
-        dayCounter = FindObjectOfType<DayCounter>();
-        OnDayChanged += i => dayCounter.SetDay(i);
-    }
-
+    #region UI Methods*
     public void ActivateTrap(Button trapButton)
     {
         // Have to reset if the player reactivates the trap

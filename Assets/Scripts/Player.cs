@@ -14,22 +14,30 @@ namespace GoldProject
     {
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
-        
+
         [Header("Movements")]
         [SerializeField] private float moveCooldown;
-        [SerializeField] private int defaultMoveRange = 1;
-        [SerializeField] private int transformedMoveRange = 3;
-        private int currentMoveRange;
-        private int CurrentMoveRange
+        [SerializeField] private int defaultActionsPerTurn = 1;
+        [SerializeField] private int transformedActionsPerTurn = 3;
+        private int remainingActions;
+        private int RemainingActions
         {
-            get => currentMoveRange;
+            get => remainingActions;
             set
             {
-                currentMoveRange = value;
+                remainingActions = value;
+                if (remainingActions <= 0)
+                {
+                    // OnLaunchedTurn reset remainingAction
+                    GameManager.Instance.LaunchTurn();
+                    return;
+                }
+
                 Tile.ResetWalkableTiles();
-                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, currentMoveRange);
+                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
             }
         }
+        private void ResetRemainingAction(int phaseActionCount) => RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
         
         private bool hasPath;
         private List<Direction> path = new List<Direction>();
@@ -43,7 +51,8 @@ namespace GoldProject
 
             cameraController = FindObjectOfType<CameraController>();
             
-            CurrentMoveRange = defaultMoveRange;
+            RemainingActions = defaultActionsPerTurn;
+            GameManager.Instance.OnLaunchedTurn += ResetRemainingAction;
         }
 
         private void Update()
@@ -73,7 +82,7 @@ namespace GoldProject
                                 gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
                             {
                                 interactable.Interact();
-                                GameManager.Instance.LaunchTurn();
+                                RemainingActions--;
                                 break;
                             }
                         }
@@ -82,15 +91,13 @@ namespace GoldProject
                             if (gridController.gridPosition == tile.GridPos)
                                 continue;
 
-                            if (gridController.gridManager.GetManhattanDistance(gridController.gridPosition, tile.GridPos) <= CurrentMoveRange)
+                            int manhattanDistance =
+                                gridController.gridManager.GetManhattanDistance(gridController.gridPosition,
+                                    tile.GridPos);
+                            if (manhattanDistance <= RemainingActions)
                             {
-                                // StartPath(tile.GridPos);
-                                
-                                Tile.ResetWalkableTiles();
                                 gridController.SetPosition(tile.GridPos);
-                                gridController.OnMoved?.Invoke(gridController.gridPosition);
-                                GameManager.Instance.LaunchTurn();
-                                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
+                                RemainingActions -= manhattanDistance;
                                 break;
                             }
                         }
@@ -111,7 +118,7 @@ namespace GoldProject
             // foreach (var enemy in currentRoom.enemies)
             // enemy.Frighten();
 
-            CurrentMoveRange = transformedMoveRange;
+            RemainingActions = transformedActionsPerTurn;
         }
 
         public void UnTransform()
@@ -120,7 +127,7 @@ namespace GoldProject
                 return;
             transformed = false;
 
-            CurrentMoveRange = defaultMoveRange;
+            RemainingActions = defaultActionsPerTurn;
         }
 
         private void StartPath(Vector2Int aimedGridPos)
@@ -170,7 +177,7 @@ namespace GoldProject
         
         private void OnStoppedMoving()
         {
-            gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
+            gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, RemainingActions);
         }
 
         protected override void OnEnterRoom(Room room)
