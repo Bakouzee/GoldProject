@@ -942,6 +942,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: actionPerPhase
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: dayNightTurnCooldown.x
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814087095047755681, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
+      propertyPath: dayNightTurnCooldown.y
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6814087095047755687, guid: 745f825f9792bcf45bade0d2316c703f, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -6801,7 +6813,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00c43fe7ef44075b046d0ed6ac22961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
 --- !u!4 &1853284022
 Transform:
   m_ObjectHideFlags: 0

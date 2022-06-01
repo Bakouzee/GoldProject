@@ -25,7 +25,17 @@ namespace Enemies
         protected ExplorationStateBase explorationState;
         public GridController GridController => gridController;
 
-        public int afraidCount;
+        public int afraidToLeave;
+        private int afraidCount;
+
+        [Range(0,90)]
+        public int sightAngle;
+
+        [Range(0,10)]
+        public int sightRange;
+
+        private Color stateColor;
+        
         
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
@@ -37,7 +47,9 @@ namespace Enemies
 
             DefineStates();
             SetState(explorationState);
-            Afraid();
+
+            stateColor = Color.yellow;
+            stateColor.a = 0.1f;
         }
         
         /// <summary>
@@ -49,8 +61,14 @@ namespace Enemies
             explorationState = new ExplorationStateBase(this);
 
         }
-        
-        protected virtual void Update() => currentState?.OnStateUpdate();
+
+        protected virtual void Update()  {
+            currentState?.OnStateUpdate();
+
+            if (gridController.gridPosition == GameManager.Instance.tileEnd)
+                Destroy(transform.gameObject);
+            
+        }
 
         /// <summary>
         /// Do Action method, let the current state choose the action to do
@@ -59,21 +77,26 @@ namespace Enemies
 
         public void DoAction() {
 
-           // currentState?.DoAction();
+            currentState?.DoAction();
 
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
-
             Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
- 
-            Vector3 sight = transform.up * 3;
+            Vector3 sight = transform.up * sightRange;
 
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
-
-            if (angle < 90 && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= 3)
-                Debug.Log("je vois le joueur");
- 
-
+            if (angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange)  {
+                SetState(new ChaseState(this, PlayerManager.Instance.Player));
+                stateColor = Color.red;
+                stateColor.a = 0.1f;
+            }
+            else {
+                if(currentState is ChaseState) {
+                    SetState(explorationState);
+                    stateColor = Color.yellow;
+                    stateColor.a = 0.1f;
+                }
+            }
         }
         
         public void Afraid()
@@ -82,8 +105,8 @@ namespace Enemies
 
             afraidCount = Mathf.Clamp(afraidCount, 0,3);
 
-            if (afraidCount == 3) // A modifier le 3 avec le bravoure du Enemyprofile
-                explorationState.directions = new Queue<Direction>(gridManager.GetPath(gridPosition, GameManager.Instance.levelEnd));
+            if (afraidCount == afraidToLeave) 
+                explorationState.directions = new Queue<Direction>(GridManager.Instance.GetPath(GridManager.Instance.GetGridPosition(transform.position),GameManager.Instance.tileEnd));
         }
 
 
@@ -114,10 +137,10 @@ namespace Enemies
         }
 
         private void OnDrawGizmos() {
-            Handles.color = new Color(Color.yellow.r,Color.yellow.g,Color.yellow.b,0.1f);
+            Handles.color = stateColor;
             Transform viewTransform = transform.GetChild(0);
 
-            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,180,3); // 180 a changer par une valeur du so
+            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
         }
 
         

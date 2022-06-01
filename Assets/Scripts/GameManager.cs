@@ -8,6 +8,7 @@ using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using GridSystem;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -25,7 +26,7 @@ public class GameManager : SingletonBase<GameManager>
     private int currentDay;
     private System.Action<int> OnDayChanged;
 
-    public Vector2Int levelEnd;
+    public Vector2Int tileEnd;
 
     private int CurrentDay
     {
@@ -84,7 +85,8 @@ public class GameManager : SingletonBase<GameManager>
         // Init days
         CurrentDay = 1;
 
-        levelEnd = new Vector2Int((int)transform.GetChild(1).position.x, (int)transform.GetChild(1).position.y);
+        tileEnd = GridManager.Instance.GetGridPosition(transform.GetChild(1).position);
+
     }
 
     private void Update()
