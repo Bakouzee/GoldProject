@@ -15,12 +15,15 @@ public class KnightEvent : FrighteningEventBase
 
     public override void Interact()
     {
-        /*if (transform.parent != null && transform.parent.GetComponent<KnightEvent>())
+        if(GameManager.dayState == GameManager.DayState.NIGHT)
         {
-            transform.parent.GetComponent<KnightEvent>().Do();
-        }*/
-        Debug.Log("coucou0");
-        Do();
+            Debug.Log("coucou0");
+            Do();
+        }
+        else
+        {
+            return;
+        }
     }
 
 
@@ -57,10 +60,16 @@ public class KnightEvent : FrighteningEventBase
 
     public void MoveKnight()
     {
-        if(index < NumberOfTurnTheKnightCanMove)
+        if(GameManager.dayState == GameManager.DayState.NIGHT)
         {
-            gridController.Move(directionKnight[index]);
-            index++;
+            if(index < NumberOfTurnTheKnightCanMove)
+            {
+                gridController.Move(directionKnight[index]);
+                index++;
+            }
+        } else
+        {
+            return;
         }
     }
 }
