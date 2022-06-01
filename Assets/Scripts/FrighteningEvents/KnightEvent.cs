@@ -7,6 +7,9 @@ using GridSystem;
 public class KnightEvent : FrighteningEventBase
 {
     public List<Direction> directionKnight = new List<Direction>();
+    private int index = 0;
+
+    public int NumberOfTurnTheKnightCanMove = 5;
 
     public override void Interact()
     {
@@ -22,6 +25,7 @@ public class KnightEvent : FrighteningEventBase
     //from a script to tell the knight where to move
     protected override IEnumerator DoActionCoroutine()
     {
+        EnemyManager.knights.Add(this);
         //get the closest enemy pos so the knight will move to the enemy --> HAVE TO MAKE THE KNIGHT MOVE AT
         // THE SAME TIME OF THE ENEMIES
         Vector2Int enemyToScare = CurrentRoom.GetClosestEnemy(transform.position).GridController.gridPosition;
@@ -29,20 +33,26 @@ public class KnightEvent : FrighteningEventBase
 
         //Get the path to do
         directionKnight = GridManager.Instance.TempGetPath(knightPos, enemyToScare);
-
-        foreach(Direction direction in directionKnight)
+        foreach (Direction direction in directionKnight)
         {
-            //Move the gameobject itself but not the parent
-            gridController.Move(direction);
+            Debug.Log(direction.Value);
         }
 
-        yield return new WaitForSeconds(50f);
-        Debug.Log("done");
+        yield return new WaitForSeconds(1f);
     }
 
     protected override IEnumerator UndoActionCoroutine()
     {
         yield return new WaitForSeconds(1f);
         Debug.Log("undone");
+    }
+
+    public void MoveKnight()
+    {
+        if(index < NumberOfTurnTheKnightCanMove)
+        {
+            gridController.Move(directionKnight[index]);
+            index++;
+        }
     }
 }

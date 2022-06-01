@@ -132,6 +132,12 @@ public class GameManager : SingletonBase<GameManager>
             enemy.DoAction();
         }
 
+        // Knight too
+        foreach(var knight in EnemyManager.knights)
+        {
+            knight.MoveKnight();
+        }
+
         // Spawn enemies
         SpawnCurrentEnemy();
 

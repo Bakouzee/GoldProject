@@ -87,7 +87,6 @@ namespace GoldProject
                     {
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
-                            Debug.Log(hit.transform.name + " is " + interactable.NeedToBeInRange);
                             if (interactable.NeedToBeInRange)
                             {
                                 if (gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1 && interactable.IsInteractable)
@@ -99,7 +98,6 @@ namespace GoldProject
                             }
                             else
                             {
-                                Debug.Log("PAs besoin d'être en range -> ça intéragit!");
                                 interactable.Interact();
                                 break;
                             }
