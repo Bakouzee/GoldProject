@@ -63,11 +63,20 @@ namespace GoldProject
             if (Input.touchCount > 0)
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
+                    Vector3 mousePosition = Vector3.zero;
                     // Do nothing if clicking UI
                     if (GameManager.eventSystem.IsPointerOverGameObject())
                         return;
 
-                    Vector3 mousePosition = cameraController.Camera.ScreenToWorldPoint(Input.mousePosition);
+                    if(PlayerManager.mapSeen == true)
+                    {
+                        Camera camMiniMap = PlayerManager.Instance.miniMap.GetComponent<Camera>();
+                        mousePosition = camMiniMap.ScreenToWorldPoint(Input.mousePosition);
+                    } else
+                    {
+                        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    }
+
 
                     RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.right, 0.1f);
                     if (hits.Length == 0)
@@ -78,6 +87,7 @@ namespace GoldProject
                     {
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
+                            Debug.Log(hit.transform.name + " is " + interactable.NeedToBeInRange);
                             if (interactable.NeedToBeInRange)
                             {
                                 if (gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1 && interactable.IsInteractable)
@@ -89,6 +99,7 @@ namespace GoldProject
                             }
                             else
                             {
+                                Debug.Log("PAs besoin d'être en range -> ça intéragit!");
                                 interactable.Interact();
                                 break;
                             }
