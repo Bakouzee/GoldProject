@@ -1,10 +1,11 @@
+using GoldProject;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VentManager : MonoBehaviour
+public class VentManager : MonoBehaviour, IInteractable
 {
-    public GameObject player;
+    public Player player;
     public GameObject ventOne;
 
     public GameObject ventTwo;
@@ -15,39 +16,32 @@ public class VentManager : MonoBehaviour
 
     public bool FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
 
+    public bool IsInteractable => true;
 
     private void Start()
     {
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+        player = PlayerManager.Instance.Player;
     }
 
-    private void Update()
+   
+
+    public void Interact()
     {
-        if (FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé == true)
+        if (!waitForVent)
         {
-            WorkingVent();
+            //player.transform.position = ventTwo.transform.position;
+            player.gridController.SetPosition(ventTwo.transform.position);
+            waitForVent = true;
+            FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         }
-        
+        if (waitForVent)
+        {
+            StartCoroutine(VentDelay());
+        }
     }
 
-    private void WorkingVent()
-    {
-        if (IsIn == true && Input.GetKeyDown(KeyCode.P))
-        {
-            if (!waitForVent)
-            {
-                player.transform.position = ventTwo.transform.position;
-                waitForVent = true;
-                FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
-            }
-            if (waitForVent)
-            {
-                StartCoroutine(VentDelay());
-            }
-        }
-
-
-    }
+    
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -72,4 +66,6 @@ public class VentManager : MonoBehaviour
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
 
     }
+
+    
 }
