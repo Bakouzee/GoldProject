@@ -170,6 +170,8 @@ namespace GridSystem
         {
             Tile startTile = GetTileAtPosition(startGridPos);
             Tile endTile = GetTileAtPosition(targetGridPos);
+            if (!startTile || !endTile)
+                return null;
 
             List<Tile> openList = new List<Tile>() {startTile};
             List<Tile> closedList = new List<Tile>();

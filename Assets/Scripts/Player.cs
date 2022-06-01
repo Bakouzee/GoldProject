@@ -15,11 +15,11 @@ namespace GoldProject
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
 
-        [Header("Movements")]
-        [SerializeField] private float moveCooldown;
+        [Header("Movements")] [SerializeField] private float moveCooldown;
         [SerializeField] private int defaultActionsPerTurn = 1;
         [SerializeField] private int transformedActionsPerTurn = 3;
         private int remainingActions;
+
         private int RemainingActions
         {
             get => remainingActions;
@@ -37,15 +37,16 @@ namespace GoldProject
                 gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
             }
         }
-        private void ResetRemainingAction(int phaseActionCount) => RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
-        
-        [Header("Others"), SerializeField] 
-        private int lightDamage;
+
+        private void ResetRemainingAction(int phaseActionCount) =>
+            RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
+
+        [Header("Others"), SerializeField] private int lightDamage;
 
         protected override void Start()
         {
             GameManager gameManager = GameManager.Instance;
-            
+
             base.Start();
             gridController.OnMoved += OnMoved;
 
@@ -54,21 +55,30 @@ namespace GoldProject
             // Transform or Untransform on day or night start
             gameManager.OnDayStart += UnTransform;
             gameManager.OnNightStart += Transform;
-            
+
             RemainingActions = defaultActionsPerTurn;
             // When a turn is launched -> reset the number of remaining action
             gameManager.OnLaunchedTurn += ResetRemainingAction;
-            
+
             // Get the ability to transform if a chief leave or die
             Enemies.EnemyManager.OnEnemyDisappeared += enemy =>
             {
                 if (enemy.chief)
                     canTransform = true;
             };
+            
+            // Check for light damage on day start
+            gameManager.OnDayStart += LookForLightDamage;
         }
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                canTransform = true;
+                Transform();
+            }
+            
             if (Input.touchCount > 0)
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
@@ -77,11 +87,12 @@ namespace GoldProject
                     if (GameManager.eventSystem.IsPointerOverGameObject())
                         return;
 
-                    if(PlayerManager.mapSeen == true)
+                    if (PlayerManager.mapSeen == true)
                     {
                         Camera camMiniMap = PlayerManager.Instance.miniMap.GetComponent<Camera>();
                         mousePosition = camMiniMap.ScreenToWorldPoint(Input.mousePosition);
-                    } else
+                    }
+                    else
                     {
                         mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                     }
@@ -98,11 +109,16 @@ namespace GoldProject
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
                             // Just to not copy/paste
-                            System.Action interact = () => { interactable.Interact(); GameManager.Instance.LaunchTurn(); };
-                            
+                            System.Action interact = () =>
+                            {
+                                interactable.Interact();
+                                GameManager.Instance.LaunchTurn();
+                            };
+
                             if (interactable.NeedToBeInRange)
                             {
-                                if (gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1 && interactable.IsInteractable)
+                                if (gridController.gridManager.GetManhattanDistance(transform.position,
+                                    hit.transform.position) <= 1 && interactable.IsInteractable)
                                 {
                                     interact.Invoke();
                                     break;
@@ -114,7 +130,7 @@ namespace GoldProject
                                 break;
                             }
                         }
-                        
+
                         // Tiles
                         else if (hit.transform.TryGetComponent(out Tile tile))
                         {
@@ -138,8 +154,10 @@ namespace GoldProject
         }
 
         #region Transformation
+
         public static bool transformed;
         private bool canTransform;
+
         public void Transform()
         {
             if (transformed || !canTransform)
@@ -147,13 +165,13 @@ namespace GoldProject
             canTransform = false;
             transformed = true;
 
-            // TODO: Waiting for Frighten method in enemies
             // Frighten enemies in the room
-            // foreach (var enemy in currentRoom.enemies)
-            // enemy.Frighten();
+            foreach (var enemy in currentRoom.enemies)
+                enemy.GetAfraid(source: transform);
 
             RemainingActions = transformedActionsPerTurn;
         }
+
         public void UnTransform()
         {
             if (!transformed)
@@ -162,16 +180,26 @@ namespace GoldProject
 
             RemainingActions = defaultActionsPerTurn;
         }
+
         #endregion
 
         private void OnMoved(Vector2Int newGridPos)
+        {
+            LookForGarlicDamage();
+
+            LookForLightDamage();
+        }
+
+        private void LookForGarlicDamage()
         {
             if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
             {
                 // Take damage from garlic
                 PlayerManager.PlayerHealth.TakeStinkDamage(damagingGarlic.damage);
             }
-
+        }
+        public void LookForLightDamage()
+        {
             if (currentRoom.IsInLight(transform.position))
             {
                 // Take damage from light
@@ -185,6 +213,7 @@ namespace GoldProject
         }
 
         #region UI Methods
+
         public void MoveLeft() => TryMove(Vector2Int.left);
         public void MoveRight() => TryMove(Vector2Int.right);
         public void MoveUp() => TryMove(Vector2Int.up);
@@ -192,7 +221,7 @@ namespace GoldProject
 
         public void TryMove(Vector2Int vec)
         {
-            if(gridController.Move(Direction.FromVector2Int(vec)))
+            if (gridController.Move(Direction.FromVector2Int(vec)))
                 // Only decrement remaining action if Move is a success
                 RemainingActions--;
         }
