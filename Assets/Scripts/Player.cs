@@ -185,13 +185,13 @@ namespace GoldProject
             if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
             {
                 Debug.Log("Garlic in range");
-                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
+                PlayerManager.PlayerHealth.TakeStinkDamage(damagingGarlic.damage);
             }
 
             if (currentRoom.IsInLight(transform.position))
             {
                 Debug.Log("Take damage from light");
-                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
+                PlayerManager.PlayerHealth.TakeFireDamage(lightDamage);
             }
             
             // GameManager.Instance.LaunchTurn();

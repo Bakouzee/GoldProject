@@ -82,7 +82,7 @@ namespace Enemies
         public bool NeedToBeInRange => true;
         public void Interact()
         {
-            health.TakeDamage(-1);
+            health.TakeDamage(1);
         }
     }
 }
