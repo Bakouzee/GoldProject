@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using GoldProject.Rooms;
 using UnityEngine;
+using GridSystem;
 
 namespace GoldProject.FrighteningEvent
 {
@@ -19,6 +20,7 @@ namespace GoldProject.FrighteningEvent
     public abstract class FrighteningEventBase : MonoBehaviour, IInteractable
     {
         protected Rooms.Room currentRoom;
+        protected GridController gridController;
 
         public Rooms.Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
 
@@ -26,6 +28,11 @@ namespace GoldProject.FrighteningEvent
         public bool IsTriggered => isTriggered;
         private bool inProgress = false;
         public bool IsInProgress => inProgress;
+
+        private void Start()
+        {
+            gridController = new GridController(transform);
+        }
 
         #region Do
         // Has to be overriden, rule the activation of the trap
@@ -80,7 +87,5 @@ namespace GoldProject.FrighteningEvent
             
             // To override
         }
-
-        public Room CurrentRoom;
     }
 }
