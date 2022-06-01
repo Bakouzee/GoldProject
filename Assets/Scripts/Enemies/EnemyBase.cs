@@ -74,6 +74,9 @@ namespace Enemies
 
         // IInteractable implementation
         public bool IsInteractable => GameManager.dayState == GameManager.DayState.NIGHT;
+
+        public bool NeedToBeInRange => true;
+
         public void Interact()
         {
             // Take Damage

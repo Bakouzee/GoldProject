@@ -1542,6 +1542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: debb48fd387904e4e95d5c8da226e949, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationTrigger: 
 --- !u!58 &707577913
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -2373,7 +2374,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -8107,7 +8108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d00c43fe7ef44075b046d0ed6ac22961, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
 --- !u!4 &1544693184
 Transform:
   m_ObjectHideFlags: 0
@@ -8134,8 +8134,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1545084650}
   - component: {fileID: 1545084651}
-  - component: {fileID: 1545084652}
   - component: {fileID: 1545084653}
+  - component: {fileID: 1545084654}
   m_Layer: 3
   m_Name: TrapIconMap
   m_TagString: Knight
@@ -8210,18 +8210,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1545084652
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1545084649}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 587d2ff0cd74bff4eb8f969b6a4e3bae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!58 &1545084653
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -8238,6 +8226,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &1545084654
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545084649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 587d2ff0cd74bff4eb8f969b6a4e3bae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1727491186
 GameObject:
   m_ObjectHideFlags: 0
@@ -8638,7 +8638,7 @@ PrefabInstance:
     - target: {fileID: 74132703024466840, guid: 1da826d58796dd94a8ed260bc4569891, type: 3}
       propertyPath: rooms.Array.data[1].frighteningEvents.Array.data[0]
       value: 
-      objectReference: {fileID: 1545084652}
+      objectReference: {fileID: 0}
     - target: {fileID: 74132703024466843, guid: 1da826d58796dd94a8ed260bc4569891, type: 3}
       propertyPath: m_RootOrder
       value: 3
