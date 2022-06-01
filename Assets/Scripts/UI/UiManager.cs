@@ -35,7 +35,7 @@ namespace GoldProject.UI
             if (playerHealthBar != null)
             {
                 var playerHealth = PlayerManager.Instance.PlayerHealth;
-                playerHealthBar.SetMaxHealth(playerHealth.maxHealth);
+                playerHealthBar.SetMaxHealth(playerHealth.healthMax);
                 playerHealth.OnHealthUpdated += playerHealthBar.SetHealth;
             }
         }

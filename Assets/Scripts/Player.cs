@@ -69,7 +69,7 @@ namespace GoldProject
 
                     Vector3 mousePosition = cameraController.Camera.ScreenToWorldPoint(Input.mousePosition);
 
-                    RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.right, 0.1f);
+                    RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.back, 0.1f);
                     if (hits.Length == 0)
                         return;
 
@@ -112,8 +112,7 @@ namespace GoldProject
                 }
         }
 
-        private bool transformed;
-
+        public static bool transformed;
         public void Transform()
         {
             if (transformed)

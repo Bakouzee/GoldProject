@@ -18,6 +18,8 @@ namespace Enemies
     /// </summary>
     public class EnemyBase : Entity, IInteractable
     {
+        protected Health health;
+        
         // States
         protected EnemyBaseState currentState;
         protected ExplorationStateBase explorationState;
@@ -31,6 +33,8 @@ namespace Enemies
         {   
             base.Start();
 
+            health = GetComponent<Health>();
+            
             DefineStates();
             SetState(explorationState);
         }
@@ -72,14 +76,13 @@ namespace Enemies
         protected override void OnExitRoom(Room room) => room.enemies.Remove(this);
         protected override void OnEnterRoom(Room room) => room.enemies.Add(this);
 
+        
         // IInteractable implementation
-        public bool IsInteractable => GameManager.dayState == GameManager.DayState.NIGHT;
-
+        public bool IsInteractable => Player.transformed;
         public bool NeedToBeInRange => true;
-
         public void Interact()
         {
-            // Take Damage
+            health.TakeDamage(-1);
         }
     }
 }

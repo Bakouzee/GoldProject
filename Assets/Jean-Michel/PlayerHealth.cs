@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Health
 {
     public PlayerManager PlayerManager { private get; set; }
-    public int maxHealth = 100;
-
-    public int currentHealth;
 
     public bool IsInOnionZone = false;
 
@@ -21,11 +18,6 @@ public class PlayerHealth : MonoBehaviour
     
     public SpriteRenderer sprite;
 
-    private void Start()
-    {
-        currentHealth = maxHealth;
-    }
-
     private void Update()
     {
         if(currentHealth <= 0)
@@ -35,9 +27,9 @@ public class PlayerHealth : MonoBehaviour
     }
     public void HealPlayer(int healAmount)
     {
-        if((currentHealth + healAmount) > maxHealth)
+        if((currentHealth + healAmount) > healthMax)
         {
-            currentHealth = maxHealth;
+            currentHealth = healthMax;
         }
         else
         {
@@ -81,7 +73,7 @@ public class PlayerHealth : MonoBehaviour
     }
 
 
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
         if (!IsInvincible)
         {
