@@ -9,6 +9,8 @@ public class KnightEvent : FrighteningEventBase
     public List<Direction> directionKnight = new List<Direction>();
     private int index = 0;
 
+    private Vector2Int knightPos;
+
     public int NumberOfTurnTheKnightCanMove = 5;
 
     public override void Interact()
@@ -29,7 +31,7 @@ public class KnightEvent : FrighteningEventBase
         //get the closest enemy pos so the knight will move to the enemy --> HAVE TO MAKE THE KNIGHT MOVE AT
         // THE SAME TIME OF THE ENEMIES
         Vector2Int enemyToScare = CurrentRoom.GetClosestEnemy(transform.position).GridController.gridPosition;
-        Vector2Int knightPos = GridManager.Instance.GetGridPosition(transform.position);
+        knightPos = GridManager.Instance.GetGridPosition(transform.position);
 
         //Get the path to do
         directionKnight = GridManager.Instance.TempGetPath(knightPos, enemyToScare);
@@ -43,6 +45,10 @@ public class KnightEvent : FrighteningEventBase
 
     protected override IEnumerator UndoActionCoroutine()
     {
+        // Reset the start position of the knight
+        gridController.SetPosition(knightPos);
+        index = 0;
+        directionKnight.Clear();
         yield return new WaitForSeconds(1f);
         Debug.Log("undone");
     }

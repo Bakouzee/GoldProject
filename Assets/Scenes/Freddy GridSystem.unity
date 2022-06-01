@@ -608,13 +608,14 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1396109352}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1545084654}
+        m_TargetAssemblyTypeName: GoldProject.FrighteningEvent.FrighteningEventBase,
+          Assembly-CSharp
+        m_MethodName: Undo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -3059,7 +3060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ccf12d1e804a82a7602ea57bd0ba49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 874020662}
 --- !u!1 &1364121699
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,11 +3270,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1392482925}
   m_CullTransparentMesh: 1
---- !u!1 &1396109352 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1519083190786363598, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
-  m_PrefabInstance: {fileID: 1519083192055245037}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1507416496
 GameObject:
   m_ObjectHideFlags: 0
@@ -8242,6 +8237,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587d2ff0cd74bff4eb8f969b6a4e3bae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  NumberOfTurnTheKnightCanMove: 5
 --- !u!1 &1727491186
 GameObject:
   m_ObjectHideFlags: 0
@@ -8352,7 +8348,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1519083190786363593, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
   m_PrefabInstance: {fileID: 1519083192055245037}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396109352}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 823b1b31cad448fd9347cee78bfcdd33, type: 3}
@@ -8363,7 +8359,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 188906877, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
   m_PrefabInstance: {fileID: 1519083192055245037}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1396109352}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b119448ff8210b445a42441fc46f4f74, type: 3}
