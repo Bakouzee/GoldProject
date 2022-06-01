@@ -20,7 +20,8 @@ namespace GridSystem
             gridPosition = gridManager.GetGridPosition(transform.position);
             SetPosition(gridPosition);
         }
-        
+
+        public bool SetPosition(Vector3 worldPosition) => SetPosition(gridManager.GetGridPosition(worldPosition));
         public bool SetPosition(Vector2Int newGridPos)
         {
             if (!gridManager.HasTile(newGridPos))
@@ -28,12 +29,8 @@ namespace GridSystem
             
             gridPosition = newGridPos;
             transform.position = (Vector2)gridManager.GetTileAtPosition(gridPosition).transform.position;
-
-            Vector2Int position = new Vector2Int((int)transform.position.x, (int)transform.position.y);
-
-            if (position == GameManager.Instance.levelEnd)
-                Destroy(transform.gameObject);
-
+            
+            OnMoved?.Invoke(gridPosition);
             return true;
         }
 
@@ -49,8 +46,6 @@ namespace GridSystem
                 // Rotate in move direction
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
                 transform.eulerAngles = new Vector3(0, 0, angle);
-                
-                OnMoved?.Invoke(gridPosition);
                 
                 // It is a success
                 return true;
