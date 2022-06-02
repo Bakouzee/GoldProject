@@ -15,8 +15,6 @@ namespace Enemies.States
         private int numberOfTurn;
         private int turnCounter;
         
-        private GridManager gridManager;
-            
         public RunningState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState) : base(enemy, nextState)
         {
             this.frighteningSource = frighteningSource;
@@ -24,8 +22,6 @@ namespace Enemies.States
         
             this.numberOfTurn = numberOfTurn;
             this.turnCounter = 0;
-            
-            this.gridManager = GridManager.Instance;
         }
 
         public override void DoAction()

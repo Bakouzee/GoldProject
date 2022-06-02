@@ -210,6 +210,9 @@ namespace GoldProject
 
         private void OnMoved(Vector2Int newGridPos)
         {
+            if (!currentRoom.IsInside(transform.position))
+                UpdateCurrentRoom();
+
             LookForGarlicDamage();
 
             LookForLightDamage();

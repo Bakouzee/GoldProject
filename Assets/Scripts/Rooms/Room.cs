@@ -2,7 +2,9 @@
 using Enemies;
 using GoldProject.FrighteningEvent;
 using GridSystem;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
 namespace GoldProject.Rooms
@@ -27,13 +29,25 @@ namespace GoldProject.Rooms
         }
 
         private bool lighten;
-        public bool IsLighten => lighten;
-
+        public bool IsLighten
+        {
+            get => lighten;
+            private set
+            {
+                lighten = value;
+                if (fullRoomLight)
+                    fullRoomLight.gameObject.SetActive(lighten && GameManager.dayState == GameManager.DayState.DAY);
+            }
+        }
+        
+        public Light2D fullRoomLight;
+        
         [HideInInspector] public Curtain[] curtains;
         [HideInInspector] public FrighteningEventBase[] frighteningEvents;
         [HideInInspector] public VentManager[] vents;
         [HideInInspector] public List<Garlic> garlics;
         [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        [Space(10)]
         public Transform[] pathPoints;
 
         [FormerlySerializedAs("roomCollidersTransform"), Header("Colliders"),
@@ -85,13 +99,30 @@ namespace GoldProject.Rooms
             roomColliders = roomTransform.GetComponentsInChildren<Collider2D>();
             foreach (Collider2D roomCollider in roomColliders)
                 roomCollider.isTrigger = true;
+
+            // Full room light
+            if (fullRoomLight)
+            {
+                fullRoomLight.gameObject.SetActive(false);
+                GameManager.Instance.OnDayStart += () =>
+                {
+                    if (IsLighten)
+                        fullRoomLight.gameObject.SetActive(true);
+                };
+
+                GameManager.Instance.OnNightStart += () =>
+                {
+                    if (fullRoomLight.gameObject.activeSelf)
+                        fullRoomLight.gameObject.SetActive(false);
+                };
+            }
         }
 
         private void UpdateLightState()
         {
             if (curtains.Length == 0)
             {
-                lighten = false;
+                IsLighten = false;
                 return;
             }
 
@@ -102,12 +133,12 @@ namespace GoldProject.Rooms
                 
                 if (!curtain.IsOpened)
                 {
-                    lighten = false;
+                    IsLighten = false;
                     return;
                 }
             }
 
-            lighten = true;
+            IsLighten = true;
         }
 
         #region Get Closest T
@@ -206,7 +237,7 @@ namespace GoldProject.Rooms
             if (GameManager.dayState != GameManager.DayState.DAY)
                 return false;
 
-            if (lighten)
+            if (IsLighten)
                 return true;
 
             foreach (var curtain in curtains)

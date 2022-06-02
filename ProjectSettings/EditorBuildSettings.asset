@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Morigan.unity
-    guid: 8726d8c55bb49fa4fbb7f8012284f7f2
+    path: Assets/Scenes/Victoria_LD.unity
+    guid: cea32bc9877989e4e9a515055741bd01
   m_configObjects:
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: 4a6cd7cfbcae0ed4c8b73d1e891db203, type: 2}
     com.unity.adaptiveperformance.samsung.android.provider_settings: {fileID: 11400000, guid: ebb22373ed50558498602218e5223501, type: 2}
