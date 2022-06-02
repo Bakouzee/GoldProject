@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1519083190786363595}
   - component: {fileID: 1519083190786363593}
   - component: {fileID: 28784895}
+  - component: {fileID: 7980684790137685315}
   - component: {fileID: 188906877}
   - component: {fileID: 1519083190786363592}
   - component: {fileID: 1519083190786363589}
@@ -72,6 +73,32 @@ MonoBehaviour:
   invincibilityFlash: 0.2
   IsInvincible: 0
   sprite: {fileID: 1519083190786363592}
+--- !u!114 &7980684790137685315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1519083190786363598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0576ec20b1fd47c7a87b24e42b6fade3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerManager: {fileID: 0}
+  bonuses:
+  - enabled: 0
+    healthPercentageNeeded: 0
+    _type: 1
+    _value: 1
+  - enabled: 0
+    healthPercentageNeeded: 0.25
+    _type: 1
+    _value: 2
+  - enabled: 0
+    healthPercentageNeeded: 0.5
+    _type: 0
+    _value: 1
 --- !u!114 &188906877
 MonoBehaviour:
   m_ObjectHideFlags: 0

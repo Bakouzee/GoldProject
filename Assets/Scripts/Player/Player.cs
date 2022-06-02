@@ -17,7 +17,7 @@ namespace GoldProject
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
 
-        [Header("Movements")]
+        [Header("Actions")]
         [SerializeField] private int defaultActionsPerTurn = 1;
         [SerializeField] private int transformedActionsPerTurn = 3;
         private int remainingActions;
@@ -27,21 +27,27 @@ namespace GoldProject
             get => remainingActions;
             set
             {
-                remainingActions = value;
-                if (remainingActions <= 0)
+                if (value <= 0)
                 {
                     // OnLaunchedTurn reset remainingAction
                     GameManager.Instance.LaunchTurn();
                     return;
                 }
+                // Only if we want to damage enemy on each move
+                // else if(remainingActions > value)
+                // {
+                //     LookForGarlicDamage();
+                //     LookForLightDamage();
+                // }
+                remainingActions = value;
 
                 Tile.ResetWalkableTiles();
                 gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
             }
         }
-
-        private void ResetRemainingAction(int phaseActionCount) =>
-            RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
+        private void ResetRemainingAction(int phaseActionCount) => 
+            RemainingActions = (transformed ? transformedActionsPerTurn : defaultActionsPerTurn) + PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.ActionPerTurn);
+        private int interactionRange => 1 + PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.InteractionRange);
 
         [Header("Others"), SerializeField] private int lightDamage;
         [SerializeField] private int lifeStealOnKill;
@@ -143,7 +149,7 @@ namespace GoldProject
                             if (interactable.NeedToBeInRange)
                             {
                                 if (gridController.gridManager.GetManhattanDistance(transform.position,
-                                    hit.transform.position) <= 1 && interactable.IsInteractable)
+                                    hit.transform.position) <= interactionRange && interactable.IsInteractable)
                                 {
                                     interact.Invoke();
                                     break;
@@ -238,7 +244,6 @@ namespace GoldProject
 
             if (currentRoom != lastRoom)
             {
-                Debug.Log("fee");
                 cameraController.ZoomToRoom(currentRoom);
             }
         }
