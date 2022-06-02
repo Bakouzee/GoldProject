@@ -76,7 +76,4 @@ namespace AudioController
         Sc_Mirror,
         Sc_Painting
     }
-
 }
-
-

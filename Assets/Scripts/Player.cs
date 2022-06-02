@@ -92,11 +92,11 @@ namespace GoldProject
 
         private void Update()
         {
-            /* TEST AUDIO FOOTSTEP
-             * if (Input.GetKeyDown(KeyCode.E))
+            // TEST AUDIO FOOTSTEP
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                AudioManager.Instance.PlaySoundForPlayer(PlayerAudioTracks.P_Footstep);
-            }*/
+                AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Footstep);
+            }
 
             if (Input.GetKeyDown(KeyCode.P))
             {

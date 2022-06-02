@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoldProject.FrighteningEvent;
 using GridSystem;
-
+using AudioController;
 public class NoiseEvent : FrighteningEventBase
 {
-    private Animator anim;
+    public Animator anim;
     
     public string animationTrigger;
-
-    private void Start()
-    {
-        anim = GetComponent<Animator>();    
-    }
 
     private void OnMouseDown()
     {
@@ -21,22 +16,16 @@ public class NoiseEvent : FrighteningEventBase
     }
 
     // animation event
-    public void MakeScarySound()
+    public void MakeScarySound(ScaryAudioTracks audioToPlay)
     {
-
+        AudioManager.Instance.PlayScarySound(audioToPlay);
     }
 
     // Check if enemy is in range to activate the animation
     protected override IEnumerator DoActionCoroutine()
     {
-        Vector2Int enemyToScare = CurrentRoom.GetClosestEnemy(transform.position).GridController.gridPosition;
-        Vector2Int trapPos = GridManager.Instance.GetGridPosition(transform.parent.position);
-
-        if(Vector2Int.Distance(enemyToScare, trapPos) <= 3)
-        {
-            //Launch animation
-            anim.SetTrigger(animationTrigger);
-        }
+        //Launch animation
+        anim.SetTrigger(animationTrigger);
 
         yield return new WaitForSeconds(1f);
         Debug.Log("done");
@@ -44,6 +33,7 @@ public class NoiseEvent : FrighteningEventBase
 
     protected override IEnumerator UndoActionCoroutine()
     {
+        anim.SetTrigger("ResetAnim");
         yield return new WaitForSeconds(1f);
         Debug.Log("undone");
     }
