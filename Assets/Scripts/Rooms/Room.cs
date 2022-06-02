@@ -34,8 +34,7 @@ namespace GoldProject.Rooms
         [HideInInspector] public Curtain[] curtains;
         [HideInInspector] public FrighteningEventBase[] frighteningEvents;
         [HideInInspector] public List<Garlic> garlics;
-
-        /*[HideInInspector]*/ public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         public Transform[] pathPoints;
 
         [FormerlySerializedAs("roomCollidersTransform"), Header("Colliders"),

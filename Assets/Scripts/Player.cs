@@ -8,6 +8,7 @@ using Unity.Notifications.Android;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
+using AudioController;
 
 namespace GoldProject
 {
@@ -91,6 +92,12 @@ namespace GoldProject
 
         private void Update()
         {
+            /* TEST AUDIO FOOTSTEP
+             * if (Input.GetKeyDown(KeyCode.E))
+            {
+                AudioManager.Instance.PlaySoundForPlayer(PlayerAudioTracks.P_Footstep);
+            }*/
+
             if (Input.GetKeyDown(KeyCode.P))
             {
                 canTransform = true;
