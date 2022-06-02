@@ -75,7 +75,7 @@ public class PlayerHealth : Health
     }
 
 
-    public override void TakeDamage(int damage)
+    public override bool TakeDamage(int damage)
     {
         if (!IsInvincible)
         {
@@ -85,8 +85,9 @@ public class PlayerHealth : Health
             StartCoroutine(InvincibillityFlash());
             IsInvincible = false;
             // StartCoroutine(InvincibillityDelay());
-
         }
+
+        return false;
     }
 
     public IEnumerator InvincibillityFlash()

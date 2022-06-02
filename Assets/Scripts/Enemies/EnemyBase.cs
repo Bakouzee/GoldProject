@@ -1,13 +1,8 @@
-﻿using System;
-using Enemies.States;
+﻿using Enemies.States;
 using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
-using Mono.Cecil;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 
 namespace Enemies
 {
@@ -18,10 +13,9 @@ namespace Enemies
     /// </summary>
     public class EnemyBase : Entity, IInteractable
     {
-        /// <summary>
-        /// Is the enemy the chief of exploration
-        /// </summary>
+        /// <summary>Is the enemy the chief of exploration</summary>
         public bool chief;
+        /// <summary>Is sensible to frightening traps</summary>
         public bool canBeAfraid;
         
         protected Health health;
@@ -122,7 +116,11 @@ namespace Enemies
         public bool NeedToBeInRange => true;
         public void Interact()
         {
-            health.TakeDamage(1);
+            if (health.TakeDamage(1))
+            {
+                // If died -> call OnEnemyKilled event
+                EnemyManager.OnEnemyKilled?.Invoke(this);
+            }
         }
     }
 }

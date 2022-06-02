@@ -38,7 +38,11 @@ namespace GoldProject.Rooms
         {
             Gizmos.color = Color.yellow;
             foreach (var room in rooms)
-                Gizmos.DrawWireCube(room.position,(Vector2)(room.size));
+            {
+                if (room == null || room.roomTransform == null)
+                    continue;
+                Gizmos.DrawWireCube(room.Position,(Vector2)(room.size));
+            }
         }
 
         public Room GetColliderRoom(Collider2D collider2D) => rooms.FirstOrDefault(room => room.IsRoomCollider(collider2D));

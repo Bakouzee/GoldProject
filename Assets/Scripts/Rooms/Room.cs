@@ -14,11 +14,12 @@ namespace GoldProject.Rooms
     {
         public string name;
         public bool isCorridor;
-        public Vector2 position;
+        public Vector2 Position => roomTransform.position;
         public Vector2Int size;
 
         public bool IsInside(Vector2 worldPosition)
         {
+            Vector2 position = Position;
             float halfLength = size.x * 0.5f;
             float halfHeight = size.y * 0.5f;
             return position.x - halfLength < worldPosition.x &&
@@ -45,6 +46,12 @@ namespace GoldProject.Rooms
 
         public void Initialize()
         {
+            if (!roomTransform)
+            {
+                Debug.LogWarning($"Room named {name} doesn't have a transform");
+                return;
+            } 
+            
             // Initialize curtains
             curtains = roomTransform.GetComponentsInChildren<Curtain>();
             foreach (Curtain curtain in curtains)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using GoldProject.Rooms;
 using GridSystem;
 using Unity.Notifications.Android;
@@ -42,6 +43,7 @@ namespace GoldProject
             RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
 
         [Header("Others"), SerializeField] private int lightDamage;
+        [SerializeField] private int lifeStealOnKill;
 
         protected override void Start()
         {
@@ -52,24 +54,40 @@ namespace GoldProject
 
             cameraController = FindObjectOfType<CameraController>();
 
+            RemainingActions = defaultActionsPerTurn;
+            SetGameHandlerEvents(gameManager);
+            SetEnemyManagerEvents();
+        }
+
+        #region Set Events
+
+        private void SetGameHandlerEvents(GameManager gameManager)
+        {
             // Transform or Untransform on day or night start
             gameManager.OnDayStart += UnTransform;
             gameManager.OnNightStart += Transform;
 
-            RemainingActions = defaultActionsPerTurn;
             // When a turn is launched -> reset the number of remaining action
             gameManager.OnLaunchedTurn += ResetRemainingAction;
 
+            // Check for light damage on day start
+            gameManager.OnDayStart += LookForLightDamage;
+        }
+
+        private void SetEnemyManagerEvents()
+        {
             // Get the ability to transform if a chief leave or die
-            Enemies.EnemyManager.OnEnemyDisappeared += enemy =>
+            EnemyManager.OnEnemyDisappeared += enemy =>
             {
                 if (enemy.chief)
                     canTransform = true;
             };
-            
-            // Check for light damage on day start
-            gameManager.OnDayStart += LookForLightDamage;
+
+            // Heal when killing an enemy
+            EnemyManager.OnEnemyDisappeared += enemy => { PlayerManager.PlayerHealth.HealPlayer(lifeStealOnKill); };
         }
+
+        #endregion
 
         private void Update()
         {

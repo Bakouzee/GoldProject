@@ -16,16 +16,22 @@ public class Health : MonoBehaviour
         currentHealth = healthMax;
     }
 
-    public virtual void TakeDamage(int amount)
+    /// <summary>Function to apply damage</summary>
+    /// <param name="amount">the amount of damage to apply</param>
+    /// <returns>is dead</returns>
+    public virtual bool TakeDamage(int amount)
     {
         if (dead)
-            return;
+            return false;
 
         currentHealth -= amount;
         if (currentHealth <= 0)
         {
             Die();
+            return true;
         }
+
+        return false;
     }
 
     public System.Action OnDeath;
