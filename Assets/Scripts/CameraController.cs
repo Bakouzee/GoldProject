@@ -14,10 +14,6 @@ namespace GoldProject
         private void Awake()
         {
             _camera = GetComponent<Camera>();
-        }
-
-        private void Start()
-        {
             zPos = transform.position.z;
             resolution = Screen.currentResolution;
         }

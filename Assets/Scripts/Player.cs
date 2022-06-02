@@ -48,12 +48,11 @@ namespace GoldProject
 
         protected override void Start()
         {
+            cameraController = FindObjectOfType<CameraController>();
             GameManager gameManager = GameManager.Instance;
 
             base.Start();
             gridController.OnMoved += OnMoved;
-
-            cameraController = FindObjectOfType<CameraController>();
 
             RemainingActions = defaultActionsPerTurn;
             SetGameHandlerEvents(gameManager);
@@ -229,6 +228,18 @@ namespace GoldProject
             {
                 // Take damage from light
                 PlayerManager.PlayerHealth.TakeFireDamage(lightDamage);
+            }
+        }
+
+        protected override void UpdateCurrentRoom()
+        {
+            var lastRoom = currentRoom;
+            base.UpdateCurrentRoom();
+
+            if (currentRoom != lastRoom)
+            {
+                Debug.Log("fee");
+                cameraController.ZoomToRoom(currentRoom);
             }
         }
 

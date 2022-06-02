@@ -14,7 +14,17 @@ namespace GoldProject.Rooms
     {
         public string name;
         public bool isCorridor;
-        public Vector2 Position => roomTransform.position;
+        public Vector2 Position => (Vector2)roomTransform.position + PrimaryCollider.offset;
+        private BoxCollider2D primaryCollider;
+        private BoxCollider2D PrimaryCollider
+        {
+            get
+            {
+                if (primaryCollider == null)
+                    primaryCollider = roomTransform.GetComponent<BoxCollider2D>();
+                return primaryCollider;
+            }
+        }
         public Vector2Int size;
 
         public bool IsInside(Vector2 worldPosition)

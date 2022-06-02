@@ -19,7 +19,7 @@ namespace GoldProject
             UpdateCurrentRoom();
         }
 
-        protected void UpdateCurrentRoom()
+        protected virtual void UpdateCurrentRoom()
         {
             // Find current room
             foreach (var room in RoomsManager.Instance.Rooms)
