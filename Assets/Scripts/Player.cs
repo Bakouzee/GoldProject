@@ -61,7 +61,6 @@ namespace GoldProject
         }
 
         #region Set Events
-
         private void SetGameHandlerEvents(GameManager gameManager)
         {
             // Transform or Untransform on day or night start
@@ -69,10 +68,12 @@ namespace GoldProject
             gameManager.OnNightStart += Transform;
 
             // When a turn is launched -> reset the number of remaining action
-            gameManager.OnLaunchedTurn += ResetRemainingAction;
-
-            // Check for light damage on day start
-            gameManager.OnDayStart += LookForLightDamage;
+            gameManager.OnLaunchedTurn += (phaseActionCount) =>
+            {
+                LookForGarlicDamage();
+                LookForLightDamage();
+                ResetRemainingAction(phaseActionCount);
+            };
         }
 
         private void SetEnemyManagerEvents()
@@ -212,10 +213,6 @@ namespace GoldProject
         {
             if (!currentRoom.IsInside(transform.position))
                 UpdateCurrentRoom();
-
-            LookForGarlicDamage();
-
-            LookForLightDamage();
         }
 
         private void LookForGarlicDamage()
