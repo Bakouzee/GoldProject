@@ -44,7 +44,7 @@ namespace Enemies.States
             turnCounter++;
             if (turnCounter >= numberOfTurn)
             {
-                GoToNextPhase();
+                GoToNextState();
             }
         }
 
@@ -62,7 +62,7 @@ namespace Enemies.States
                 if (gridManager.HasTile(temp))
                 {
                     // Calculate the number of move needed to join the frighteningSource from current position + direction
-                    tuples[i].Item2 = gridManager.TempGetPath(enemy.gridController.gridPosition + tuples[i].Item1,
+                    tuples[i].Item2 = gridManager.GetPath(enemy.gridController.gridPosition + tuples[i].Item1,
                         gridManager.GetGridPosition(frighteningSource.position)).Count;
                 }
                 else

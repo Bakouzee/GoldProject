@@ -15,15 +15,15 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public bool waitForVent = false;
 
-    public bool FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+    public bool FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffÃ© = true;
 
+    public Transform Transform => transform;
     public bool IsInteractable => true;
-
     public bool NeedToBeInRange => true;
 
     private void Start()
     {
-        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffÃ© = true;
         player = PlayerManager.Instance.Player;
     }
 
@@ -36,7 +36,7 @@ public class VentManager : MonoBehaviour, IInteractable
             //player.transform.position = ventTwo.transform.position;
             player.gridController.SetPosition(ventTwo.transform.position);
             waitForVent = true;
-            FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
+            FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffÃ© = false;
         }
         if (waitForVent)
         {            
@@ -54,7 +54,7 @@ public class VentManager : MonoBehaviour, IInteractable
         
         yield return new WaitForSeconds(5f);
         waitForVent = false;
-        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffÃ© = true;
 
         ventOne.GetComponent<BoxCollider2D>().enabled = true;
         ventOne.GetComponent<SpriteRenderer>().color = Color.white;

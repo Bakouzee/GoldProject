@@ -17,6 +17,20 @@ namespace Enemies
         public bool chief;
         /// <summary>Is sensible to frightening traps</summary>
         public bool canBeAfraid;
+
+        
+        [Space(20)]
+        [Tooltip("Windows, vents, etc... will not be detected if too far")]
+        [SerializeField] private int objectDetectionRange;
+        
+        [Header("Window")]
+        [Tooltip("Probabilty of opening a windowwhen passing next to a closed window")]
+        [Range(0f, 1f)] public float openWindowProba;
+        
+        [Header("Garlic")]
+        [Tooltip("Probability of putting a garlic on the floor when passing next to an open window")]
+        [Range(0f, 1f)] public float garlicProba;
+        public Garlic garlicPrefab; 
         
         protected Health health;
         
@@ -112,6 +126,7 @@ namespace Enemies
         
         
         // IInteractable implementation
+        public Transform Transform => transform;
         public bool IsInteractable => Player.transformed;
         public bool NeedToBeInRange => true;
         public void Interact()

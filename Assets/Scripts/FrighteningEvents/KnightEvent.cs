@@ -41,7 +41,7 @@ public class KnightEvent : FrighteningEventBase
         knightPos = GridManager.Instance.GetGridPosition(transform.position);
 
         //Get the path to do
-        directionKnight = GridManager.Instance.TempGetPath(knightPos, enemyToScare);
+        directionKnight = GridManager.Instance.GetPath(knightPos, enemyToScare);
 
         yield return new WaitForSeconds(1f);
     }
@@ -54,7 +54,7 @@ public class KnightEvent : FrighteningEventBase
         directionKnight.Clear();
 
         Vector2Int actualKnightPos = GridManager.Instance.GetGridPosition(transform.position);
-        directionKnight = GridManager.Instance.TempGetPath(actualKnightPos, knightPos);
+        directionKnight = GridManager.Instance.GetPath(actualKnightPos, knightPos);
 
         yield return new WaitForSeconds(1f);
         Debug.Log("undone");
