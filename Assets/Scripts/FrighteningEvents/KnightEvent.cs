@@ -26,11 +26,20 @@ public class KnightEvent : FrighteningEventBase
     //from a script to tell the knight where to move
     protected override IEnumerator DoActionCoroutine()
     {
+        if (CurrentRoom.enemies.Count == 0)
+        {
+            Debug.Log("No enemy in sight -> the trap didn't work !");
+            yield break;
+        }
+
+
         Enemies.EnemyManager.knights.Add(this);
         index = 0;
 
         //get the closest enemy pos so the knight will move to the enemy --> HAVE TO MAKE THE KNIGHT MOVE AT
         // THE SAME TIME OF THE ENEMIES
+
+
         enemyToScare = CurrentRoom.GetClosestEnemy(transform.position);
         knightPos = GridManager.Instance.GetGridPosition(transform.position);
 

@@ -30,6 +30,12 @@ public class NoiseEvent : FrighteningEventBase
     // Check if enemy is in range to activate the animation
     protected override IEnumerator DoActionCoroutine()
     {
+        if (CurrentRoom.enemies.Count == 0)
+        {
+            Debug.Log("No enemy in sight -> the trap didn't work !");
+            yield break;
+        }
+
         Vector2Int thisPos = GridManager.Instance.GetGridPosition(transform.position);
 
         foreach(EnemyBase enemy in CurrentRoom.enemies)
