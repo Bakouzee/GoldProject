@@ -16,17 +16,10 @@ public class KnightEvent : FrighteningEventBase
 
     public override void Interact()
     {
-        if(GameManager.dayState == GameManager.DayState.DAY)
-        {
-            // normally have to activate the trap AND WHEN an enemy is at his range or in the room
-            // the armor will move to him
-            Debug.Log("KnightTrap");
-            Do();
-        }
-        else
-        {
-            return;
-        }
+        // normally have to activate the trap AND WHEN an enemy is at his range or in the room
+        // the armor will move to him
+        Debug.Log("KnightTrap");
+        Do();
     }
 
 
@@ -80,7 +73,10 @@ public class KnightEvent : FrighteningEventBase
                 }
 
                 // Move the knight until he can't
-                gridController.Move(directionKnight[index]);
+                if(index < directionKnight.Count)
+                {
+                    gridController.Move(directionKnight[index]);
+                }
                 index++;
             }
         } else
