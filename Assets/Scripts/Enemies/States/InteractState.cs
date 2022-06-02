@@ -14,7 +14,7 @@ namespace Enemies.States
             nextState)
         {
             this.aimedTile = gridController.gridManager.FindClosestTile(interactable.Transform.position);
-            if (aimedTile == null || !interactable.IsInteractable)
+            if (aimedTile == null)
             {
                 GoToNextState();
                 return;
@@ -25,13 +25,6 @@ namespace Enemies.States
 
         public override void DoAction()
         {
-            // If interactable no more interactable --> stop and go next phase
-            if (!interactable.IsInteractable)
-            {
-                GoToNextState();
-                return;
-            }
-            
             // If no more
             if (directions.Count == 0)
             {

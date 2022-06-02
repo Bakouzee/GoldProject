@@ -110,9 +110,11 @@ namespace GoldProject.Rooms
             lighten = true;
         }
 
+        #region Get Closest T
 
         /// <summary>Give the closest curtain from a given position in this room</summary>
-        public Curtain GetClosestCurtain(Vector2 worldPosition) => GetClosest<Curtain>(worldPosition, in curtains);
+        public Curtain GetClosestCurtain(Vector2 worldPosition) => 
+            GetClosest<Curtain>(worldPosition, in curtains);
         
         /// <summary>Give the closest enemy from a given position in this room</summary>
         public EnemyBase GetClosestEnemy(Vector2 worldPosition)
@@ -122,7 +124,12 @@ namespace GoldProject.Rooms
         }
         
         /// <summary>Give the closest vent from a given position in this room</summary>
-        public VentManager GetClosestVent(Vector2 worldPosition) => GetClosest(worldPosition, in vents);
+        public VentManager GetClosestVent(Vector2 worldPosition) => 
+            GetClosest(worldPosition, in vents);
+
+        /// <summary>Give the closest FrighteningEvent from a given position in this room</summary>
+        public FrighteningEventBase GetClosestFrighteningEvent(Vector2 worldPosition) =>
+            GetClosest(worldPosition, in frighteningEvents);
         
         private T GetClosest<T>(Vector2 worldPosition, in T[] array) where T : MonoBehaviour
         {
@@ -144,6 +151,7 @@ namespace GoldProject.Rooms
             }
             return array[closestDistanceIndex];
         }
+        #endregion
 
         /// <summary>
         /// Tell if a collider is the collider of the room
