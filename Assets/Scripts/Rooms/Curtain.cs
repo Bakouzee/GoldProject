@@ -25,8 +25,8 @@ namespace GoldProject.Rooms
             light2D.gameObject.SetActive(false);
         }
 
+        public Transform Transform => transform;
         public bool IsInteractable => true; //opened;
-
         public bool NeedToBeInRange => true;
 
         public void Interact()

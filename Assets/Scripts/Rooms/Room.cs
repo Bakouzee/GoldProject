@@ -2,9 +2,7 @@
 using Enemies;
 using GoldProject.FrighteningEvent;
 using GridSystem;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
 namespace GoldProject.Rooms
@@ -33,6 +31,7 @@ namespace GoldProject.Rooms
 
         [HideInInspector] public Curtain[] curtains;
         [HideInInspector] public FrighteningEventBase[] frighteningEvents;
+        [HideInInspector] public VentManager[] vents;
         [HideInInspector] public List<Garlic> garlics;
         [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         public Transform[] pathPoints;
@@ -71,6 +70,9 @@ namespace GoldProject.Rooms
                 frighteningEventBase.CurrentRoom = this;
             }
             
+            
+            // Find vents
+            vents = roomTransform.GetComponentsInChildren<VentManager>();
             // Find garlics
             garlics = new List<Garlic>(roomTransform.GetComponentsInChildren<Garlic>());
             
@@ -108,31 +110,39 @@ namespace GoldProject.Rooms
             lighten = true;
         }
 
-        /// <summary>
-        /// Give the closest enemy from a given position in this room
-        /// </summary>
-        /// <param name="worldPosition"></param>
-        /// <returns></returns>
+
+        /// <summary>Give the closest curtain from a given position in this room</summary>
+        public Curtain GetClosestCurtain(Vector2 worldPosition) => GetClosest<Curtain>(worldPosition, in curtains);
+        
+        /// <summary>Give the closest enemy from a given position in this room</summary>
         public EnemyBase GetClosestEnemy(Vector2 worldPosition)
         {
-            if (enemies.Count == 0)
+            EnemyBase[] enemiesArray = this.enemies.ToArray();
+            return GetClosest<EnemyBase>(worldPosition, in enemiesArray);
+        }
+        
+        /// <summary>Give the closest vent from a given position in this room</summary>
+        public VentManager GetClosestVent(Vector2 worldPosition) => GetClosest(worldPosition, in vents);
+        
+        private T GetClosest<T>(Vector2 worldPosition, in T[] array) where T : MonoBehaviour
+        {
+            if (array.Length == 0)
                 return null;
-            
-            GridManager gridManager = GridManager.Instance;
 
+            GridManager gridManager = GridManager.Instance;
+            
             int closestDistanceIndex = 0;
-            int closestDistance = gridManager.GetManhattanDistance(worldPosition, enemies[0].transform.position);
-            for (int i = 1; i < enemies.Count; i++)
+            int closestDistance = gridManager.GetManhattanDistance(worldPosition, array[0].transform.position);
+            for (int i = 1; i < array.Length; i++)
             {
-                int distance = gridManager.GetManhattanDistance(worldPosition, enemies[i].transform.position);
+                int distance = gridManager.GetManhattanDistance(worldPosition, array[i].transform.position);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
                     closestDistanceIndex = i;
                 }
             }
-
-            return enemies[closestDistanceIndex];
+            return array[closestDistanceIndex];
         }
 
         /// <summary>

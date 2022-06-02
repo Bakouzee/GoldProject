@@ -102,6 +102,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chief: 0
   canBeAfraid: 1
+  objectDetectionRange: 3
+  openWindowProba: 0.5
+  garlicProba: 0.5
+  garlicPrefab: {fileID: 1313222802256865829, guid: ad3f17827c2be3c4e93df67824a6d7f4, type: 3}
 --- !u!58 &2110391225984441415
 CircleCollider2D:
   m_ObjectHideFlags: 0

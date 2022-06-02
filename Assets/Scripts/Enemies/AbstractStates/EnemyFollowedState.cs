@@ -17,7 +17,7 @@ namespace Enemies.States
         }
         
         /// <summary>Method used to force the enemy to switch to the new state</summary>
-        protected void GoToNextPhase()
+        protected void GoToNextState()
         {
             enemy.SetState(nextState);
         }

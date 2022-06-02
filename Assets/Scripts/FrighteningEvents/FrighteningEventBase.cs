@@ -79,8 +79,8 @@ namespace GoldProject.FrighteningEvent
         #endregion
 
         // Temporary for debug reasons
+        public Transform Transform => transform;
         public bool IsInteractable => true;
-
         public bool NeedToBeInRange => isTriggered;
 
         public virtual void Interact()
