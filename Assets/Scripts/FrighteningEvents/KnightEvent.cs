@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoldProject.FrighteningEvent;
 using GridSystem;
+using Enemies;
 
 public class KnightEvent : FrighteningEventBase
 {
     public List<Direction> directionKnight = new List<Direction>();
     private int index = 0;
-
+    private EnemyBase enemyToScare;
     private Vector2Int knightPos;
 
     public int NumberOfTurnTheKnightCanMove = 5;
@@ -37,12 +38,17 @@ public class KnightEvent : FrighteningEventBase
 
         //get the closest enemy pos so the knight will move to the enemy --> HAVE TO MAKE THE KNIGHT MOVE AT
         // THE SAME TIME OF THE ENEMIES
-        Vector2Int enemyToScare = CurrentRoom.GetClosestEnemy(transform.position).GridController.gridPosition;
+        enemyToScare = CurrentRoom.GetClosestEnemy(transform.position);
         knightPos = GridManager.Instance.GetGridPosition(transform.position);
 
         //Get the path to do
-        directionKnight = GridManager.Instance.GetPath(knightPos, enemyToScare);
+        directionKnight = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
 
+        // If the enemy is directly next to the trap -> he will be scared !
+        if(directionKnight.Count < distanceToBeScared)
+        {
+            enemyToScare.GetAfraid(transform);
+        }
         yield return new WaitForSeconds(1f);
     }
 
@@ -66,6 +72,14 @@ public class KnightEvent : FrighteningEventBase
         {
             if(index < NumberOfTurnTheKnightCanMove)
             {
+                // Check if the knight is at distance to scare the enemy
+                List<Direction> refreshedDistance = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
+                if(refreshedDistance.Count < distanceToBeScared)
+                {
+                    enemyToScare.GetAfraid(transform);
+                }
+
+                // Move the knight until he can't
                 gridController.Move(directionKnight[index]);
                 index++;
             }

@@ -24,6 +24,8 @@ namespace GoldProject.FrighteningEvent
 
         public Rooms.Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
 
+        public int distanceToBeScared = 6;
+
         private bool isTriggered = false;
         public bool IsTriggered => isTriggered;
         private bool inProgress = false;
