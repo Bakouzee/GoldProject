@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : Health
 {
     public PlayerManager PlayerManager { private get; set; }
-    public int maxHealth = 100;
-
-    public int currentHealth;
 
     public bool IsInOnionZone = false;
 
@@ -17,22 +14,12 @@ public class PlayerHealth : MonoBehaviour
 
     public bool IsInvincible = false;
 
-    public HealthBar healthBar;
-
+    public System.Action<int> OnHealthUpdated;
+    
     public SpriteRenderer sprite;
-
-    private void Start()
-    {
-        currentHealth = maxHealth;
-        healthBar.SetMaxHealth(maxHealth);
-    }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            TakeDamage(20);
-        }
         if(currentHealth <= 0)
         {
             Death();
@@ -40,16 +27,16 @@ public class PlayerHealth : MonoBehaviour
     }
     public void HealPlayer(int healAmount)
     {
-        if((currentHealth + healAmount) > maxHealth)
+        if((currentHealth + healAmount) > healthMax)
         {
-            currentHealth = maxHealth;
+            currentHealth = healthMax;
         }
         else
         {
             currentHealth += healAmount;
 
         }
-        healthBar.SetHealth(currentHealth);
+        OnHealthUpdated?.Invoke(currentHealth);
     }
 
     void Death()
@@ -65,10 +52,11 @@ public class PlayerHealth : MonoBehaviour
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(BurningFlash());
-            StartCoroutine(InvincibillityDelay());
+            IsInvincible = false;
+            // StartCoroutine(InvincibillityDelay());
 
         }
     }
@@ -77,26 +65,29 @@ public class PlayerHealth : MonoBehaviour
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(StinkFlash());
-            StartCoroutine(InvincibillityDelay());
+            // StartCoroutine(InvincibillityDelay());
+            IsInvincible = false;
 
         }
     }
 
 
-    public void TakeDamage(int damage)
+    public override bool TakeDamage(int damage)
     {
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            healthBar.SetHealth(currentHealth);  
+            OnHealthUpdated?.Invoke(currentHealth);
             IsInvincible = true;
             StartCoroutine(InvincibillityFlash());
-            StartCoroutine(InvincibillityDelay());
-
+            IsInvincible = false;
+            // StartCoroutine(InvincibillityDelay());
         }
+
+        return false;
     }
 
     public IEnumerator InvincibillityFlash()

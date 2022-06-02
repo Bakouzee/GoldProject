@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Enemies;
 using GoldProject.Rooms;
 using GridSystem;
 using Unity.Notifications.Android;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
+using AudioController;
 
 namespace GoldProject
 {
@@ -14,104 +16,185 @@ namespace GoldProject
     {
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
-        
+
         [Header("Movements")]
-        [SerializeField] private float moveCooldown;
-        [SerializeField] private int defaultMoveRange = 1;
-        [SerializeField] private int transformedMoveRange = 3;
-        private int currentMoveRange;
-        private int CurrentMoveRange
+        [SerializeField] private int defaultActionsPerTurn = 1;
+        [SerializeField] private int transformedActionsPerTurn = 3;
+        private int remainingActions;
+
+        private int RemainingActions
         {
-            get => currentMoveRange;
+            get => remainingActions;
             set
             {
-                currentMoveRange = value;
+                remainingActions = value;
+                if (remainingActions <= 0)
+                {
+                    // OnLaunchedTurn reset remainingAction
+                    GameManager.Instance.LaunchTurn();
+                    return;
+                }
+
                 Tile.ResetWalkableTiles();
-                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, currentMoveRange);
+                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
             }
         }
-        
-        private bool hasPath;
-        private List<Direction> path = new List<Direction>();
-        [Header("Others"), SerializeField] 
-        private int lightDamage;
+
+        private void ResetRemainingAction(int phaseActionCount) =>
+            RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
+
+        [Header("Others"), SerializeField] private int lightDamage;
+        [SerializeField] private int lifeStealOnKill;
 
         protected override void Start()
         {
+            GameManager gameManager = GameManager.Instance;
+
             base.Start();
             gridController.OnMoved += OnMoved;
 
             cameraController = FindObjectOfType<CameraController>();
-            
-            CurrentMoveRange = defaultMoveRange;
+
+            RemainingActions = defaultActionsPerTurn;
+            SetGameHandlerEvents(gameManager);
+            SetEnemyManagerEvents();
         }
+
+        #region Set Events
+
+        private void SetGameHandlerEvents(GameManager gameManager)
+        {
+            // Transform or Untransform on day or night start
+            gameManager.OnDayStart += UnTransform;
+            gameManager.OnNightStart += Transform;
+
+            // When a turn is launched -> reset the number of remaining action
+            gameManager.OnLaunchedTurn += ResetRemainingAction;
+
+            // Check for light damage on day start
+            gameManager.OnDayStart += LookForLightDamage;
+        }
+
+        private void SetEnemyManagerEvents()
+        {
+            // Get the ability to transform if a chief leave or die
+            EnemyManager.OnEnemyDisappeared += enemy =>
+            {
+                if (enemy.chief)
+                    canTransform = true;
+            };
+
+            // Heal when killing an enemy
+            EnemyManager.OnEnemyDisappeared += enemy => { PlayerManager.PlayerHealth.HealPlayer(lifeStealOnKill); };
+        }
+
+        #endregion
 
         private void Update()
         {
-            if (hasPath)
-                return;
+            // TEST AUDIO FOOTSTEP
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Footstep);
+            }
 
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                canTransform = true;
+                Transform();
+            }
+            
             if (Input.touchCount > 0)
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
+                    Vector3 mousePosition = Vector3.zero;
                     // Do nothing if clicking UI
                     if (GameManager.eventSystem.IsPointerOverGameObject())
                         return;
 
-                    Vector3 mousePosition = cameraController.Camera.ScreenToWorldPoint(Input.mousePosition);
+                    if (PlayerManager.mapSeen == true)
+                    {
+                        Camera camMiniMap = PlayerManager.Instance.miniMap.GetComponent<Camera>();
+                        mousePosition = camMiniMap.ScreenToWorldPoint(Input.mousePosition);
+                    }
+                    else
+                    {
+                        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                    }
 
-                    RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.right, 0.1f);
+
+                    RaycastHit2D[] hits = Physics2D.RaycastAll(mousePosition, Vector3.back, 0.1f);
                     if (hits.Length == 0)
                         return;
 
                     // Look for IInteractable or Tile or... and break if found
                     foreach (var hit in hits)
                     {
+                        // Interactable objects
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
-                            if (interactable.IsInteractable &&
-                                gridController.gridManager.GetManhattanDistance(transform.position, hit.transform.position) <= 1)
+                            // Just to not copy/paste
+                            System.Action interact = () =>
                             {
                                 interactable.Interact();
                                 GameManager.Instance.LaunchTurn();
+                            };
+
+                            if (interactable.NeedToBeInRange)
+                            {
+                                if (gridController.gridManager.GetManhattanDistance(transform.position,
+                                    hit.transform.position) <= 1 && interactable.IsInteractable)
+                                {
+                                    interact.Invoke();
+                                    break;
+                                }
+                            }
+                            else
+                            {
+                                interact.Invoke();
                                 break;
                             }
                         }
+
+                        // Tiles
                         else if (hit.transform.TryGetComponent(out Tile tile))
                         {
                             if (gridController.gridPosition == tile.GridPos)
                                 continue;
 
-                            if (gridController.gridManager.GetManhattanDistance(gridController.gridPosition, tile.GridPos) <= CurrentMoveRange)
+                            int manhattanDistance =
+                                gridController.gridManager.GetManhattanDistance(gridController.gridPosition,
+                                    tile.GridPos);
+                            if (manhattanDistance <= RemainingActions)
                             {
-                                // StartPath(tile.GridPos);
-                                
-                                Tile.ResetWalkableTiles();
-                                gridController.SetPosition(tile.GridPos);
-                                gridController.OnMoved?.Invoke(gridController.gridPosition);
-                                GameManager.Instance.LaunchTurn();
-                                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
-                                break;
+                                if (gridController.SetPosition(tile.GridPos))
+                                {
+                                    RemainingActions -= manhattanDistance;
+                                    break;
+                                }
                             }
                         }
                     }
                 }
         }
 
-        private bool transformed;
+        #region Transformation
+
+        public static bool transformed;
+        private bool canTransform;
 
         public void Transform()
         {
-            if (transformed)
+            if (transformed || !canTransform)
                 return;
+            canTransform = false;
             transformed = true;
 
-            // TODO: Waiting for Frighten method in enemies
             // Frighten enemies in the room
-            // foreach (var enemy in currentRoom.enemies)
-            // enemy.Frighten();
+            foreach (var enemy in currentRoom.enemies)
+                enemy.GetAfraid(source: transform);
 
-            CurrentMoveRange = transformedMoveRange;
+            RemainingActions = transformedActionsPerTurn;
         }
 
         public void UnTransform()
@@ -120,57 +203,33 @@ namespace GoldProject
                 return;
             transformed = false;
 
-            CurrentMoveRange = defaultMoveRange;
+            RemainingActions = defaultActionsPerTurn;
         }
 
-        private void StartPath(Vector2Int aimedGridPos)
-        {
-            if (hasPath || moveCoroutine != null)
-                return;
-            path = gridController.gridManager.TempGetPath(gridController.gridPosition, aimedGridPos);
-            hasPath = true;
+        #endregion
 
-            moveCoroutine = MoveCoroutine();
-            StartCoroutine(moveCoroutine);
-        }
-
-        private IEnumerator moveCoroutine;
-
-        IEnumerator MoveCoroutine()
-        {
-            Tile.ResetWalkableTiles();
-
-            foreach (Direction direction in path)
-            {
-                gridController.Move(direction);
-                yield return new WaitForSeconds(moveCooldown);
-            }
-
-            OnStoppedMoving();
-            hasPath = false;
-            moveCoroutine = null;
-        }
-        
         private void OnMoved(Vector2Int newGridPos)
+        {
+            LookForGarlicDamage();
+
+            LookForLightDamage();
+        }
+
+        private void LookForGarlicDamage()
         {
             if (currentRoom.IsInGarlicRange(transform.position, out Garlic damagingGarlic))
             {
-                Debug.Log("Garlic in range");
-                PlayerManager.PlayerHealth.TakeDamage(damagingGarlic.damage);
+                // Take damage from garlic
+                PlayerManager.PlayerHealth.TakeStinkDamage(damagingGarlic.damage);
             }
-
+        }
+        public void LookForLightDamage()
+        {
             if (currentRoom.IsInLight(transform.position))
             {
-                Debug.Log("Take damage from light");
-                PlayerManager.PlayerHealth.TakeDamage(lightDamage);
+                // Take damage from light
+                PlayerManager.PlayerHealth.TakeFireDamage(lightDamage);
             }
-            
-            // GameManager.Instance.LaunchTurn();
-        }
-        
-        private void OnStoppedMoving()
-        {
-            gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, CurrentMoveRange);
         }
 
         protected override void OnEnterRoom(Room room)
@@ -179,6 +238,7 @@ namespace GoldProject
         }
 
         #region UI Methods
+
         public void MoveLeft() => TryMove(Vector2Int.left);
         public void MoveRight() => TryMove(Vector2Int.right);
         public void MoveUp() => TryMove(Vector2Int.up);
@@ -186,12 +246,9 @@ namespace GoldProject
 
         public void TryMove(Vector2Int vec)
         {
-            if (hasPath)
-                return;
-
-            Tile.ResetWalkableTiles();
-            gridController.Move(Direction.FromVector2Int(vec));
-            OnStoppedMoving();
+            if (gridController.Move(Direction.FromVector2Int(vec)))
+                // Only decrement remaining action if Move is a success
+                RemainingActions--;
         }
 
         #endregion

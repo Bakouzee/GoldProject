@@ -1,15 +1,8 @@
-﻿using System;
-using Enemies.States;
+﻿using Enemies.States;
 using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
-using Mono.Cecil;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
-using System.Collections.Generic;
-using GridSystem;
 
 namespace Enemies
 {
@@ -20,6 +13,27 @@ namespace Enemies
     /// </summary>
     public class EnemyBase : Entity, IInteractable
     {
+        /// <summary>Is the enemy the chief of exploration</summary>
+        public bool chief;
+        /// <summary>Is sensible to frightening traps</summary>
+        public bool canBeAfraid;
+
+        
+        [Space(20)]
+        [Tooltip("Windows, vents, etc... will not be detected if too far")]
+        [SerializeField] private int objectDetectionRange;
+        
+        [Header("Window")]
+        [Tooltip("Probabilty of opening a windowwhen passing next to a closed window")]
+        [Range(0f, 1f)] public float openWindowProba;
+        
+        [Header("Garlic")]
+        [Tooltip("Probability of putting a garlic on the floor when passing next to an open window")]
+        [Range(0f, 1f)] public float garlicProba;
+        public Garlic garlicPrefab; 
+        
+        protected Health health;
+        
         // States
         protected EnemyBaseState currentState;
         protected ExplorationStateBase explorationState;
@@ -41,12 +55,32 @@ namespace Enemies
         
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
-        private void OnDestroy() => EnemyManager.enemies.Remove(this);
+        private void OnDestroy()
+        {
+            // remove self from room enemies list
+            if (currentRoom != null)
+                currentRoom.enemies.Remove(this);
+            
+            // Remove self from allEnemies list
+            EnemyManager.enemies.Remove(this);
+        }
 
         protected override void Start()
         {
             base.Start();
 
+            health = GetComponent<Health>();
+            
+            // Call EnemyManager.OnEnemyDeath when dead
+            health.OnDeath += () =>
+            {
+                EnemyManager.OnEnemyDeath?.Invoke(this);
+                // foreach (var enemy in currentRoom.enemies)
+                // {
+                //     enemy.Afraid();
+                // }
+            };
+            
             DefineStates();
             SetState(explorationState);
 
@@ -135,7 +169,7 @@ namespace Enemies
         /// and the enter in the new one
         /// </summary>
         /// <param name="enemyBaseState"></param>
-        protected virtual void SetState(EnemyBaseState enemyBaseState)
+        public virtual void SetState(EnemyBaseState enemyBaseState)
         {
             if (enemyBaseState == null)
                 return;
@@ -148,11 +182,34 @@ namespace Enemies
         protected override void OnExitRoom(Room room) => room.enemies.Remove(this);
         protected override void OnEnterRoom(Room room) => room.enemies.Add(this);
 
+
+        public void GetAfraid(Transform source)
+        {
+            if (!canBeAfraid)
+                return;
+            
+            SetState(
+                new RunningState(
+                    enemy: this,
+                    frighteningSource: source,
+                    numberOfTurn: 3,
+                    nextState: new ExplorationStateBase(this)
+                )
+            );
+        }
+        
+        
         // IInteractable implementation
-        public bool IsInteractable => GameManager.dayState == GameManager.DayState.NIGHT;
+        public Transform Transform => transform;
+        public bool IsInteractable => Player.transformed;
+        public bool NeedToBeInRange => true;
         public void Interact()
         {
-            // Take Damage
+            if (health.TakeDamage(1))
+            {
+                // If died -> call OnEnemyKilled event
+                EnemyManager.OnEnemyKilled?.Invoke(this);
+            }
         }
 
         private void OnDrawGizmos() {

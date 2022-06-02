@@ -1,13 +1,18 @@
 ﻿using UnityEngine;
 using System;
+using System.Linq.Expressions;
 
 namespace GridSystem
 {
+    /// <summary>
+    /// Class meant to be used as an enum
+    /// Contains useful classes to convert to or from Vectors
+    /// </summary>
     public class Direction
     {
         private string value;
         public string Value => value;
-        
+
         public const string Up = "Up";
         public const string Left = "Left";
         public const string Right = "Right";
@@ -15,83 +20,53 @@ namespace GridSystem
 
         private Direction(string value) => this.value = value;
 
-        #region From Vector 2s
-        public static Direction FromVector2Int(Vector2Int vec)
+        public Direction Inverse() => value switch
         {
-            string dir = "";
-            if (vec.x > 0)
-                dir = Right;
-            else if (vec.x < 0)
-                dir = Left;
-            else if (vec.y > 0)
-                dir = Up;
-            else if (vec.y < 0)
-                dir = Down;
-            
-            return new Direction(dir);
-        }
+            Direction.Up => new Direction(Direction.Down),
+            Direction.Left => new Direction(Direction.Right),
+            Direction.Down => new Direction(Direction.Up),
+            Direction.Right => new Direction(Direction.Left),
+            _ => null
+        };
+
+        #region From Vector 2s
+
+        public static Direction FromVector2Int(Vector2Int vec) => FromVector2(vec);
+
         public static Direction FromVector2(Vector2 vec)
         {
             if (vec == Vector2.zero)
                 throw new Exception("Vector2 can't be null");
 
-            Vector2[] vector2s = {Vector2.up, Vector2.left, Vector2.down, Vector2.right};
-            string[] directions = {Direction.Up, Direction.Left, Direction.Down, Direction.Right};
-            int closestDirectionIndex = 0;
-            float closestDirectionAngle = Vector2.Angle(vec, vector2s[0]);
-            for (int i = 1; i < vector2s.Length; i++)
-            {
-                float angle = Vector2.Angle(vec, vector2s[i]);
-                if (angle < closestDirectionAngle)
-                {
-                    closestDirectionAngle = angle;
-                    closestDirectionIndex = i;
-                }
-            }
+            float xAbs = Mathf.Abs(vec.x);
+            float yAbs = Mathf.Abs(vec.y);
 
-            return new Direction(directions[closestDirectionIndex]);
+            if (xAbs >= yAbs)
+            {
+                return new Direction(vec.x > 0 ? Direction.Right : Direction.Left);
+            }
+            else
+            {
+                return new Direction(vec.y > 0 ? Direction.Up : Direction.Down);
+            }
         }
+
         #endregion
 
         #region To Vector 2s
-        Vector2Int ToVector2Int() => ToVector2Int(value);
-        public static Vector2Int ToVector2Int(string direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    return Vector2Int.up;
-                case Direction.Down:
-                    return Vector2Int.down;
-                case Direction.Left:
-                    return Vector2Int.left;
-                case Direction.Right:
-                    return Vector2Int.right;
-                default:
-                    return Vector2Int.zero;
-            }
-        }
-        public static Vector2 ToVector2(string direction)
-        {
-            switch (direction)
-            {
-                case Direction.Up:
-                    return Vector2.up;
-                case Direction.Down:
-                    return Vector2.down;
-                case Direction.Left:
-                    return Vector2.left;
-                case Direction.Right:
-                    return Vector2.right;
-                default:
-                    return Vector2.zero;
-            }
-        }
 
-        public static Vector3 ToVector3(string direction)
+        Vector2Int ToVector2Int() => ToVector2Int(value);
+
+        public static Vector2Int ToVector2Int(string direction) => direction switch
         {
-            return (Vector3)ToVector2(direction);
-        }
+            Direction.Up => Vector2Int.up,
+            Direction.Left => Vector2Int.left,
+            Direction.Down => Vector2Int.down,
+            Direction.Right => Vector2Int.right,
+            _ => Vector2Int.zero
+        };
+        public static Vector2 ToVector2(string direction) => ToVector2Int(direction);
+        public static Vector3 ToVector3(string direction) => (Vector3) ToVector2(direction);
         #endregion
 
         public override string ToString() => value;

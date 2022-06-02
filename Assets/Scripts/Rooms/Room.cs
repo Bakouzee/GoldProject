@@ -2,9 +2,7 @@
 using Enemies;
 using GoldProject.FrighteningEvent;
 using GridSystem;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.Serialization;
 
 namespace GoldProject.Rooms
@@ -14,11 +12,12 @@ namespace GoldProject.Rooms
     {
         public string name;
         public bool isCorridor;
-        public Vector2 position;
+        public Vector2 Position => roomTransform.position;
         public Vector2Int size;
 
         public bool IsInside(Vector2 worldPosition)
         {
+            Vector2 position = Position;
             float halfLength = size.x * 0.5f;
             float halfHeight = size.y * 0.5f;
             return position.x - halfLength < worldPosition.x &&
@@ -32,8 +31,8 @@ namespace GoldProject.Rooms
 
         [HideInInspector] public Curtain[] curtains;
         [HideInInspector] public FrighteningEventBase[] frighteningEvents;
+        [HideInInspector] public VentManager[] vents;
         [HideInInspector] public List<Garlic> garlics;
-
         [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         public Transform[] pathPoints;
 
@@ -45,18 +44,25 @@ namespace GoldProject.Rooms
 
         public void Initialize()
         {
+            if (!roomTransform)
+            {
+                Debug.LogWarning($"Room named {name} doesn't have a transform");
+                return;
+            } 
+            
             // Initialize curtains
             curtains = roomTransform.GetComponentsInChildren<Curtain>();
             foreach (Curtain curtain in curtains)
             {
                 if (curtain == null)
                     continue;
+                
                 curtain.SetOpened(false);
                 curtain.onStateChanged = UpdateLightState;
             }
 
             // Initialize frightening events
-            FrighteningEventBase[] events = roomTransform.GetComponentsInChildren<FrighteningEventBase>();
+            frighteningEvents = roomTransform.GetComponentsInChildren<FrighteningEventBase>();
             foreach (var frighteningEventBase in frighteningEvents)
             {
                 if (frighteningEventBase == null)
@@ -64,6 +70,9 @@ namespace GoldProject.Rooms
                 frighteningEventBase.CurrentRoom = this;
             }
             
+            
+            // Find vents
+            vents = roomTransform.GetComponentsInChildren<VentManager>();
             // Find garlics
             garlics = new List<Garlic>(roomTransform.GetComponentsInChildren<Garlic>());
             
@@ -88,6 +97,9 @@ namespace GoldProject.Rooms
 
             foreach (var curtain in curtains)
             {
+                if (curtain == null)
+                    continue;
+                
                 if (!curtain.IsOpened)
                 {
                     lighten = false;
@@ -98,29 +110,48 @@ namespace GoldProject.Rooms
             lighten = true;
         }
 
-        /// <summary>
-        /// Give the closest enemy from a given position in this room
-        /// </summary>
-        /// <param name="worldPosition"></param>
-        /// <returns></returns>
+        #region Get Closest T
+
+        /// <summary>Give the closest curtain from a given position in this room</summary>
+        public Curtain GetClosestCurtain(Vector2 worldPosition) => 
+            GetClosest<Curtain>(worldPosition, in curtains);
+        
+        /// <summary>Give the closest enemy from a given position in this room</summary>
         public EnemyBase GetClosestEnemy(Vector2 worldPosition)
         {
-            GridManager gridManager = GridManager.Instance;
+            EnemyBase[] enemiesArray = this.enemies.ToArray();
+            return GetClosest<EnemyBase>(worldPosition, in enemiesArray);
+        }
+        
+        /// <summary>Give the closest vent from a given position in this room</summary>
+        public VentManager GetClosestVent(Vector2 worldPosition) => 
+            GetClosest(worldPosition, in vents);
 
+        /// <summary>Give the closest FrighteningEvent from a given position in this room</summary>
+        public FrighteningEventBase GetClosestFrighteningEvent(Vector2 worldPosition) =>
+            GetClosest(worldPosition, in frighteningEvents);
+        
+        private T GetClosest<T>(Vector2 worldPosition, in T[] array) where T : MonoBehaviour
+        {
+            if (array.Length == 0)
+                return null;
+
+            GridManager gridManager = GridManager.Instance;
+            
             int closestDistanceIndex = 0;
-            int closestDistance = gridManager.GetManhattanDistance(worldPosition, enemies[0].transform.position);
-            for (int i = 1; i < enemies.Count; i++)
+            int closestDistance = gridManager.GetManhattanDistance(worldPosition, array[0].transform.position);
+            for (int i = 1; i < array.Length; i++)
             {
-                int distance = gridManager.GetManhattanDistance(worldPosition, enemies[i].transform.position);
+                int distance = gridManager.GetManhattanDistance(worldPosition, array[i].transform.position);
                 if (distance < closestDistance)
                 {
                     closestDistance = distance;
                     closestDistanceIndex = i;
                 }
             }
-
-            return enemies[closestDistanceIndex];
+            return array[closestDistanceIndex];
         }
+        #endregion
 
         /// <summary>
         /// Tell if a collider is the collider of the room
@@ -151,6 +182,9 @@ namespace GoldProject.Rooms
         {
             foreach (Garlic garlic in garlics)
             {
+                if (garlic == null)
+                    continue;
+                
                 if (garlic.IsInRange(worldPosition))
                 {
                     damagingGarlic = garlic;
@@ -177,6 +211,9 @@ namespace GoldProject.Rooms
 
             foreach (var curtain in curtains)
             {
+                if (curtain == null)
+                    continue;
+                
                 if (!curtain.IsOpened)
                     continue;
 

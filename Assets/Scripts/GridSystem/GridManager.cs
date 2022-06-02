@@ -61,7 +61,6 @@ namespace GridSystem
             new Vector2Int((int) worldPosition.x, (int) worldPosition.y);
 
         #region Get Tile at Position
-
         public Tile GetTileAtPosition(Vector3 worldPosition) =>
             GetTileAtPosition(GetGridPosition(worldPosition));
         public Tile GetTileAtPosition(Vector2Int gridPos) => GetTileAtPosition(gridPos.x, gridPos.y);
@@ -110,66 +109,69 @@ namespace GridSystem
         }
 
         #region Pathfinding
-        public List<Direction> GetPath(Vector2Int startGridPos, Vector2Int aimedGridPos)
-        {
-            if (startGridPos == aimedGridPos)
-            {
-                Debug.Log("chemin généré a 100%");
-                return null;
-            }
+        // RIP Amaury
+        // public List<Direction> GetPath(Vector2Int startGridPos, Vector2Int aimedGridPos)
+        // {
+        //     if (startGridPos == aimedGridPos)
+        //     {
+        //         Debug.Log("chemin généré a 100%");
+        //         return null;
+        //     }
+        //
+        //     List<Direction> path = new List<Direction>();
+        //
+        //     // Get tiles
+        //     Tile origin = GetTileAtPosition(startGridPos);
+        //     Tile end = GetTileAtPosition(aimedGridPos);
+        //
+        //     // Set startTile green
+        //     if (debug)
+        //         origin.GetComponent<SpriteRenderer>().color = Color.green;
+        //
+        //     // Get the best tile
+        //     Tile smallestTile = null;
+        //     foreach (Tile tile in GetTouchingTiles(origin))
+        //     {
+        //         if (tile != null)
+        //         {
+        //             tile.GCost = GetManhattanDistance(origin, tile);
+        //             tile.HCost = GetManhattanDistance(tile, end);
+        //
+        //
+        //             if (smallestTile == null || smallestTile.FCost > tile.FCost)
+        //                 smallestTile = tile;
+        //             else if (smallestTile.FCost == tile.FCost)
+        //                 smallestTile = smallestTile.HCost > tile.HCost ? tile : smallestTile;
+        //         }
+        //     }
+        //
+        //     // Get direction to the best tile
+        //     Vector2Int gridDirection = smallestTile.GridPos - origin.GridPos;
+        //     Direction dir = Direction.FromVector2Int(gridDirection);
+        //
+        //     // Add to path
+        //     // path.Add(smallestTile, dir);
+        //     path.Add(dir);
+        //
+        //     if (debug)
+        //         smallestTile.gameObject.GetComponent<SpriteRenderer>().color =
+        //             new Color(Color.green.r, Color.green.g, Color.green.b, 0.3f);
+        //
+        //
+        //     // If already reached target
+        //     if ((Vector2) smallestTile.GridPos == aimedGridPos)
+        //         return path;
+        //
+        //     path.AddRange(GetPath(smallestTile.GridPos, aimedGridPos));
+        //     return path;
+        // }
 
-            List<Direction> path = new List<Direction>();
-
-            // Get tiles
-            Tile origin = GetTileAtPosition(startGridPos);
-            Tile end = GetTileAtPosition(aimedGridPos);
-
-            // Set startTile green
-            if (debug)
-                origin.GetComponent<SpriteRenderer>().color = Color.green;
-
-            // Get the best tile
-            Tile smallestTile = null;
-            foreach (Tile tile in GetTouchingTiles(origin))
-            {
-                if (tile != null)
-                {
-                    tile.GCost = GetManhattanDistance(origin, tile);
-                    tile.HCost = GetManhattanDistance(tile, end);
-
-
-                    if (smallestTile == null || smallestTile.FCost > tile.FCost)
-                        smallestTile = tile;
-                    else if (smallestTile.FCost == tile.FCost)
-                        smallestTile = smallestTile.HCost > tile.HCost ? tile : smallestTile;
-                }
-            }
-
-            // Get direction to the best tile
-            Vector2Int gridDirection = smallestTile.GridPos - origin.GridPos;
-            Direction dir = Direction.FromVector2Int(gridDirection);
-
-            // Add to path
-            // path.Add(smallestTile, dir);
-            path.Add(dir);
-
-            if (debug)
-                smallestTile.gameObject.GetComponent<SpriteRenderer>().color =
-                    new Color(Color.green.r, Color.green.g, Color.green.b, 0.3f);
-
-
-            // If already reached target
-            if ((Vector2) smallestTile.GridPos == aimedGridPos)
-                return path;
-
-            path.AddRange(GetPath(smallestTile.GridPos, aimedGridPos));
-            return path;
-        }
-
-        public List<Direction> TempGetPath(Vector2Int startGridPos, Vector2Int targetGridPos)
+        public List<Direction> GetPath(Vector2Int startGridPos, Vector2Int targetGridPos)
         {
             Tile startTile = GetTileAtPosition(startGridPos);
             Tile endTile = GetTileAtPosition(targetGridPos);
+            if (!startTile || !endTile)
+                return null;
 
             List<Tile> openList = new List<Tile>() {startTile};
             List<Tile> closedList = new List<Tile>();
@@ -299,5 +301,18 @@ namespace GridSystem
         public int GetManhattanDistance(Vector3 a, Vector3 b) => 
             GetManhattanDistance(GetGridPosition(a), GetGridPosition(b));
         #endregion
+
+        public Tile FindClosestTile(Vector2 worldPosition)
+        {
+            var gridPosition = GetGridPosition(worldPosition);
+
+            Vector2Int[] directions = new[] {Vector2Int.down, Vector2Int.right, Vector2Int.left, Vector2Int.up};
+            for (int i = 0; i < directions.Length; i++)
+            {
+                if (HasTile(gridPosition + directions[i]))
+                    return GetTileAtPosition(gridPosition + directions[i]);
+            }
+            return null;
+        }
     }
 }

@@ -36,11 +36,9 @@ namespace GridSystem
 
 
         public bool Move(Direction direction) => Move(direction.Value);
-        public bool Move(string direction)
+        public bool Move(string direction) => Move(Direction.ToVector2Int(direction));
+        public bool Move(Vector2Int dir)
         {
-            // Try to move in the direction
-            Vector2Int dir = Direction.ToVector2Int(direction);
-
             if (SetPosition(gridPosition + dir))
             {
                 // Rotate in move direction

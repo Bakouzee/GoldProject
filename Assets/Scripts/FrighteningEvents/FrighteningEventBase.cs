@@ -63,7 +63,7 @@ namespace GoldProject.FrighteningEvent
         // Method meant to be called from the oustide to rearm a trap
         public void Undo()
         {
-            if (inProgress || !isTriggered)
+            if ((inProgress || !isTriggered) && GameManager.dayState != GameManager.DayState.NIGHT)
                 return;
             StartCoroutine(UndoCoroutine());
         }
@@ -79,7 +79,10 @@ namespace GoldProject.FrighteningEvent
         #endregion
 
         // Temporary for debug reasons
-        public bool IsInteractable => inProgress; //isTriggered && !inProgress;
+        public Transform Transform => transform;
+        public bool IsInteractable => true;
+        public bool NeedToBeInRange => isTriggered;
+
         public virtual void Interact()
         {
             if (!IsInteractable)

@@ -36,7 +36,7 @@ namespace GoldProject
             else
             {
                 // Focus only room
-                wantedPos = room.position;
+                wantedPos = room.Position;
                 size = room.size;
             }
             transform.position = new Vector3(wantedPos.x, wantedPos.y, zPos);

@@ -24,14 +24,11 @@ public class GameManager : SingletonBase<GameManager>
     [Header("Turns")] [SerializeField] private int actionPerPhase;
     private int actionCount;
     private int currentDay;
-    private System.Action<int> OnDayChanged;
-
-    public Vector2Int tileEnd;
-
-    private int CurrentDay
+    public System.Action<int> OnDayChanged;
+    public int CurrentDay
     {
         get => currentDay;
-        set
+        private set
         {
             currentDay = Mathf.Clamp(value, 1, int.MaxValue);
             OnDayChanged?.Invoke(currentDay);
@@ -40,7 +37,7 @@ public class GameManager : SingletonBase<GameManager>
 
     [SerializeField] private Vector2 dayNightTurnCooldown;
     private Cooldown turnCooldown;
-    public Camera minimapCam;
+    public GameObject undoButton;
 
     [Header("Waves and enemy spawns")]
     // Waves
@@ -68,11 +65,8 @@ public class GameManager : SingletonBase<GameManager>
     private Enemies.EnemyType[] enemiesToSpawn;
     private int enemySpawned = 0;
 
-    [Header("UI")] private DayCounter dayCounter;
-
     private void Start()
     {
-        InitUI();
         eventSystem = FindObjectOfType<EventSystem>();
 
         // Set turn cooldown
@@ -83,47 +77,58 @@ public class GameManager : SingletonBase<GameManager>
         enemiesChiefDef.Init();
 
         // Init days
-        CurrentDay = 1;
-
-        tileEnd = GridManager.Instance.GetGridPosition(transform.GetChild(1).position);
-
+        currentDay = 0;
+        StartDay();
     }
 
     private void Update()
     {
         if (turnCooldown.HasCooldown())
             LaunchTurn();
+
+        if(dayState == DayState.DAY)
+        {
+            undoButton.SetActive(false);
+        }
+        else
+        {
+            undoButton.SetActive(true);
+        }
     }
 
     #region Start phases
+
+    public System.Action OnDayStart;
+    public System.Action OnNightStart;
     public void StartDay()
     {
+        Debug.Log("Day");
         StartPhaseBase();
         CurrentDay++;
         dayState = DayState.DAY;
-        // EnemyManager.enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy")); // can be changed by "FindGameObjectsOfType<>"
+        
         StartSpawningWave();
-        Debug.Log("Day");
 
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
         
         Curtain.SetDay(true);
-        PlayerManager.Instance.Player.UnTransform();
+        
+        OnDayStart?.Invoke();
     }
 
     public void StartNight()
     {
+        Debug.Log("Night");
         StartPhaseBase();
         dayState = DayState.NIGHT;
-        // EnemyManager.enemies.Clear(); // Reset all enemies in the list
-        Debug.Log("Night");
         
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.y;        
         
         Curtain.SetDay(false);
-        PlayerManager.Instance.Player.Transform();
+        
+        OnNightStart?.Invoke();
     }
 
     private void StartPhaseBase()
@@ -133,12 +138,19 @@ public class GameManager : SingletonBase<GameManager>
 
     #endregion
 
+    public System.Action<int> OnLaunchedTurn;
     public void LaunchTurn()
     {
         // Enemies make their turn
         foreach (var enemy in EnemyManager.enemies)
         {
             enemy.DoAction();
+        }
+
+        // Knight too
+        foreach(var knight in EnemyManager.knights)
+        {
+            knight.MoveKnight();
         }
 
         // Spawn enemies
@@ -156,6 +168,8 @@ public class GameManager : SingletonBase<GameManager>
 
         // Cooldown of turn
         turnCooldown.SetCooldown();
+        
+        OnLaunchedTurn?.Invoke(actionCount);
     }
 
     private void StartSpawningWave()
@@ -173,7 +187,7 @@ public class GameManager : SingletonBase<GameManager>
         if (!chiefSpawned)
         {
             // If it is time to spawn chief --> spawn it
-            if (enemySpawned == CurrentWave.chief.spawnOrder)
+            if (enemySpawned == CurrentWave.chief.spawnOrder - 1)
             {
                 // Spawn chief and return
                 EnemyBase chiefPrefab = enemiesChiefDef.dict[CurrentWave.chief.chiefType];
@@ -201,14 +215,7 @@ public class GameManager : SingletonBase<GameManager>
         spawningEnemies = false;
     }
 
-    #region UI Methods
-
-    private void InitUI()
-    {
-        dayCounter = FindObjectOfType<DayCounter>();
-        OnDayChanged += i => dayCounter.SetDay(i);
-    }
-
+    #region UI Methods*
     public void ActivateTrap(Button trapButton)
     {
         // Have to reset if the player reactivates the trap
@@ -246,6 +253,7 @@ public class GameManager : SingletonBase<GameManager>
     public struct ChiefOrder
     {
         public Enemies.EnemyChiefType chiefType;
+        [Range(1, 50)]
         public int spawnOrder;
     }
 
