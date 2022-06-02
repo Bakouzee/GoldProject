@@ -145,7 +145,10 @@ MonoBehaviour:
   enemySounds: []
   musics: []
   ambianceSounds: []
-  scarySounds: []
+  scarySounds:
+  - scaryTracks: 1
+    scaryClipList:
+    - {fileID: 8300000, guid: b5713bdf57b03c040af2a1fe08c34222, type: 3}
   menuSounds: []
   ventSounds: []
   windowSounds: []

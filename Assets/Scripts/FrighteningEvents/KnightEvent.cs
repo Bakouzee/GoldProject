@@ -19,7 +19,7 @@ public class KnightEvent : FrighteningEventBase
         {
             // normally have to activate the trap AND WHEN an enemy is at his range or in the room
             // the armor will move to him
-            Debug.Log("coucou0");
+            Debug.Log("KnightTrap");
             Do();
         }
         else
