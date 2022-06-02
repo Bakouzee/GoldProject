@@ -177,7 +177,7 @@ public class GameManager : SingletonBase<GameManager>
         if (!chiefSpawned)
         {
             // If it is time to spawn chief --> spawn it
-            if (enemySpawned == CurrentWave.chief.spawnOrder)
+            if (enemySpawned == CurrentWave.chief.spawnOrder - 1)
             {
                 // Spawn chief and return
                 EnemyBase chiefPrefab = enemiesChiefDef.dict[CurrentWave.chief.chiefType];
@@ -243,6 +243,7 @@ public class GameManager : SingletonBase<GameManager>
     public struct ChiefOrder
     {
         public Enemies.EnemyChiefType chiefType;
+        [Range(1, 50)]
         public int spawnOrder;
     }
 

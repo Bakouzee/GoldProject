@@ -16,7 +16,7 @@ namespace GoldProject
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
 
-        [Header("Movements")] [SerializeField] private float moveCooldown;
+        [Header("Movements")]
         [SerializeField] private int defaultActionsPerTurn = 1;
         [SerializeField] private int transformedActionsPerTurn = 3;
         private int remainingActions;
