@@ -78,7 +78,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionPerPhase: 20
   dayNightTurnCooldown: {x: 2, y: 4}
-  minimapCam: {fileID: 0}
+  undoButton: {fileID: 0}
   enemiesChiefDef:
     typeAndPrefabs:
     - type: 0

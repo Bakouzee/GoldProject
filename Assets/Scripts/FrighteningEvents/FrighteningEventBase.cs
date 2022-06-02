@@ -63,7 +63,7 @@ namespace GoldProject.FrighteningEvent
         // Method meant to be called from the oustide to rearm a trap
         public void Undo()
         {
-            if (inProgress || !isTriggered)
+            if ((inProgress || !isTriggered) && GameManager.dayState != GameManager.DayState.NIGHT)
                 return;
             StartCoroutine(UndoCoroutine());
         }

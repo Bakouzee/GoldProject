@@ -36,7 +36,7 @@ public class GameManager : SingletonBase<GameManager>
 
     [SerializeField] private Vector2 dayNightTurnCooldown;
     private Cooldown turnCooldown;
-    public Camera minimapCam;
+    public GameObject undoButton;
 
     [Header("Waves and enemy spawns")]
     // Waves
@@ -84,6 +84,15 @@ public class GameManager : SingletonBase<GameManager>
     {
         if (turnCooldown.HasCooldown())
             LaunchTurn();
+
+        if(dayState == DayState.DAY)
+        {
+            undoButton.SetActive(false);
+        }
+        else
+        {
+            undoButton.SetActive(true);
+        }
     }
 
     #region Start phases

@@ -12,7 +12,17 @@ public class NoiseEvent : FrighteningEventBase
 
     private void OnMouseDown()
     {
-        Do();
+        if (GameManager.dayState == GameManager.DayState.DAY)
+        {
+            // normally have to activate the trap AND WHEN an enemy is at his range or in the room
+            // the armor will move to him
+            Debug.Log("NoiseTrap");
+            Do();
+        }
+        else
+        {
+            return;
+        }
     }
 
     // animation event
