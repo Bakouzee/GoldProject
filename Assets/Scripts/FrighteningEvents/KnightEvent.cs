@@ -15,7 +15,7 @@ public class KnightEvent : FrighteningEventBase
 
     public override void Interact()
     {
-        if(GameManager.dayState == GameManager.DayState.NIGHT)
+        if(GameManager.dayState == GameManager.DayState.DAY)
         {
             // normally have to activate the trap AND WHEN an enemy is at his range or in the room
             // the armor will move to him
