@@ -4,7 +4,7 @@ using UnityEngine;
 using GoldProject;
 
 
-public class NewVentManager : MonoBehaviour
+public class NewVentManager : SingletonBase<NewVentManager>
 {
     public Player player;
     public GameObject ventOne;
@@ -15,6 +15,7 @@ public class NewVentManager : MonoBehaviour
 
     public GameObject ventFour;
 
+    public static bool choosingVent;
     
 
     private void Start()
@@ -26,22 +27,30 @@ public class NewVentManager : MonoBehaviour
     {
         player.gridController.SetPosition(ventOne.transform.position);
         gameObject.SetActive(false);
+        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
+        choosingVent = false;
     }
 
     public void SecondRoomVent()
     {
         player.gridController.SetPosition(ventTwo.transform.position);
         gameObject.SetActive(false);
+        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
+        choosingVent = false;
     }
     public void ThirdRoomVent()
     {
         player.gridController.SetPosition(ventThree.transform.position);
         gameObject.SetActive(false);
+        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
+        choosingVent = false;
     }
 
     public void FourthRoomVent()
     {
         player.gridController.SetPosition(ventFour.transform.position);
         gameObject.SetActive(false);
+        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
+        choosingVent = false;
     }
 }

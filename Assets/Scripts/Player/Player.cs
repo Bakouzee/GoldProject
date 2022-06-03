@@ -163,7 +163,7 @@ namespace GoldProject
                         }
 
                         // Tiles and if map = cantmove
-                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen)
+                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen && !NewVentManager.choosingVent)
                         {
                             if (gridController.gridPosition == tile.GridPos)
                                 continue;

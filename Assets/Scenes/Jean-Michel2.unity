@@ -8218,6 +8218,10 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 96141513}
+    - target: {fileID: 188906877, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
+      propertyPath: arrowToMovePlayer
+      value: 
+      objectReference: {fileID: 503135773}
     - target: {fileID: 1519083190786363595, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
       propertyPath: m_RootOrder
       value: 3
