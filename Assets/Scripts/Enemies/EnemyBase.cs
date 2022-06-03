@@ -3,6 +3,8 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
+using UnityEditor;
+using System.Collections;
 
 namespace Enemies
 {
@@ -51,6 +53,7 @@ namespace Enemies
         public Color stateColor;
 
         public bool isAlerted;
+        public bool isInSight;
         
         
         // Add and remove self automatically from the static enemies list
@@ -92,29 +95,19 @@ namespace Enemies
         /// Method only used to define each EnemyBaseState
         /// and called by default in the start
         /// </summary>
-        protected virtual void DefineStates()
-        {
-            explorationState = new ExplorationStateBase(this);
+        protected virtual void DefineStates() =>  explorationState = new ExplorationStateBase(this);
 
-        }
+        
 
-        protected virtual void Update()  {
-            currentState?.OnStateUpdate();
-
-            if (gridController.gridPosition == GameManager.Instance.tileEnd)
-                Destroy(transform.gameObject);
+        protected virtual void Update() => currentState?.OnStateUpdate();
             
-        }
-
+        
         /// <summary>
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
 
-        public void DoAction() {
-
-            
-
+        public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
             Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
             Vector3 sight = transform.up * sightRange;
@@ -122,46 +115,38 @@ namespace Enemies
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
 
-            bool isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
+            
 
-        /*    Debug.Log("=========================");
-            Debug.Log("name " + name);
-            Debug.Log("isAlerted " + isAlerted);
-            Debug.Log("isInSight " + isInSight);
-            */
-
-            if (isInSight || isAlerted) {              
-                if(!(currentState is ChaseState)) {
-                    SetState(new ChaseState(this, PlayerManager.Instance.Player));
-                    stateColor = Color.red;
-                    stateColor.a = 0.1f;
-                }
-
-                
+            if (isInSight || isAlerted) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
+                currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+                    if (!(enemy.currentState is ChaseState))  {
+                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
+                        enemy.stateColor = Color.red;
+                        enemy.stateColor.a = 0.1f;
+                        enemy.isAlerted = true;
+                    }
+                });
+  
             }
             else {
-                if(currentState is ChaseState) {
-                    
-                    SetState(explorationState);
-                    stateColor = Color.yellow;
-                    stateColor.a = 0.1f;
+                if(currentState is ChaseState && !((ChaseState)currentState).chief.isInSight) {
+
+                    currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+                        if (enemy.currentState is ChaseState) {
+                            enemy.SetState(explorationState);
+                            enemy.stateColor = Color.yellow;
+                            enemy.stateColor.a = 0.1f;
+                            enemy.isAlerted = false;
+                        }
+                    });
 
                 }
             }
+            
 
             currentState?.DoAction();
         }
-        
-        public void Afraid()
-        {
-            afraidCount++;
-
-            afraidCount = Mathf.Clamp(afraidCount, 0,3);
-
-            if (afraidCount == afraidToLeave) 
-                explorationState.directions = new Queue<Direction>(GridManager.Instance.GetPath(GridManager.Instance.GetGridPosition(transform.position),GameManager.Instance.tileEnd));
-        }
-
 
         /// <summary>
         /// Method to change the current state

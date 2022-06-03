@@ -31,7 +31,6 @@ namespace Enemies.States
 
         public override void DoAction()
         {
-            Debug.Log("queueSize " + directions.Count);
 
             gridController.Move(directions.Dequeue());
             if(directions.Count == 0)

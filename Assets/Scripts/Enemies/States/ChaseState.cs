@@ -10,8 +10,11 @@ namespace Enemies.States {
         private Entity chaseEntity;
         private Vector2Int lastChasePos;
 
-        public ChaseState(EnemyBase enemy,Entity chaseEntity) : base(enemy) {
+        public EnemyBase chief;
+
+        public ChaseState(EnemyBase enemy,Entity chaseEntity, EnemyBase chief) : base(enemy) {
             this.chaseEntity = chaseEntity;
+            this.chief = chief;
         }
 
         public override IEnumerator OnStateEnter() { 
@@ -29,10 +32,7 @@ namespace Enemies.States {
         }
 
         public override IEnumerator OnStateExit()  {
-            Debug.Log("gridPos " + gridPos);
-            Debug.Log("chase " + lastChasePos);
-            directions = new Queue<Direction>(GridManager.Instance.GetPath(gridPos, lastChasePos));
-            Debug.Log("directionSize2 " + directions.Count);
+          //  directions = new Queue<Direction>(GridManager.Instance.GetPath(gridPos, lastChasePos));
             yield return null;
         }
 
