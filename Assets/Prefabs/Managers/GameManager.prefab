@@ -108,6 +108,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc64a348f663e746a9a037236d8cb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vm:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  actionCountForVent: 0
   actionPerPhase: 20
   dayNightTurnCooldown: {x: 2, y: 4}
   undoButton: {fileID: 0}
