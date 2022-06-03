@@ -42,7 +42,7 @@ public class VentManager : MonoBehaviour, IInteractable
             
             ventSysteme.SetActive(true);
             NewVentManager.choosingVent = true;
-            PlayerManager.Instance.arrowToMovePlayer.SetActive(false);
+            PlayerManager.Instance.arrowToMovePlayer.SetActive(false);  
             waitForVent = true;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         }

@@ -146,8 +146,7 @@ namespace Enemies
             }
 
             if(currentState is ChaseState) {
-                ChaseState chase = (ChaseState)currentState;
-                Debug.Log(chase.chief.currentRoom.name);
+                ChaseState chase = (ChaseState)currentState;    
                 if(!chase.chief.isInSight) {
                     chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
                         enemy.SetState(new ExplorationStateBase(enemy));
@@ -220,7 +219,7 @@ namespace Enemies
 
             Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
-            if(GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
+            if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
                 && !(currentState is InteractState) && !closest.IsOpened)    {
                 int random = Random.Range(0, 100);
 
