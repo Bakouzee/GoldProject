@@ -9,6 +9,7 @@ namespace GoldProject
         private float zPos;
         private Camera _camera;
         public Camera Camera => _camera;
+        public bool dezoomCam;
         private Resolution resolution;
 
         private void Awake()

@@ -43,7 +43,7 @@ namespace GridSystem
             {
                 // Rotate in move direction
                 float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
-                transform.eulerAngles = new Vector3(0, 0, angle);
+                //transform.eulerAngles = new Vector3(0, 0, angle);
                 
                 // It is a success
                 return true;

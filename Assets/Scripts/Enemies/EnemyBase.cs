@@ -3,6 +3,9 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
+using UnityEditor;
+using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Enemies
 {
@@ -39,6 +42,21 @@ namespace Enemies
         protected ExplorationStateBase explorationState;
         public GridController GridController => gridController;
 
+        public int afraidToLeave;
+        private int afraidCount;
+
+        [Range(0,90)]
+        public int sightAngle;
+
+        [Range(0,10)]
+        public int sightRange;
+
+        public Color stateColor;
+
+        public bool isAlerted;
+        public bool isInSight;
+        
+        
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy()
@@ -52,7 +70,7 @@ namespace Enemies
         }
 
         protected override void Start()
-        {   
+        {
             base.Start();
 
             health = GetComponent<Health>();
@@ -69,26 +87,71 @@ namespace Enemies
             
             DefineStates();
             SetState(explorationState);
+
+            stateColor = Color.yellow;
+            stateColor.a = 0.1f;
+
+            gridController.OnMoved += OnMoved;
         }
         
         /// <summary>
         /// Method only used to define each EnemyBaseState
         /// and called by default in the start
         /// </summary>
-        protected virtual void DefineStates()
-        {
-            explorationState = new ExplorationStateBase(this);
-        }
+        protected virtual void DefineStates() =>  explorationState = new ExplorationStateBase(this);
+
         
+
         protected virtual void Update() => currentState?.OnStateUpdate();
+            
         
         /// <summary>
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
-        public void DoAction() => currentState?.DoAction();
 
-        
+         
+        public void DoAction() {      
+            Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
+            Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
+            Vector3 sight = transform.up * sightRange;
+
+            float angle = Vector2.Angle(playerToSightCenter, sight);
+
+
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
+            
+
+            if (isInSight || isAlerted) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
+                currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+                    if (!(enemy.currentState is ChaseState))  {
+                        this.gameObject.name = "Chief Of Patrol";
+                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
+                        enemy.stateColor = Color.red;
+                        enemy.stateColor.a = 0.1f;
+                        enemy.isAlerted = true;
+                    }
+                });
+  
+            }
+
+            if(currentState is ChaseState) {
+                ChaseState chase = (ChaseState)currentState;
+                Debug.Log(chase.chief.currentRoom.name);
+                if(!chase.chief.isInSight) {
+                    chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+                        enemy.SetState(new ExplorationStateBase(enemy));
+                        enemy.stateColor = Color.yellow;
+                        enemy.stateColor.a = 0.1f;
+                        enemy.isAlerted = false;
+                    });
+                }
+            }
+            
+
+            currentState?.DoAction();
+        }
+
         /// <summary>
         /// Method to change the current state
         /// It handles the exit of the current state
@@ -139,5 +202,21 @@ namespace Enemies
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
         }
+
+        private void OnMoved(Vector2Int newGridPos)
+        {
+            if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
+                PlayerManager.Instance.PlayerHealth.Death();
+            
+        }
+
+        private void OnDrawGizmos() {
+            Handles.color = stateColor;
+            Transform viewTransform = transform.GetChild(0);
+
+            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
+        }
+
+        
     }
 }

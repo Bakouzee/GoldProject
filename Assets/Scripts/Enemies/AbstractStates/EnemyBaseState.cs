@@ -19,7 +19,9 @@ namespace Enemies
         protected Vector2Int gridPos => gridController.gridPosition;
 
         // For movements
-        protected Queue<Direction> directions;
+        public Queue<Direction> directions;
+
+
         protected void DefinePath(Vector2Int targetGridPos)
         {
             // Debug.Log($"{enemy.GridPosition} // {targetGridPos}");
