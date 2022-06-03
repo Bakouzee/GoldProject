@@ -9,9 +9,15 @@ public class VentManager : MonoBehaviour, IInteractable
     public GameObject ventOne;
 
     public GameObject ventTwo;
+    public GameObject ventThree;
+    public GameObject ventFour;
+
+    public GameObject ventSysteme;
+
+    private int actionCount = 20;
 
 
-  
+
 
     public bool waitForVent = false;
 
@@ -27,14 +33,16 @@ public class VentManager : MonoBehaviour, IInteractable
         player = PlayerManager.Instance.Player;
     }
 
-   
+    //public System.Action<int> OnLaunchedTurn;
 
     public void Interact()
     {
         if (!waitForVent)
         {
-            //player.transform.position = ventTwo.transform.position;
-            player.gridController.SetPosition(ventTwo.transform.position);
+            
+            ventSysteme.SetActive(true);
+            NewVentManager.choosingVent = true;
+            PlayerManager.Instance.arrowToMovePlayer.SetActive(false);
             waitForVent = true;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         }
@@ -49,17 +57,32 @@ public class VentManager : MonoBehaviour, IInteractable
 
         ventOne.GetComponent<BoxCollider2D>().enabled = false;
         ventOne.GetComponent<SpriteRenderer>().color = Color.red;
+
         ventTwo.GetComponent<BoxCollider2D>().enabled = false;
         ventTwo.GetComponent<SpriteRenderer>().color = Color.red;
-        
-        yield return new WaitForSeconds(5f);
+
+        ventThree.GetComponent<BoxCollider2D>().enabled = false;
+        ventThree.GetComponent<SpriteRenderer>().color = Color.red;
+
+        ventFour.GetComponent<BoxCollider2D>().enabled = false;
+        ventFour.GetComponent<SpriteRenderer>().color = Color.red;
+
+        yield return new WaitForSeconds(10f);
+        //OnLaunchedTurn?.Invoke(actionCount);
         waitForVent = false;
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
 
         ventOne.GetComponent<BoxCollider2D>().enabled = true;
         ventOne.GetComponent<SpriteRenderer>().color = Color.white;
+
         ventTwo.GetComponent<BoxCollider2D>().enabled = true;
         ventTwo.GetComponent<SpriteRenderer>().color = Color.white;
+
+        ventThree.GetComponent<BoxCollider2D>().enabled = true;
+        ventThree.GetComponent<SpriteRenderer>().color = Color.white;
+
+        ventFour.GetComponent<BoxCollider2D>().enabled = true;
+        ventFour.GetComponent<SpriteRenderer>().color = Color.white;
 
 
 
