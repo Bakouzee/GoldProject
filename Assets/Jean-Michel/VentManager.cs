@@ -14,8 +14,10 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public GameObject ventSysteme;
 
-    
-  
+    private int actionCount = 20;
+
+
+
 
     public bool waitForVent = false;
 
@@ -31,7 +33,7 @@ public class VentManager : MonoBehaviour, IInteractable
         player = PlayerManager.Instance.Player;
     }
 
-   
+    //public System.Action<int> OnLaunchedTurn;
 
     public void Interact()
     {
@@ -65,7 +67,8 @@ public class VentManager : MonoBehaviour, IInteractable
         ventFour.GetComponent<BoxCollider2D>().enabled = false;
         ventFour.GetComponent<SpriteRenderer>().color = Color.red;
 
-        yield return new WaitForSeconds(100f);
+        yield return new WaitForSeconds(10f);
+        //OnLaunchedTurn?.Invoke(actionCount);
         waitForVent = false;
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
 
