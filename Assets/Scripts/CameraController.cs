@@ -43,9 +43,26 @@ namespace GoldProject
             }
             else
             {
+                switch (room.name)
+                {
+                    case "Salle d'armes":
+                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y + 2);
+                        break;
+                    case "Salon":
+                        wantedPos = new Vector2(room.Position.x - 2, room.Position.y + 2);
+                        break;
+                    case "Chambre":
+                        wantedPos = new Vector2(room.Position.x - 2, room.Position.y - 2);
+                        break;
+                    case "Bibliothéque":
+                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y - 2);
+                        break;
+                    default:
+                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y + 2);
+                        break;
+                }
                 // Focus only room
-                wantedPos = room.Position;
-                size = room.size;
+                size = new Vector2Int(room.size.x + 5, room.size.y + 5);
             }
             transform.position = new Vector3(wantedPos.x, wantedPos.y, zPos);
             _camera.orthographicSize = GetOrthographicSizeDesired(size);
