@@ -1479,6 +1479,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7449267421560251422, guid: e262ee26c8defa745a0686d23d0345e5, type: 3}
   m_PrefabInstance: {fileID: 279291728}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &294301776 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2979044234292966090, guid: 224dbe5fa47194b4a97f5849f39f7147, type: 3}
+  m_PrefabInstance: {fileID: 380644976}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &344316402
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,7 +1746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2979044236133789754, guid: 224dbe5fa47194b4a97f5849f39f7147, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 160
+      value: 221.97
       objectReference: {fileID: 0}
     - target: {fileID: 2979044236133789754, guid: 224dbe5fa47194b4a97f5849f39f7147, type: 3}
       propertyPath: m_SizeDelta.y
@@ -31208,11 +31219,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877500, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4305382
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877500, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.311163
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877500, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -31248,7 +31259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: orthographic size
-      value: 17
+      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: m_OcclusionCulling
@@ -45883,6 +45894,10 @@ PrefabInstance:
       propertyPath: miniMap
       value: 
       objectReference: {fileID: 1009652491}
+    - target: {fileID: 188906877, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
+      propertyPath: textEnemyTrap
+      value: 
+      objectReference: {fileID: 294301776}
     - target: {fileID: 1519083190786363595, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
       propertyPath: m_RootOrder
       value: 2

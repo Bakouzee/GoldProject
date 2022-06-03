@@ -162,8 +162,8 @@ namespace GoldProject
                             }
                         }
 
-                        // Tiles
-                        else if (hit.transform.TryGetComponent(out Tile tile))
+                        // Tiles and if map = cantmove
+                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen)
                         {
                             if (gridController.gridPosition == tile.GridPos)
                                 continue;
