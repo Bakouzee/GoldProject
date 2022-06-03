@@ -10,7 +10,7 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public GameObject ventTwo;
 
-
+    public GameObject ventSysteme;
   
 
     public bool waitForVent = false;
@@ -34,7 +34,7 @@ public class VentManager : MonoBehaviour, IInteractable
         if (!waitForVent)
         {
             //player.transform.position = ventTwo.transform.position;
-            player.gridController.SetPosition(ventTwo.transform.position);
+            ventSysteme.SetActive(true);
             waitForVent = true;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         }
