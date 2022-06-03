@@ -9,6 +9,8 @@ public class VentManager : MonoBehaviour, IInteractable
     public GameObject ventOne;
 
     public GameObject ventTwo;
+    public GameObject ventThree;
+    public GameObject ventFour;
 
     public GameObject ventSysteme;
   
@@ -33,7 +35,7 @@ public class VentManager : MonoBehaviour, IInteractable
     {
         if (!waitForVent)
         {
-            //player.transform.position = ventTwo.transform.position;
+            
             ventSysteme.SetActive(true);
             waitForVent = true;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
@@ -51,8 +53,12 @@ public class VentManager : MonoBehaviour, IInteractable
         ventOne.GetComponent<SpriteRenderer>().color = Color.red;
         ventTwo.GetComponent<BoxCollider2D>().enabled = false;
         ventTwo.GetComponent<SpriteRenderer>().color = Color.red;
-        
-        yield return new WaitForSeconds(5f);
+        ventThree.GetComponent<BoxCollider2D>().enabled = false;
+        ventThree.GetComponent<SpriteRenderer>().color = Color.red;
+        ventFour.GetComponent<BoxCollider2D>().enabled = false;
+        ventFour.GetComponent<SpriteRenderer>().color = Color.red;
+
+        yield return new WaitForSeconds(100f);
         waitForVent = false;
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
 
@@ -60,6 +66,12 @@ public class VentManager : MonoBehaviour, IInteractable
         ventOne.GetComponent<SpriteRenderer>().color = Color.white;
         ventTwo.GetComponent<BoxCollider2D>().enabled = true;
         ventTwo.GetComponent<SpriteRenderer>().color = Color.white;
+
+        ventThree.GetComponent<BoxCollider2D>().enabled = true;
+        ventThree.GetComponent<SpriteRenderer>().color = Color.white;
+
+        ventFour.GetComponent<BoxCollider2D>().enabled = true;
+        ventFour.GetComponent<SpriteRenderer>().color = Color.white;
 
 
 

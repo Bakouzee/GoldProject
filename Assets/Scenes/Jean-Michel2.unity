@@ -303,9 +303,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1817572376}
-  ventOne: {fileID: 16082993}
-  ventTwo: {fileID: 6888564652619264346}
-  ventSysteme: {fileID: 0}
+  ventOne: {fileID: 6888564652619264346}
+  ventTwo: {fileID: 1896992807}
+  ventThree: {fileID: 16082993}
+  ventFour: {fileID: 1507384294}
+  ventSysteme: {fileID: 1122146361}
   waitForVent: 0
   "FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiff\xE9": 1
 --- !u!212 &16082996
@@ -3003,9 +3005,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1817572376}
-  ventOne: {fileID: 1507384294}
-  ventTwo: {fileID: 6888564652619264346}
-  ventSysteme: {fileID: 0}
+  ventOne: {fileID: 6888564652619264346}
+  ventTwo: {fileID: 1896992807}
+  ventThree: {fileID: 16082993}
+  ventFour: {fileID: 1507384294}
+  ventSysteme: {fileID: 1122146361}
   waitForVent: 0
   "FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiff\xE9": 1
 --- !u!212 &1507384297
@@ -8595,6 +8599,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1817572376}
     - target: {fileID: 6888564651109797543, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventTwo
+      value: 
+      objectReference: {fileID: 1896992807}
+    - target: {fileID: 6888564651109797543, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventFour
+      value: 
+      objectReference: {fileID: 1507384294}
+    - target: {fileID: 6888564651109797543, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventThree
+      value: 
+      objectReference: {fileID: 16082993}
+    - target: {fileID: 6888564651109797543, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
       propertyPath: ventSysteme
       value: 
       objectReference: {fileID: 1122146361}
@@ -8614,6 +8630,26 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1817572376}
+    - target: {fileID: 6888564651719965390, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventOne
+      value: 
+      objectReference: {fileID: 6888564652619264346}
+    - target: {fileID: 6888564651719965390, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventTwo
+      value: 
+      objectReference: {fileID: 1896992807}
+    - target: {fileID: 6888564651719965390, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventFour
+      value: 
+      objectReference: {fileID: 1507384294}
+    - target: {fileID: 6888564651719965390, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventThree
+      value: 
+      objectReference: {fileID: 16082993}
+    - target: {fileID: 6888564651719965390, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
+      propertyPath: ventSysteme
+      value: 
+      objectReference: {fileID: 1122146361}
     - target: {fileID: 6888564652483396701, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
       propertyPath: m_Name
       value: VentManager
