@@ -130,17 +130,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1302066828}
     m_Modifications:
+    - target: {fileID: 9146962521025806608, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
+      propertyPath: dezoomCam
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806610, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806610, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806610, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 4.1
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806610, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_LocalPosition.z
@@ -173,6 +177,10 @@ PrefabInstance:
     - target: {fileID: 9146962521025806610, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146962521025806613, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
+      propertyPath: orthographic size
+      value: 16.5
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806615, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_Name
