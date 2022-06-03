@@ -242,7 +242,7 @@ namespace GoldProject
             var lastRoom = currentRoom;
             base.UpdateCurrentRoom();
 
-            if (currentRoom != lastRoom && !cameraController.dezoomCam)
+            if (currentRoom != lastRoom )//&& !cameraController.dezoomCam)
             {
                 cameraController.ZoomToRoom(currentRoom);
             }
@@ -250,7 +250,7 @@ namespace GoldProject
 
         protected override void OnEnterRoom(Room room)
         {
-            if(!cameraController.dezoomCam)
+            //if(!cameraController.dezoomCam)
                 cameraController.ZoomToRoom(room);
         }
 

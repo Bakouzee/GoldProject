@@ -7,6 +7,7 @@ namespace GoldProject.Rooms
     public class RoomsManager : SingletonBase<RoomsManager>
     {
         public Vector2 mapSize;
+        public Vector2 playerFovSize;
         [SerializeField] private Room[] rooms;
         #region Rooms getter/setter
         public Room[] Rooms => rooms;

@@ -8,9 +8,14 @@ using Enemies;
 
 public class NoiseEvent : FrighteningEventBase
 {
-    public Animator anim;
+    private Animator anim;
     
     public string animationTrigger;
+
+    private void Start()
+    {
+        anim = transform.parent.GetComponent<Animator>();
+    }
 
     public override void Interact()
     {
@@ -19,12 +24,6 @@ public class NoiseEvent : FrighteningEventBase
         Debug.Log("NoiseTrap");
         Do();
 
-    }
-
-    // animation event
-    public void MakeScarySound(ScaryAudioTracks audioToPlay)
-    {
-        AudioManager.Instance.PlayScarySound(audioToPlay);
     }
 
     // Check if enemy is in range to activate the animation
@@ -40,7 +39,13 @@ public class NoiseEvent : FrighteningEventBase
 
         foreach(EnemyBase enemy in CurrentRoom.enemies)
         {
-            List<Direction> directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+            List<Direction> directionBetweenTrapAndEnemy = new List<Direction>();
+            Debug.Log(enemy.GridController.gridPosition);
+            Debug.Log(thisPos);
+
+
+            directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+
             Debug.Log(directionBetweenTrapAndEnemy.Count);
             
             // If enemies are directly next to the trap -> they will be scared !

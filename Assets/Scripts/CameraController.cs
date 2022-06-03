@@ -24,11 +24,22 @@ namespace GoldProject
             RoomsManager roomsManager = RoomsManager.Instance;
             Vector2 wantedPos;
             Vector2 size;
+
+            if(transform.parent != null)
+            {
+                transform.parent = null;
+            }
+
             if (room.isCorridor)
             {
                 // Focus all map
                 size = roomsManager.mapSize;
                 wantedPos = size * 0.5f;
+
+                // Focus the player
+                transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+                size = roomsManager.playerFovSize;
+                wantedPos = transform.parent.position;
             }
             else
             {
