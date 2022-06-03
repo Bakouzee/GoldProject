@@ -51,6 +51,16 @@ namespace Enemies
         [Range(0,10)]
         public int sightRange;
 
+        public int curtainRange;
+        [Range(0,100)]
+        public int curtainProbability;
+
+
+        public int garlicRange;
+        [Range(0, 100)]
+        public int garlicProbability;
+
+
         public Color stateColor;
 
         public bool isAlerted;
@@ -207,7 +217,36 @@ namespace Enemies
         {
             if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
                 PlayerManager.Instance.PlayerHealth.Death();
+
+            Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
+            if(GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
+                && !(currentState is InteractState) && !closest.IsOpened)    {
+                int random = Random.Range(0, 100);
+
+                if (random <= curtainProbability)            
+                    SetState(new InteractState(this, new ExplorationStateBase(this), closest));
+                
+            }
+            
+           /* VentManager vent = currentRoom.GetClosestVent(transform.position);
+            vent.GetComponent<SpriteRenderer>().color = Color.green;
+
+            Vector2Int ventPos = new Vector2Int((int)vent.transform.position.x, (int)vent.transform.position.y);
+
+            if (GridManager.Instance.GetManhattanDistance(gridController.gridPosition, ventPos) <= garlicRange && !(currentState is RunningState))
+            {
+                int random = Random.Range(0, 100);
+                Debug.Log(ventPos);
+                Debug.Log(garlicRange);
+                if (random <= garlicProbability)
+                    SetState(new RunningState(enemy: this,frighteningSource: vent.transform,numberOfTurn: garlicRange,nextState: new ExplorationStateBase(this),() =>
+                    {
+                        //Debug.Log("end state");
+                    }));
+            }
+
+    */
         }
 
         private void OnDrawGizmos() {

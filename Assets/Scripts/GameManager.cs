@@ -22,7 +22,7 @@ public class GameManager : SingletonBase<GameManager>
     public static EventSystem eventSystem;
 
     [Header("Turns")] [SerializeField] private int actionPerPhase;
-    private int actionCount;
+    public int actionCount;
     private int currentDay;
     public System.Action<int> OnDayChanged;
     public int CurrentDay
