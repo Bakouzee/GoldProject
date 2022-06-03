@@ -8,6 +8,7 @@ using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using GridSystem;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -85,13 +86,14 @@ public class GameManager : SingletonBase<GameManager>
         if (turnCooldown.HasCooldown())
             LaunchTurn();
 
+
         if(dayState == DayState.DAY)
         {
-            undoButton.SetActive(false);
+            if(undoButton != null) undoButton.SetActive(false);
         }
         else
         {
-            undoButton.SetActive(true);
+            if(undoButton != null) undoButton.SetActive(true);
         }
     }
 
@@ -200,7 +202,8 @@ public class GameManager : SingletonBase<GameManager>
         if (enemySpawned < enemiesToSpawn.Length)
         {
             EnemyBase prefab = enemiesDef.dict[enemiesToSpawn[enemySpawned]];
-            Instantiate(prefab, enemySpawnPoint.position, Quaternion.identity);
+            EnemyBase enemyIns = Instantiate(prefab, enemySpawnPoint.position, Quaternion.identity);
+            enemyIns.name = enemySpawned + "";
         }
         enemySpawned++;
 

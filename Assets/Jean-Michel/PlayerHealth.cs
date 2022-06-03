@@ -42,7 +42,7 @@ public class PlayerHealth : Health
         OnHealthUpdated?.Invoke(currentHealth, healthMax);
     }
 
-    void Death()
+    public void Death()
     {
         // Temporary just for apk
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
