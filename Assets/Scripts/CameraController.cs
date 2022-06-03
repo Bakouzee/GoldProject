@@ -30,7 +30,7 @@ namespace GoldProject
                 transform.parent = null;
             }
 
-            if (room.isCorridor)
+            /*if (room.isCorridor)
             {
                 // Focus all map
                 size = roomsManager.mapSize;
@@ -42,7 +42,7 @@ namespace GoldProject
                 wantedPos = transform.parent.position;
             }
             else
-            {
+            {*/
                 switch (room.name)
                 {
                     case "Salle d'armes":
@@ -57,13 +57,22 @@ namespace GoldProject
                     case "Bibliothéque":
                         wantedPos = new Vector2(room.Position.x + 2, room.Position.y - 2);
                         break;
+                    case "Couloir Ouest":
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
+                        break;
+                    case "Couloir Est":
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
+                        break;
+                    case "Couloir Nord":
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
+                        break;
                     default:
                         wantedPos = new Vector2(room.Position.x + 2, room.Position.y + 2);
                         break;
                 }
                 // Focus only room
                 size = new Vector2Int(room.size.x + 5, room.size.y + 5);
-            }
+            //}
             transform.position = new Vector3(wantedPos.x, wantedPos.y, zPos);
             _camera.orthographicSize = GetOrthographicSizeDesired(size);
         }

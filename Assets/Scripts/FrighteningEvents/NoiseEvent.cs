@@ -39,12 +39,7 @@ public class NoiseEvent : FrighteningEventBase
 
         foreach(EnemyBase enemy in CurrentRoom.enemies)
         {
-            List<Direction> directionBetweenTrapAndEnemy = new List<Direction>();
-            Debug.Log(enemy.GridController.gridPosition);
-            Debug.Log(thisPos);
-
-
-            directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+            List<Direction> directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
 
             Debug.Log(directionBetweenTrapAndEnemy.Count);
             

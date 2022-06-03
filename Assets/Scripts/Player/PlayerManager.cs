@@ -5,6 +5,7 @@ using GoldProject;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Enemies;
 
 public class PlayerManager : SingletonBase<PlayerManager>
 {
@@ -42,12 +43,20 @@ public class PlayerManager : SingletonBase<PlayerManager>
         {
             if (!mapSeen)
             {
+                foreach(EnemyBase enemy in Player.CurrentRoom.enemies)
+                {
+                    enemy.gameObject.layer = 3;
+                }
                 miniMap.SetActive(true);
                 arrowToMovePlayer.SetActive(false);
                 textEnemyTrap.text = "Show Enemies";
                 mainCam.SetActive(false);
             } else
             {
+                foreach (EnemyBase enemy in Player.CurrentRoom.enemies)
+                {
+                    enemy.gameObject.layer = 0;
+                }
                 mainCam.SetActive(true);
                 arrowToMovePlayer.SetActive(true);
                 textEnemyTrap.text = "Show Traps";
