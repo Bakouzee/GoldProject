@@ -5,6 +5,7 @@ using GridSystem;
 using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace Enemies
 {
@@ -89,6 +90,8 @@ namespace Enemies
 
             stateColor = Color.yellow;
             stateColor.a = 0.1f;
+
+            gridController.OnMoved += OnMoved;
         }
         
         /// <summary>
@@ -107,6 +110,7 @@ namespace Enemies
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
 
+         
         public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
             Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
@@ -121,6 +125,7 @@ namespace Enemies
             if (isInSight || isAlerted) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
                 currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
                     if (!(enemy.currentState is ChaseState))  {
+                        this.gameObject.name = "Chief Of Patrol";
                         enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
                         enemy.stateColor = Color.red;
                         enemy.stateColor.a = 0.1f;
@@ -129,18 +134,17 @@ namespace Enemies
                 });
   
             }
-            else {
-                if(currentState is ChaseState && !((ChaseState)currentState).chief.isInSight) {
 
-                    currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
-                        if (enemy.currentState is ChaseState) {
-                            enemy.SetState(explorationState);
-                            enemy.stateColor = Color.yellow;
-                            enemy.stateColor.a = 0.1f;
-                            enemy.isAlerted = false;
-                        }
+            if(currentState is ChaseState) {
+                ChaseState chase = (ChaseState)currentState;
+                Debug.Log(chase.chief.currentRoom.name);
+                if(!chase.chief.isInSight) {
+                    chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+                        enemy.SetState(new ExplorationStateBase(enemy));
+                        enemy.stateColor = Color.yellow;
+                        enemy.stateColor.a = 0.1f;
+                        enemy.isAlerted = false;
                     });
-
                 }
             }
             
@@ -197,6 +201,13 @@ namespace Enemies
                 // If died -> call OnEnemyKilled event
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
+        }
+
+        private void OnMoved(Vector2Int newGridPos)
+        {
+            if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
+                PlayerManager.Instance.PlayerHealth.Death();
+            
         }
 
         private void OnDrawGizmos() {
