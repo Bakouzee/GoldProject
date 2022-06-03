@@ -13,6 +13,8 @@ public class VentManager : MonoBehaviour, IInteractable
     public GameObject ventFour;
 
     public GameObject ventSysteme;
+
+    
   
 
     public bool waitForVent = false;
@@ -37,6 +39,7 @@ public class VentManager : MonoBehaviour, IInteractable
         {
             
             ventSysteme.SetActive(true);
+            
             waitForVent = true;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         }
