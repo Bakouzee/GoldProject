@@ -4,25 +4,21 @@ using UnityEngine;
 using GoldProject.FrighteningEvent;
 using GridSystem;
 using AudioController;
+using Enemies;
+
 public class NoiseEvent : FrighteningEventBase
 {
     public Animator anim;
     
     public string animationTrigger;
 
-    private void OnMouseDown()
+    public override void Interact()
     {
-        if (GameManager.dayState == GameManager.DayState.DAY)
-        {
-            // normally have to activate the trap AND WHEN an enemy is at his range or in the room
-            // the armor will move to him
-            Debug.Log("NoiseTrap");
-            Do();
-        }
-        else
-        {
-            return;
-        }
+        // normally have to activate the trap AND WHEN an enemy is at his range or in the room
+        // the armor will move to him
+        Debug.Log("NoiseTrap");
+        Do();
+
     }
 
     // animation event
@@ -34,6 +30,26 @@ public class NoiseEvent : FrighteningEventBase
     // Check if enemy is in range to activate the animation
     protected override IEnumerator DoActionCoroutine()
     {
+        if (CurrentRoom.enemies.Count == 0)
+        {
+            Debug.Log("No enemy in sight -> the trap didn't work !");
+            yield break;
+        }
+
+        Vector2Int thisPos = GridManager.Instance.GetGridPosition(transform.position);
+
+        foreach(EnemyBase enemy in CurrentRoom.enemies)
+        {
+            List<Direction> directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+            Debug.Log(directionBetweenTrapAndEnemy.Count);
+            
+            // If enemies are directly next to the trap -> they will be scared !
+            if(directionBetweenTrapAndEnemy.Count < distanceToBeScared)
+            {
+                enemy.GetAfraid(transform);
+            }
+        }
+
         //Launch animation
         anim.SetTrigger(animationTrigger);
 

@@ -6,18 +6,21 @@ public class PlayerHealth : Health
 {
     public PlayerManager PlayerManager { private get; set; }
 
+    [HideInInspector]
     public bool IsInOnionZone = false;
-
+    [HideInInspector]
     public bool IsInWindowZone = false;
-
+    [HideInInspector]
     public float invincibilityFlash = 0.2f;
-
+    [HideInInspector]
     public bool IsInvincible = false;
 
-    public System.Action<int> OnHealthUpdated;
+    /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
+    /// <params>newHealth, healthMax </params>
+    public System.Action<int, int> OnHealthUpdated;
     
     public SpriteRenderer sprite;
-
+    
     private void Update()
     {
         if(currentHealth <= 0)
@@ -36,7 +39,7 @@ public class PlayerHealth : Health
             currentHealth += healAmount;
 
         }
-        OnHealthUpdated?.Invoke(currentHealth);
+        OnHealthUpdated?.Invoke(currentHealth, healthMax);
     }
 
     void Death()
@@ -52,7 +55,7 @@ public class PlayerHealth : Health
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            OnHealthUpdated?.Invoke(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth, healthMax);
             IsInvincible = true;
             StartCoroutine(BurningFlash());
             IsInvincible = false;
@@ -65,7 +68,7 @@ public class PlayerHealth : Health
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            OnHealthUpdated?.Invoke(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth, healthMax);
             IsInvincible = true;
             StartCoroutine(StinkFlash());
             // StartCoroutine(InvincibillityDelay());
@@ -80,7 +83,7 @@ public class PlayerHealth : Health
         if (!IsInvincible)
         {
             currentHealth -= damage;
-            OnHealthUpdated?.Invoke(currentHealth);
+            OnHealthUpdated?.Invoke(currentHealth, healthMax);
             IsInvincible = true;
             StartCoroutine(InvincibillityFlash());
             IsInvincible = false;

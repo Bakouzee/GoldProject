@@ -17,7 +17,7 @@ namespace GoldProject
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
 
-        [Header("Movements")]
+        [Header("Actions")]
         [SerializeField] private int defaultActionsPerTurn = 1;
         [SerializeField] private int transformedActionsPerTurn = 3;
         private int remainingActions;
@@ -27,33 +27,38 @@ namespace GoldProject
             get => remainingActions;
             set
             {
-                remainingActions = value;
-                if (remainingActions <= 0)
+                if (value <= 0)
                 {
                     // OnLaunchedTurn reset remainingAction
                     GameManager.Instance.LaunchTurn();
                     return;
                 }
+                // Only if we want to damage enemy on each move
+                // else if(remainingActions > value)
+                // {
+                //     LookForGarlicDamage();
+                //     LookForLightDamage();
+                // }
+                remainingActions = value;
 
                 Tile.ResetWalkableTiles();
                 gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
             }
         }
-
-        private void ResetRemainingAction(int phaseActionCount) =>
-            RemainingActions = transformed ? transformedActionsPerTurn : defaultActionsPerTurn;
+        private void ResetRemainingAction(int phaseActionCount) => 
+            RemainingActions = (transformed ? transformedActionsPerTurn : defaultActionsPerTurn) + PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.ActionPerTurn);
+        private int interactionRange => 1 + PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.InteractionRange);
 
         [Header("Others"), SerializeField] private int lightDamage;
         [SerializeField] private int lifeStealOnKill;
 
         protected override void Start()
         {
+            cameraController = FindObjectOfType<CameraController>();
             GameManager gameManager = GameManager.Instance;
 
             base.Start();
             gridController.OnMoved += OnMoved;
-
-            cameraController = FindObjectOfType<CameraController>();
 
             RemainingActions = defaultActionsPerTurn;
             SetGameHandlerEvents(gameManager);
@@ -61,7 +66,6 @@ namespace GoldProject
         }
 
         #region Set Events
-
         private void SetGameHandlerEvents(GameManager gameManager)
         {
             // Transform or Untransform on day or night start
@@ -69,10 +73,12 @@ namespace GoldProject
             gameManager.OnNightStart += Transform;
 
             // When a turn is launched -> reset the number of remaining action
-            gameManager.OnLaunchedTurn += ResetRemainingAction;
-
-            // Check for light damage on day start
-            gameManager.OnDayStart += LookForLightDamage;
+            gameManager.OnLaunchedTurn += (phaseActionCount) =>
+            {
+                LookForGarlicDamage();
+                LookForLightDamage();
+                ResetRemainingAction(phaseActionCount);
+            };
         }
 
         private void SetEnemyManagerEvents()
@@ -143,7 +149,7 @@ namespace GoldProject
                             if (interactable.NeedToBeInRange)
                             {
                                 if (gridController.gridManager.GetManhattanDistance(transform.position,
-                                    hit.transform.position) <= 1 && interactable.IsInteractable)
+                                    hit.transform.position) <= interactionRange && interactable.IsInteractable)
                                 {
                                     interact.Invoke();
                                     break;
@@ -210,9 +216,8 @@ namespace GoldProject
 
         private void OnMoved(Vector2Int newGridPos)
         {
-            LookForGarlicDamage();
-
-            LookForLightDamage();
+            if (!currentRoom.IsInside(transform.position))
+                UpdateCurrentRoom();
         }
 
         private void LookForGarlicDamage()
@@ -229,6 +234,17 @@ namespace GoldProject
             {
                 // Take damage from light
                 PlayerManager.PlayerHealth.TakeFireDamage(lightDamage);
+            }
+        }
+
+        protected override void UpdateCurrentRoom()
+        {
+            var lastRoom = currentRoom;
+            base.UpdateCurrentRoom();
+
+            if (currentRoom != lastRoom)
+            {
+                cameraController.ZoomToRoom(currentRoom);
             }
         }
 

@@ -15,7 +15,12 @@ namespace GoldProject
         protected virtual void Start()
         {
             gridController = new GridController(transform);
-            
+         
+            UpdateCurrentRoom();
+        }
+
+        protected virtual void UpdateCurrentRoom()
+        {
             // Find current room
             foreach (var room in RoomsManager.Instance.Rooms)
             {

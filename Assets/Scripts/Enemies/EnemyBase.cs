@@ -196,6 +196,8 @@ namespace Enemies
                     nextState: new ExplorationStateBase(this)
                 )
             );
+
+            Debug.Log("The enemy is afraid !");
         }
         
         

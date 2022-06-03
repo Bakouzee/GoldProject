@@ -1,6 +1,4 @@
-﻿using UnityEngine.Windows.WebCam;
-
-namespace Enemies.States
+﻿namespace Enemies.States
 {
     /// <summary>
     /// Class meant to be inherited from.

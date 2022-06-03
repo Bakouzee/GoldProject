@@ -9,6 +9,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
 {
     public Player Player { get; private set; } 
     public PlayerHealth PlayerHealth { get; private set; } 
+    public PlayerBonuses Bonuses { get; private set; }
 
     public GameObject miniMap;
     public GameObject mainCam;
@@ -19,8 +20,12 @@ public class PlayerManager : SingletonBase<PlayerManager>
         base.Awake();
         Player = GetComponent<Player>();
         Player.PlayerManager = this;
+        
         PlayerHealth = GetComponent<PlayerHealth>();
         PlayerHealth.PlayerManager = this;
+
+        Bonuses = GetComponent<PlayerBonuses>();
+        Bonuses.PlayerManager = this;
     }
 
     private void Start()

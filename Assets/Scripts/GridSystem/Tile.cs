@@ -56,6 +56,9 @@ namespace GridSystem
         {
             foreach (var tile in walkableTiles)
             {
+                if (tile == null)
+                    continue;
+                
                 tile.walkable = false;
                 tile.walkableHighlight.SetActive(false);
             }
