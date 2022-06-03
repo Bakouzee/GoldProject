@@ -111,6 +111,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b119448ff8210b445a42441fc46f4f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textEnemyTrap: {fileID: 0}
+  arrowToMovePlayer: {fileID: 0}
   miniMap: {fileID: 0}
   mainCam: {fileID: 0}
 --- !u!212 &1519083190786363592

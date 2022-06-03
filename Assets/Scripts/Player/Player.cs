@@ -162,8 +162,8 @@ namespace GoldProject
                             }
                         }
 
-                        // Tiles
-                        else if (hit.transform.TryGetComponent(out Tile tile))
+                        // Tiles and if map = cantmove
+                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen && !NewVentManager.choosingVent)
                         {
                             if (gridController.gridPosition == tile.GridPos)
                                 continue;
@@ -242,7 +242,7 @@ namespace GoldProject
             var lastRoom = currentRoom;
             base.UpdateCurrentRoom();
 
-            if (currentRoom != lastRoom)
+            if (currentRoom != lastRoom && !cameraController.dezoomCam)
             {
                 cameraController.ZoomToRoom(currentRoom);
             }
@@ -250,7 +250,8 @@ namespace GoldProject
 
         protected override void OnEnterRoom(Room room)
         {
-            cameraController.ZoomToRoom(room);
+            if(!cameraController.dezoomCam)
+                cameraController.ZoomToRoom(room);
         }
 
         #region UI Methods
