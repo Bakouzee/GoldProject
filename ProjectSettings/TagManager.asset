@@ -10,6 +10,7 @@ TagManager:
   - Puppet
   - FakeMirror
   - WatchingPainting
+  - Vent
   layers:
   - Default
   - TransparentFX

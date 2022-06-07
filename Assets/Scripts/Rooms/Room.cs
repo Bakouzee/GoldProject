@@ -56,7 +56,7 @@ namespace GoldProject.Rooms
         [HideInInspector] public FrighteningEventBase[] frighteningEvents;
         [HideInInspector] public VentManager[] vents;
         [HideInInspector] public List<Garlic> garlics;
-        [HideInInspector] public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
+        /*[HideInInspector]*/ public List<Enemies.EnemyBase> enemies = new List<EnemyBase>();
         [Space(10)]
         public Transform[] pathPoints;
 
