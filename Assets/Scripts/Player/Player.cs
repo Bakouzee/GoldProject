@@ -47,7 +47,7 @@ namespace GoldProject
             }
         }
 
-        private void ResetRemainingAction(int phaseActionCount) =>
+        private void ResetRemainingAction() =>
             RemainingActions = (transformed ? transformedActionsPerTurn : defaultActionsPerTurn) +
                                PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.ActionPerTurn);
 
@@ -79,11 +79,11 @@ namespace GoldProject
             gameManager.OnNightStart += Transform;
 
             // When a turn is launched -> reset the number of remaining action
-            gameManager.OnLaunchedTurn += (phaseActionCount) =>
+            gameManager.OnLaunchedTurn += (phaseActionCount, actionPerPhase) =>
             {
                 LookForGarlicDamage();
                 LookForLightDamage();
-                ResetRemainingAction(phaseActionCount);
+                ResetRemainingAction();
             };
         }
 
