@@ -68,9 +68,7 @@ namespace Enemies
         public bool isAlerted;
         public bool isInSight;
         public bool canSightPlayer;
-        private bool lastIsInSight;
-
-        private List<EnemyBase> roomEnemies;
+        public Vector2Int lastPlayerPos;
         
         
         // Add and remove self automatically from the static enemies list
@@ -137,43 +135,44 @@ namespace Enemies
 
             isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
 
-            if (isInSight && !lastIsInSight) {
-                Debug.Log("enter vision");
-                roomEnemies = currentRoom.enemies;
-            }
-
-
-            if ((isInSight || isAlerted) && canSightPlayer) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
-                roomEnemies.ForEach(delegate (EnemyBase enemy) {
-                    if (!(enemy.currentState is ChaseState))  {
-                        this.gameObject.name = "Chief Of Patrol";
-                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
+            if(isInSight && !isAlerted && canSightPlayer) {
+                foreach (EnemyBase enemy in currentRoom.enemies) {
+                    if (enemy != null) {
+                        this.gameObject.name = "Chief Of Patrol";                 
+                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player, this));
                         enemy.stateColor = Color.red;
                         enemy.stateColor.a = 0.1f;
                         enemy.isAlerted = true;
-                    }
-                });
-  
-            }
+                        enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
 
-            if(currentState is ChaseState) {
-                ChaseState chase = (ChaseState)currentState;    
-                if(!chase.chief.isInSight) {
-                    chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
-                        if(enemy.isAlerted && enemy.canSightPlayer) {
-                            enemy.SetState(new ExplorationStateBase(enemy));
-                            enemy.stateColor = Color.yellow;
-                            enemy.stateColor.a = 0.1f;
-                            enemy.isAlerted = false;
-                        }
-                    });
+
+
+                        this.GetComponent<EnemyBase>().stateColor = Color.green;
+                        this.GetComponent<EnemyBase>().stateColor.a = 0.1f;
+                    }
                 }
             }
-            
+            else if(!isInSight && isAlerted && currentState is ChaseState && ((ChaseState)currentState).chief == this) {
+                ChaseState chase = (ChaseState)currentState;
+                
+                foreach (EnemyBase enemy in currentRoom.enemies) {
+                    if (enemy != null) {
+                        if (enemy == chase.chief)
+                            enemy.SetState(new GoToState(enemy,enemy.lastPlayerPos,new ExplorationStateBase(enemy)));
+                        else
+                            enemy.SetState(new ExplorationStateBase(enemy));
+
+                        enemy.stateColor = Color.yellow;
+                        enemy.stateColor.a = 0.1f;
+                        enemy.isAlerted = false;
+                    }
+                }
+
+                Debug.Log("state: " + currentState);
+            }
+
 
             currentState?.DoAction();
-
-            lastIsInSight = isInSight;
         }
 
         /// <summary>
@@ -229,8 +228,8 @@ namespace Enemies
 
         private void OnMoved(Vector2Int newGridPos)
         {
-            if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
-                PlayerManager.Instance.PlayerHealth.Death();
+           // if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
+             //   PlayerManager.Instance.PlayerHealth.Death();
 
             Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
@@ -242,32 +241,14 @@ namespace Enemies
                     SetState(new InteractState(this, new ExplorationStateBase(this), closest));
                 
             }
-            
-           /* VentManager vent = currentRoom.GetClosestVent(transform.position);
-            vent.GetComponent<SpriteRenderer>().color = Color.green;
-
-            Vector2Int ventPos = new Vector2Int((int)vent.transform.position.x, (int)vent.transform.position.y);
-
-            if (GridManager.Instance.GetManhattanDistance(gridController.gridPosition, ventPos) <= garlicRange && !(currentState is RunningState))
-            {
-                int random = Random.Range(0, 100);
-                Debug.Log(ventPos);
-                Debug.Log(garlicRange);
-                if (random <= garlicProbability)
-                    SetState(new RunningState(enemy: this,frighteningSource: vent.transform,numberOfTurn: garlicRange,nextState: new ExplorationStateBase(this),() =>
-                    {
-                        //Debug.Log("end state");
-                    }));
-            }
-
-    */
+         
         }
 
         private void OnDrawGizmos() {
-            //Handles.color = stateColor;
+            Handles.color = stateColor;
             Transform viewTransform = transform.GetChild(0);
 
-            //Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
+            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
         }
 
         
