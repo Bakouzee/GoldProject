@@ -134,8 +134,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chief: 0
   canBeAfraid: 1
-  objectDetectionRange: 3
   openWindowProba: 0.5
+  closedWindowDetectionRange: 2
+  detectionRangeForGarlic: 2
   garlicProba: 0.5
   garlicPrefab: {fileID: 1313222802256865829, guid: ad3f17827c2be3c4e93df67824a6d7f4, type: 3}
   afraidToLeave: 0
@@ -143,11 +144,10 @@ MonoBehaviour:
   sightRange: 5
   curtainRange: 50
   curtainProbability: 0
-  garlicRange: 50
-  garlicProbability: 0
   stateColor: {r: 0, g: 0, b: 0, a: 0}
   isAlerted: 0
   isInSight: 0
+  canSightPlayer: 0
 --- !u!58 &2110391225984441415
 CircleCollider2D:
   m_ObjectHideFlags: 0
