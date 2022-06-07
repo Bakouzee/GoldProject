@@ -32,7 +32,7 @@ namespace Enemies.States
                     return;
                 }
 
-                interactable.Interact();
+                interactable.TryInteract();
                 GoToNextState();
                 return;
             }

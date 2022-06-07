@@ -34,20 +34,19 @@ public class VentManager : MonoBehaviour, IInteractable
 
     
 
-    public void Interact()
+    public bool TryInteract()
     {
-        if (!waitForVent)
-        {
-            
-            ventSysteme.SetActive(true);
-            NewVentManager.choosingVent = true;
-            PlayerManager.Instance.arrowToMovePlayer.SetActive(false);
-            GameManager.Instance.actionCountForVent = 10;
-
-            waitForVent = true;
-            FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
-        }
+        if (!IsInteractable || waitForVent)
+            return false;
         
+        ventSysteme.SetActive(true);
+        NewVentManager.choosingVent = true;
+        PlayerManager.Instance.arrowToMovePlayer.SetActive(false);
+        GameManager.Instance.actionCountForVent = 10;
+
+        waitForVent = true;
+        FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
+        return true;
     }
     //public System.Action<int> OnLaunchedTurn;
     public void LaunchTurnVent(int vent)

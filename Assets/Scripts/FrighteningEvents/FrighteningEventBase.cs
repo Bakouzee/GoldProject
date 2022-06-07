@@ -85,10 +85,11 @@ namespace GoldProject.FrighteningEvent
         public bool IsInteractable => true;
         public bool NeedToBeInRange => isTriggered;
 
-        public virtual void Interact()
+        public virtual bool TryInteract()
         {
             if (!IsInteractable)
-                return;
+                return false;
+            return true;
             
             // To override
         }

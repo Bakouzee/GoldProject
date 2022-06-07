@@ -214,13 +214,14 @@ namespace Enemies
         public Transform Transform => transform;
         public bool IsInteractable => Player.transformed;
         public bool NeedToBeInRange => true;
-        public void Interact()
+        public bool TryInteract()
         {
             if (health.TakeDamage(1))
             {
                 // If died -> call OnEnemyKilled event
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
+            return true;
         }
 
         private void OnMoved(Vector2Int newGridPos)

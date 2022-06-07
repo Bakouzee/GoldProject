@@ -17,8 +17,7 @@ namespace GoldProject
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
 
-        [Header("Actions")]
-        [SerializeField] private int defaultActionsPerTurn = 1;
+        [Header("Actions")] [SerializeField] private int defaultActionsPerTurn = 1;
         [SerializeField] private int transformedActionsPerTurn = 3;
         private int remainingActions;
 
@@ -33,6 +32,7 @@ namespace GoldProject
                     GameManager.Instance.LaunchTurn();
                     return;
                 }
+
                 // Only if we want to damage enemy on each move
                 // else if(remainingActions > value)
                 // {
@@ -45,12 +45,16 @@ namespace GoldProject
                 gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
             }
         }
-        private void ResetRemainingAction(int phaseActionCount) => 
-            RemainingActions = (transformed ? transformedActionsPerTurn : defaultActionsPerTurn) + PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.ActionPerTurn);
+
+        private void ResetRemainingAction(int phaseActionCount) =>
+            RemainingActions = (transformed ? transformedActionsPerTurn : defaultActionsPerTurn) +
+                               PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.ActionPerTurn);
+
         private int interactionRange => 1 + PlayerManager.Bonuses.GetBonusesOfType(Bonus.Type.InteractionRange);
 
         [Header("Others"), SerializeField] private int lightDamage;
         [SerializeField] private int lifeStealOnKill;
+        [SerializeField] private int frightenRadiusOnKill = 5;
 
         protected override void Start()
         {
@@ -66,6 +70,7 @@ namespace GoldProject
         }
 
         #region Set Events
+
         private void SetGameHandlerEvents(GameManager gameManager)
         {
             // Transform or Untransform on day or night start
@@ -90,8 +95,20 @@ namespace GoldProject
                     canTransform = true;
             };
 
-            // Heal when killing an enemy
-            EnemyManager.OnEnemyDisappeared += enemy => { PlayerManager.PlayerHealth.HealPlayer(lifeStealOnKill); };
+            // When killing an enemy
+            EnemyManager.OnEnemyKilled += enemy =>
+            {
+                // Heal when killing an enemy
+                PlayerManager.PlayerHealth.HealPlayer(lifeStealOnKill);
+
+                // Fear all nearby enemies
+                foreach (var enemyBase in currentRoom.enemies)
+                {
+                    if (gridController.gridManager.GetManhattanDistance(transform.position,
+                        enemyBase.transform.position) <= frightenRadiusOnKill)
+                        enemyBase.GetAfraid(transform);
+                }
+            };
         }
 
         #endregion
@@ -109,7 +126,7 @@ namespace GoldProject
                 canTransform = true;
                 Transform();
             }
-            
+
             if (Input.touchCount > 0)
                 if (Input.GetTouch(0).phase == TouchPhase.Ended)
                 {
@@ -139,31 +156,31 @@ namespace GoldProject
                         // Interactable objects
                         if (hit.transform.TryGetComponent(out IInteractable interactable))
                         {
-                            // Just to not copy/paste
-                            System.Action interact = () =>
-                            {
-                                interactable.Interact();
-                                GameManager.Instance.LaunchTurn();
-                            };
-
                             if (interactable.NeedToBeInRange)
                             {
                                 if (gridController.gridManager.GetManhattanDistance(transform.position,
                                     hit.transform.position) <= interactionRange && interactable.IsInteractable)
                                 {
-                                    interact.Invoke();
-                                    break;
+                                    if (interactable.TryInteract())
+                                    {
+                                        GameManager.Instance.LaunchTurn();
+                                        break;
+                                    }
                                 }
                             }
                             else
                             {
-                                interact.Invoke();
-                                break;
+                                if (interactable.TryInteract())
+                                {
+                                    GameManager.Instance.LaunchTurn();
+                                    break;
+                                }
                             }
                         }
 
                         // Tiles and if map = cantmove
-                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen && !NewVentManager.choosingVent)
+                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen &&
+                                 !NewVentManager.choosingVent)
                         {
                             if (gridController.gridPosition == tile.GridPos)
                                 continue;
@@ -228,6 +245,7 @@ namespace GoldProject
                 PlayerManager.PlayerHealth.TakeStinkDamage(damagingGarlic.damage);
             }
         }
+
         public void LookForLightDamage()
         {
             if (currentRoom.IsInLight(transform.position))
@@ -242,7 +260,7 @@ namespace GoldProject
             var lastRoom = currentRoom;
             base.UpdateCurrentRoom();
 
-            if (currentRoom != lastRoom )//&& !cameraController.dezoomCam)
+            if (currentRoom != lastRoom) //&& !cameraController.dezoomCam)
             {
                 cameraController.ZoomToRoom(currentRoom);
             }
@@ -251,7 +269,7 @@ namespace GoldProject
         protected override void OnEnterRoom(Room room)
         {
             //if(!cameraController.dezoomCam)
-                cameraController.ZoomToRoom(room);
+            cameraController.ZoomToRoom(room);
         }
 
         #region UI Methods

@@ -7,6 +7,6 @@ namespace GoldProject
         public Transform Transform { get; }
         public bool IsInteractable { get; }
         public bool NeedToBeInRange { get; }
-        public void Interact();
+        public bool TryInteract();
     }
 }
