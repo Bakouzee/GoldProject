@@ -24,18 +24,17 @@ namespace Enemies
         public bool canBeAfraid;
 
         
-        [Space(20)]
-        [Tooltip("Windows, vents, etc... will not be detected if too far")]
-        [SerializeField] private int objectDetectionRange;
-        
         [Header("Window")]
         [Tooltip("Probabilty of opening a windowwhen passing next to a closed window")]
         [Range(0f, 1f)] public float openWindowProba;
+        [SerializeField] private int closedWindowDetectionRange;
         
         [Header("Garlic")]
         [Tooltip("Probability of putting a garlic on the floor when passing next to an open window")]
+        public int detectionRangeForGarlic;
         [Range(0f, 1f)] public float garlicProba;
-        public Garlic garlicPrefab; 
+        public Garlic garlicPrefab;
+        public bool HasPlacedGarlic { get; set; }
         
         protected Health health;
         
@@ -44,9 +43,11 @@ namespace Enemies
         protected ExplorationStateBase explorationState;
         public GridController GridController => gridController;
 
+        [Header("Afraid vars")]
         public int afraidToLeave;
         private int afraidCount;
 
+        [Header("Player Detection")]
         [Range(0,90)]
         public int sightAngle;
 
@@ -56,11 +57,6 @@ namespace Enemies
         public int curtainRange;
         [Range(0,100)]
         public int curtainProbability;
-
-
-        public int garlicRange;
-        [Range(0, 100)]
-        public int garlicProbability;
 
 
         public Color stateColor;
