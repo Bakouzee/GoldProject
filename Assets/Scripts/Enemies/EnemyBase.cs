@@ -6,6 +6,8 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Enemies;
+using System.Collections.Generic;
 
 namespace Enemies
 {
@@ -65,6 +67,10 @@ namespace Enemies
 
         public bool isAlerted;
         public bool isInSight;
+        public bool canSightPlayer;
+        private bool lastIsInSight;
+
+        private List<EnemyBase> roomEnemies;
         
         
         // Add and remove self automatically from the static enemies list
@@ -130,10 +136,15 @@ namespace Enemies
 
 
             isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
-            
 
-            if (isInSight || isAlerted) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
-                currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+            if (isInSight && !lastIsInSight) {
+                Debug.Log("enter vision");
+                roomEnemies = currentRoom.enemies;
+            }
+
+
+            if ((isInSight || isAlerted) && canSightPlayer) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
+                roomEnemies.ForEach(delegate (EnemyBase enemy) {
                     if (!(enemy.currentState is ChaseState))  {
                         this.gameObject.name = "Chief Of Patrol";
                         enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
@@ -149,16 +160,20 @@ namespace Enemies
                 ChaseState chase = (ChaseState)currentState;    
                 if(!chase.chief.isInSight) {
                     chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
-                        enemy.SetState(new ExplorationStateBase(enemy));
-                        enemy.stateColor = Color.yellow;
-                        enemy.stateColor.a = 0.1f;
-                        enemy.isAlerted = false;
+                        if(enemy.isAlerted && enemy.canSightPlayer) {
+                            enemy.SetState(new ExplorationStateBase(enemy));
+                            enemy.stateColor = Color.yellow;
+                            enemy.stateColor.a = 0.1f;
+                            enemy.isAlerted = false;
+                        }
                     });
                 }
             }
             
 
             currentState?.DoAction();
+
+            lastIsInSight = isInSight;
         }
 
         /// <summary>
