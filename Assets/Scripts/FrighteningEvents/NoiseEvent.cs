@@ -48,12 +48,12 @@ public class NoiseEvent : FrighteningEventBase
 
         foreach(EnemyBase enemy in CurrentRoom.enemies)
         {
-            List<Direction> directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+            int directionBetweenTrapAndEnemy = GridManager.Instance.GetManhattanDistance(transform.position, enemy.transform.position);
 
-            Debug.Log(directionBetweenTrapAndEnemy.Count);
+            Debug.Log(directionBetweenTrapAndEnemy);
             
             // If enemies are directly next to the trap -> they will be scared !
-            if(directionBetweenTrapAndEnemy.Count < distanceToBeScared)
+            if(directionBetweenTrapAndEnemy < distanceToBeScared)
             {
                 enemy.GetAfraid(transform);
             }
