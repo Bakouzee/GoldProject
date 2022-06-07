@@ -24,18 +24,55 @@ namespace GoldProject
             RoomsManager roomsManager = RoomsManager.Instance;
             Vector2 wantedPos;
             Vector2 size;
-            if (room.isCorridor)
+
+            if(transform.parent != null)
+            {
+                transform.parent = null;
+            }
+
+            /*if (room.isCorridor)
             {
                 // Focus all map
                 size = roomsManager.mapSize;
                 wantedPos = size * 0.5f;
+
+                // Focus the player
+                transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+                size = roomsManager.playerFovSize;
+                wantedPos = transform.parent.position;
             }
             else
-            {
+            {*/
+                switch (room.name)
+                {
+                    case "Salle d'armes":
+                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y + 2);
+                        break;
+                    case "Salon":
+                        wantedPos = new Vector2(room.Position.x - 2, room.Position.y + 2);
+                        break;
+                    case "Chambre":
+                        wantedPos = new Vector2(room.Position.x - 2, room.Position.y - 2);
+                        break;
+                    case "Bibliothéque":
+                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y - 2);
+                        break;
+                    case "Couloir Ouest":
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
+                        break;
+                    case "Couloir Est":
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
+                        break;
+                    case "Couloir Nord":
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
+                        break;
+                    default:
+                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y + 2);
+                        break;
+                }
                 // Focus only room
-                wantedPos = room.Position;
-                size = room.size;
-            }
+                size = new Vector2Int(room.size.x + 5, room.size.y + 5);
+            //}
             transform.position = new Vector3(wantedPos.x, wantedPos.y, zPos);
             _camera.orthographicSize = GetOrthographicSizeDesired(size);
         }

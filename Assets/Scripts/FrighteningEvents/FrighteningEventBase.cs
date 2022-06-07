@@ -19,8 +19,8 @@ namespace GoldProject.FrighteningEvent
     /// </summary>
     public abstract class FrighteningEventBase : MonoBehaviour, IInteractable
     {
-        protected Rooms.Room currentRoom;
         protected GridController gridController;
+        protected Rooms.Room currentRoom;
 
         public Rooms.Room CurrentRoom { get { return currentRoom; } set { currentRoom = value; } }
 

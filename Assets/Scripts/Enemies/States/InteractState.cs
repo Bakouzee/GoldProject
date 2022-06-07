@@ -2,7 +2,7 @@
 using GoldProject;
 using GridSystem;
 using UnityEngine;
-
+using GoldProject.Rooms;
 namespace Enemies.States
 {
     public class InteractState : EnemyFollowedState
@@ -21,13 +21,17 @@ namespace Enemies.States
             }
 
             directions = new Queue<Direction>(gridManager.GetPath(gridPos, aimedTile.GridPos));
+            this.interactable = interactable;
         }
 
-        public override void DoAction()
-        {
+        public override void DoAction() {
             // If no more
-            if (directions.Count == 0)
-            {
+            if (directions.Count == 0) {
+                if (interactable is Curtain && ((Curtain)interactable).IsOpened) {
+                    GoToNextState();
+                    return;
+                }
+
                 interactable.Interact();
                 GoToNextState();
                 return;

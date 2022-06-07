@@ -8,9 +8,20 @@ using Enemies;
 
 public class NoiseEvent : FrighteningEventBase
 {
-    public Animator anim;
-    
+    private Animator anim;
+    private SpriteRenderer srParent;
+    private SpriteRenderer thisSr;
+
     public string animationTrigger;
+
+    private void Start()
+    {
+        anim = transform.parent.GetComponent<Animator>();
+        srParent = transform.parent.GetComponent<SpriteRenderer>();
+        srParent.enabled = false;
+
+        thisSr = GetComponent<SpriteRenderer>();
+    }
 
     public override void Interact()
     {
@@ -21,18 +32,15 @@ public class NoiseEvent : FrighteningEventBase
 
     }
 
-    // animation event
-    public void MakeScarySound(ScaryAudioTracks audioToPlay)
-    {
-        AudioManager.Instance.PlayScarySound(audioToPlay);
-    }
-
     // Check if enemy is in range to activate the animation
     protected override IEnumerator DoActionCoroutine()
     {
         if (CurrentRoom.enemies.Count == 0)
         {
             Debug.Log("No enemy in sight -> the trap didn't work !");
+            thisSr.color = Color.red;
+            srParent.enabled = true;
+            anim.SetTrigger(animationTrigger);
             yield break;
         }
 
@@ -41,6 +49,7 @@ public class NoiseEvent : FrighteningEventBase
         foreach(EnemyBase enemy in CurrentRoom.enemies)
         {
             List<Direction> directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+
             Debug.Log(directionBetweenTrapAndEnemy.Count);
             
             // If enemies are directly next to the trap -> they will be scared !
@@ -51,7 +60,9 @@ public class NoiseEvent : FrighteningEventBase
         }
 
         //Launch animation
-        anim.SetTrigger(animationTrigger);
+        thisSr.color = Color.green;
+        srParent.enabled = true;
+        anim.SetBool(animationTrigger, true);
 
         yield return new WaitForSeconds(1f);
         Debug.Log("done");
@@ -59,8 +70,12 @@ public class NoiseEvent : FrighteningEventBase
 
     protected override IEnumerator UndoActionCoroutine()
     {
-        anim.SetTrigger("ResetAnim");
+        Color32 readyColor = new Color32(166, 79, 0, 255);
+        thisSr.color = readyColor;
+        // Reset animation
+        anim.SetBool(animationTrigger, false);
         yield return new WaitForSeconds(1f);
+        srParent.enabled = false;
         Debug.Log("undone");
     }
 }

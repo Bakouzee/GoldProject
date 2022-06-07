@@ -32,7 +32,13 @@ namespace Enemies.States {
         }
 
         public override IEnumerator OnStateExit()  {
-          //  directions = new Queue<Direction>(GridManager.Instance.GetPath(gridPos, lastChasePos));
+            Debug.Log("exit: " + enemy + " chief " + chief);
+            if (enemy == chief)
+            {
+                Debug.Log("exit enter");
+                directions = new Queue<Direction>(GridManager.Instance.GetPath(gridPos, lastChasePos));
+                Debug.Log("size " + directions.Count);
+            }
             yield return null;
         }
 

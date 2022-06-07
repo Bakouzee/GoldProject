@@ -12,17 +12,22 @@ using GridSystem;
 
 public class GameManager : SingletonBase<GameManager>
 {
+    public VentManager[] vm;
     public enum DayState
     {
         DAY,
         NIGHT
     };
 
+
+    public int actionCountForVent = 0;
+
+
     public static DayState dayState = DayState.DAY;
     public static EventSystem eventSystem;
 
     [Header("Turns")] [SerializeField] private int actionPerPhase;
-    private int actionCount;
+    public int actionCount;
     private int currentDay;
     public System.Action<int> OnDayChanged;
     public int CurrentDay
@@ -154,11 +159,20 @@ public class GameManager : SingletonBase<GameManager>
             knight.MoveKnight();
         }
 
+        for(int i = 0; i < vm.Length; i++)
+        {
+            vm[i].LaunchTurnVent(actionCountForVent);
+        }
+        if(actionCountForVent > 0)
+        {
+            actionCountForVent--;
+        }
+
         // Spawn enemies
         SpawnCurrentEnemy();
 
         // Count 
-        actionCount++;
+        actionCount++;        
         if (actionCount >= actionPerPhase)
         {
             if (dayState == DayState.DAY)

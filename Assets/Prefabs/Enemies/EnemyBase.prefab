@@ -60,8 +60,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110391225984441420}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.44, y: 5.91, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 23.3865, y: 7.9635, z: 0}
+  m_LocalScale: {x: 0.23631075, y: 0.23631075, z: 0.23631075}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2571962637367587460}
@@ -109,8 +109,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0327f61c33878c646ba6963a62dd85bf, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -141,8 +141,13 @@ MonoBehaviour:
   afraidToLeave: 0
   sightAngle: 90
   sightRange: 5
+  curtainRange: 50
+  curtainProbability: 0
+  garlicRange: 50
+  garlicProbability: 0
   stateColor: {r: 0, g: 0, b: 0, a: 0}
   isAlerted: 0
+  isInSight: 0
 --- !u!58 &2110391225984441415
 CircleCollider2D:
   m_ObjectHideFlags: 0

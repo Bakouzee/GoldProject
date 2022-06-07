@@ -4,6 +4,7 @@ using GridSystem;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 namespace Enemies.States
 {
@@ -14,6 +15,8 @@ namespace Enemies.States
         
         private int numberOfTurn;
         private int turnCounter;
+
+        private System.Action endAction;
         
         public RunningState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState) : base(enemy, nextState)
         {
@@ -24,12 +27,18 @@ namespace Enemies.States
             this.turnCounter = 0;
         }
 
+        public RunningState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState,System.Action endAction) : this(enemy,frighteningSource,numberOfTurn,nextState)
+        {
+            this.endAction = endAction;
+        }
+
         public override void DoAction()
         {
             Vector2 runningDir = transform.position - frighteningSource.position;
             Direction runDirection = Direction.FromVector2(runningDir);
 
             var bestRunningDirections = GetBestRunningDirections();
+            Debug.Log("size: " + bestRunningDirections.Length);
 
             foreach (var runningDirection in bestRunningDirections)
             {
@@ -42,6 +51,12 @@ namespace Enemies.States
             {
                 GoToNextState();
             }
+        }
+
+        public override IEnumerator OnStateExit() {
+            endAction?.Invoke();
+            Debug.Log("do end action");
+            yield return null;
         }
 
         private Vector2Int[] GetBestRunningDirections()
