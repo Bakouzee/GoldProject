@@ -9,12 +9,18 @@ using Enemies;
 public class NoiseEvent : FrighteningEventBase
 {
     private Animator anim;
-    
+    private SpriteRenderer srParent;
+    private SpriteRenderer thisSr;
+
     public string animationTrigger;
 
     private void Start()
     {
         anim = transform.parent.GetComponent<Animator>();
+        srParent = transform.parent.GetComponent<SpriteRenderer>();
+        srParent.enabled = false;
+
+        thisSr = GetComponent<SpriteRenderer>();
     }
 
     public override void Interact()
@@ -32,6 +38,9 @@ public class NoiseEvent : FrighteningEventBase
         if (CurrentRoom.enemies.Count == 0)
         {
             Debug.Log("No enemy in sight -> the trap didn't work !");
+            thisSr.color = Color.red;
+            srParent.enabled = true;
+            anim.SetTrigger(animationTrigger);
             yield break;
         }
 
@@ -51,7 +60,9 @@ public class NoiseEvent : FrighteningEventBase
         }
 
         //Launch animation
-        anim.SetTrigger(animationTrigger);
+        thisSr.color = Color.green;
+        srParent.enabled = true;
+        anim.SetBool(animationTrigger, true);
 
         yield return new WaitForSeconds(1f);
         Debug.Log("done");
@@ -59,8 +70,12 @@ public class NoiseEvent : FrighteningEventBase
 
     protected override IEnumerator UndoActionCoroutine()
     {
-        anim.SetTrigger("ResetAnim");
+        Color32 readyColor = new Color32(166, 79, 0, 255);
+        thisSr.color = readyColor;
+        // Reset animation
+        anim.SetBool(animationTrigger, false);
         yield return new WaitForSeconds(1f);
+        srParent.enabled = false;
         Debug.Log("undone");
     }
 }

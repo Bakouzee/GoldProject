@@ -49,11 +49,9 @@ public class VentManager : MonoBehaviour, IInteractable
         }
         
     }
-    public System.Action<int> OnLaunchedTurn;
+    //public System.Action<int> OnLaunchedTurn;
     public void LaunchTurnVent(int vent)
     {
-        
-        
         if(vent > 0)
         {
             ventOne.GetComponent<BoxCollider2D>().enabled = false;
@@ -84,14 +82,7 @@ public class VentManager : MonoBehaviour, IInteractable
 
             ventFour.GetComponent<BoxCollider2D>().enabled = true;
             ventFour.GetComponent<SpriteRenderer>().color = Color.white;
-        }
-        
-
-        
-
-        
-
-        
+        } 
     }
 
     //public IEnumerator VentDelay()
