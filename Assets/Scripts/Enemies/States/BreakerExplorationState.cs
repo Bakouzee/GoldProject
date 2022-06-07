@@ -27,7 +27,7 @@ namespace Enemies.States
         public override void DoAction()
         {
             if (directions.Count > 0)
-                gridController.Move(directions.Dequeue());
+                gridController.Move(directions.Dequeue(), animator);
 
             if (gridManager.GetManhattanDistance(transform.position, curtainTarget.transform.position) <= 1)
             {

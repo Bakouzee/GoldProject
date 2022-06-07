@@ -26,7 +26,7 @@ namespace Enemies.States {
             directions = new Queue<Direction>(GridManager.Instance.GetPath(gridController.gridPosition,GridManager.Instance.GetGridPosition(chaseEntity.transform.position)));
 
             if(directions.Count > 0)
-                gridController.Move(directions.Dequeue());
+                gridController.Move(directions.Dequeue(), animator);
 
             
         }

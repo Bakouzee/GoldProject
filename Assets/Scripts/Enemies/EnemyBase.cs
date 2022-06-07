@@ -67,8 +67,8 @@ namespace Enemies
         private bool lastIsInSight;
 
         private List<EnemyBase> roomEnemies;
-        
-        
+        public Animator animator;
+
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy()

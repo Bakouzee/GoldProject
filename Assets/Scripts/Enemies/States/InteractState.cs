@@ -37,7 +37,7 @@ namespace Enemies.States
                 return;
             }
 
-            gridController.Move(directions.Dequeue());
+            gridController.Move(directions.Dequeue(), animator);
         }
     }
 }

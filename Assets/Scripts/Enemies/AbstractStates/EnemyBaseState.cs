@@ -18,6 +18,8 @@ namespace Enemies
         protected GridManager gridManager => gridController.gridManager;
         protected Vector2Int gridPos => gridController.gridPosition;
 
+        protected Animator animator => enemy.animator;
+
         // For movements
         public Queue<Direction> directions;
 

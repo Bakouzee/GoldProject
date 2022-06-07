@@ -16,6 +16,7 @@ namespace GoldProject
     {
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
+        [SerializeField] private Animator animator;
 
         [Header("Actions")] [SerializeField] private int defaultActionsPerTurn = 1;
         [SerializeField] private int transformedActionsPerTurn = 3;
@@ -281,7 +282,7 @@ namespace GoldProject
 
         public void TryMove(Vector2Int vec)
         {
-            if (gridController.Move(Direction.FromVector2Int(vec)))
+            if (gridController.Move(Direction.FromVector2Int(vec), animator))
                 // Only decrement remaining action if Move is a success
                 RemainingActions--;
         }

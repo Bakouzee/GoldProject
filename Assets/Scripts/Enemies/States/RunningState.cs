@@ -42,7 +42,7 @@ namespace Enemies.States
 
             foreach (var runningDirection in bestRunningDirections)
             {
-                if (gridController.Move(runningDirection))
+                if (gridController.Move(runningDirection, animator))
                     break;
             }
 

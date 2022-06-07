@@ -35,14 +35,16 @@ namespace GridSystem
         }
 
 
-        public bool Move(Direction direction) => Move(direction.Value);
-        public bool Move(string direction) => Move(Direction.ToVector2Int(direction));
-        public bool Move(Vector2Int dir)
+        public bool Move(Direction direction, Animator animator = null) => Move(direction.Value, animator);
+        public bool Move(string direction, Animator animator = null) =>
+            Move(Direction.ToVector2Int(direction), animator);
+        public bool Move(Vector2Int dir, Animator animator = null)
         {
             if (SetPosition(gridPosition + dir))
             {
-                // Rotate in move direction
-                float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg + 90f;
+                // Play animation in direction
+                if(animator) animator.SetTrigger(Direction.FromVector2Int(dir).ToString());
+                
                 //transform.eulerAngles = new Vector3(0, 0, angle);
                 
                 // It is a success
