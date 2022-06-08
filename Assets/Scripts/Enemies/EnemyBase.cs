@@ -8,6 +8,7 @@ using System.Collections;
 using UnityEngine.SceneManagement;
 using Enemies;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 
 namespace Enemies
 {
@@ -61,17 +62,13 @@ namespace Enemies
         public int curtainProbability;
 
 
-        public Color stateColor;
+        private Color stateColor;
 
         public bool isAlerted;
         public bool isInSight;
         public bool canSightPlayer;
         public Vector2Int lastPlayerPos;
-        
-        
-        private bool lastIsInSight;
 
-        private List<EnemyBase> roomEnemies;
         public Animator animator;
 
         // Add and remove self automatically from the static enemies list
@@ -108,6 +105,13 @@ namespace Enemies
             stateColor.a = 0.1f;
 
             gridController.OnMoved += OnMoved;
+
+            GameObject lightObj = transform.GetChild(2).gameObject;
+
+            if(lightObj.TryGetComponent<Light2D>(out Light2D light)) {
+                light.pointLightOuterRadius = sightRange;
+                light.pointLightOuterAngle = sightAngle * 2;
+            }
         }
         
 
@@ -128,13 +132,13 @@ namespace Enemies
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
 
-            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;          
 
             if(isInSight && !isAlerted && canSightPlayer) {
                 foreach (EnemyBase enemy in currentRoom.enemies) {
                     if (enemy != null) {
                         this.gameObject.name = "Chief Of Patrol";                 
-                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player, this));
+                        enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player, this));
                         enemy.stateColor = Color.red;
                         enemy.stateColor.a = 0.1f;
                         enemy.isAlerted = true;
@@ -147,13 +151,13 @@ namespace Enemies
                     }
                 }
             }
-            else if(!isInSight && isAlerted && currentState is ChaseState && ((ChaseState)currentState).chief == this) {
-                ChaseState chase = (ChaseState)currentState;
+            else if(!isInSight && isAlerted && currentState is EnemyChaseState && ((EnemyChaseState)currentState).chief == this) {
+                EnemyChaseState chase = (EnemyChaseState)currentState;
                 
                 foreach (EnemyBase enemy in currentRoom.enemies) {
                     if (enemy != null) {
                         if (enemy == chase.chief)
-                            enemy.SetState(new GoToState(enemy,enemy.lastPlayerPos,new ExplorationStateBase(enemy)));
+                            enemy.SetState(new GoToState(enemy, enemy.lastPlayerPos, new ExplorationStateBase(enemy)));                    
                         else
                             enemy.SetState(new ExplorationStateBase(enemy));
 
@@ -163,9 +167,10 @@ namespace Enemies
                     }
                 }
 
-                Debug.Log("state: " + currentState);
             }
 
+            if (isAlerted)
+                lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
 
             currentState?.DoAction();
         }
@@ -256,10 +261,10 @@ namespace Enemies
         }
 
         private void OnDrawGizmos() {
-            Handles.color = stateColor;
+           // Handles.color = stateColor;
             Transform viewTransform = transform.GetChild(0);
 
-            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
+          //  Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
         }
 
         

@@ -21,8 +21,6 @@ public class GoToState : EnemyFollowedState
     public override IEnumerator OnStateEnter()
     {
         directions = new Queue<Direction>(GridManager.Instance.GetPath(GridManager.Instance.GetGridPosition(enemy.transform.position), goTo));
-        Debug.Log("direction " + directions.Count);
-        Debug.Log("goto " + goTo);
         yield return null;
     }
 

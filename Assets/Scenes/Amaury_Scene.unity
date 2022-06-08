@@ -39921,6 +39921,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapSize: {x: 52, y: 32}
+  playerFovSize: {x: 0, y: 0}
   rooms:
   - name: "Biblioth\xE9que"
     isCorridor: 0
@@ -40997,6 +40998,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebc64a348f663e746a9a037236d8cb0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  vm: []
+  actionCountForVent: 0
   actionPerPhase: 10
   actionCount: 0
   dayNightTurnCooldown: {x: 2, y: 4}
