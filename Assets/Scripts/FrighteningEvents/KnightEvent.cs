@@ -9,6 +9,7 @@ public class KnightEvent : FrighteningEventBase
 {
     private EnemyBase enemyToScare;
     private SpriteRenderer[] srMap;
+    private Animator animKnight;
 
     public List<Direction> directionKnight = new List<Direction>();
     private Vector2Int knightPos;
@@ -27,6 +28,8 @@ public class KnightEvent : FrighteningEventBase
         gridController = new GridController(transform);
 
         knightPos = GridManager.Instance.GetGridPosition(transform.position);
+
+        animKnight = GetComponent<Animator>();
 
         isReseting = false;
 
@@ -66,6 +69,7 @@ public class KnightEvent : FrighteningEventBase
         {
             Debug.Log("No enemy in sight -> the trap didn't work !");
             srMap[1].color = Color.red;
+            isReseting = false;
             yield break;
         }
 
@@ -82,7 +86,6 @@ public class KnightEvent : FrighteningEventBase
 
         //Get the path to do
         directionKnight = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
-
 
         // If the enemy is directly next to the trap -> he will be scared !
         if(directionKnight.Count < distanceToBeScared)
@@ -106,7 +109,13 @@ public class KnightEvent : FrighteningEventBase
 
         isReseting = CurrentRoom.enemies.Count > 0;
 
-        yield return new WaitForSeconds(1f);
+        if (GridManager.Instance.GetGridPosition(transform.position) == knightPos)
+        {
+            isReseting = false;
+            Debug.Log("It worked");
+        }
+
+            yield return new WaitForSeconds(1f);
 
         Color32 readyColor = new Color32(166, 79, 0, 255);
         srMap[1].color = readyColor;
@@ -131,7 +140,7 @@ public class KnightEvent : FrighteningEventBase
             {
                 if (gridController != null)
                 {
-                    gridController.Move(directionKnight[index]);
+                    gridController.Move(directionKnight[index], animKnight);
                     index++;
                 }
             }
@@ -152,13 +161,14 @@ public class KnightEvent : FrighteningEventBase
             {
                 if (gridController != null)
                 {
-                    gridController.Move(directionKnight[index]);
+                    gridController.Move(directionKnight[index], animKnight);
                     index++;
                 }
             }
 
             if (GridManager.Instance.GetGridPosition(transform.position) == knightPos)
             {
+                animKnight.SetTrigger("Down");
                 if (index == directionKnight.Count)
                 {
                     EnemyManager.knights.Remove(this);
@@ -167,5 +177,10 @@ public class KnightEvent : FrighteningEventBase
                 }
             }
         }
+    }
+
+    private void OnDestroy()
+    {
+        EnemyManager.knights.Remove(this);
     }
 }
