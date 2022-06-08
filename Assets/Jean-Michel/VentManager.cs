@@ -26,6 +26,10 @@ public class VentManager : MonoBehaviour, IInteractable
     public bool IsInteractable => true;
     public bool NeedToBeInRange => true;
 
+    public Sprite spriteClosed;
+
+    public Sprite spriteOpen;
+
     private void Start()
     {
         //ventOne.transform.position = GridSystem.GridManager.Instance.GetGridPosition(ventOne.transform.position);
@@ -56,68 +60,52 @@ public class VentManager : MonoBehaviour, IInteractable
         if(vent > 0)
         {
             ventOne.GetComponent<BoxCollider2D>().enabled = false;
-            ventOne.GetComponent<SpriteRenderer>().color = Color.red;
+            
+            ventOne.GetComponent<SpriteRenderer>().sprite = spriteClosed;
+            
+
 
             ventTwo.GetComponent<BoxCollider2D>().enabled = false;
-            ventTwo.GetComponent<SpriteRenderer>().color = Color.red;
+            
+            ventTwo.GetComponent<SpriteRenderer>().sprite = spriteClosed;
+
 
             ventThree.GetComponent<BoxCollider2D>().enabled = false;
-            ventThree.GetComponent<SpriteRenderer>().color = Color.red;
+            
+            ventThree.GetComponent<SpriteRenderer>().sprite = spriteClosed;
+
 
             ventFour.GetComponent<BoxCollider2D>().enabled = false;
-            ventFour.GetComponent<SpriteRenderer>().color = Color.red;
-            
+           
+            ventFour.GetComponent<SpriteRenderer>().sprite = spriteClosed;
+
+
         }
         else
         {
             waitForVent = false;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
             ventOne.GetComponent<BoxCollider2D>().enabled = true;
-            ventOne.GetComponent<SpriteRenderer>().color = Color.white;
+           
+            ventOne.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
             ventTwo.GetComponent<BoxCollider2D>().enabled = true;
-            ventTwo.GetComponent<SpriteRenderer>().color = Color.white;
+            
+            ventTwo.GetComponent<SpriteRenderer>().sprite = spriteOpen;
+
 
             ventThree.GetComponent<BoxCollider2D>().enabled = true;
-            ventThree.GetComponent<SpriteRenderer>().color = Color.white;
+            
+            ventThree.GetComponent<SpriteRenderer>().sprite = spriteOpen;
+
 
             ventFour.GetComponent<BoxCollider2D>().enabled = true;
-            ventFour.GetComponent<SpriteRenderer>().color = Color.white;
-        } 
+           
+            ventFour.GetComponent<SpriteRenderer>().sprite = spriteOpen;
+
+        }
     }
 
-    //public IEnumerator VentDelay()
-    //{
-
-    //    ventOne.GetComponent<BoxCollider2D>().enabled = false;
-    //    ventOne.GetComponent<SpriteRenderer>().color = Color.red;
-
-    //    ventTwo.GetComponent<BoxCollider2D>().enabled = false;
-    //    ventTwo.GetComponent<SpriteRenderer>().color = Color.red;
-
-    //    ventThree.GetComponent<BoxCollider2D>().enabled = false;
-    //    ventThree.GetComponent<SpriteRenderer>().color = Color.red;
-
-    //    ventFour.GetComponent<BoxCollider2D>().enabled = false;
-    //    ventFour.GetComponent<SpriteRenderer>().color = Color.red;
-
-    //    yield return new WaitForSeconds(10f);
-        
-    //    waitForVent = false;
-    //    FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
-
-    //    ventOne.GetComponent<BoxCollider2D>().enabled = true;
-    //    ventOne.GetComponent<SpriteRenderer>().color = Color.white;
-
-    //    ventTwo.GetComponent<BoxCollider2D>().enabled = true;
-    //    ventTwo.GetComponent<SpriteRenderer>().color = Color.white;
-
-    //    ventThree.GetComponent<BoxCollider2D>().enabled = true;
-    //    ventThree.GetComponent<SpriteRenderer>().color = Color.white;
-
-    //    ventFour.GetComponent<BoxCollider2D>().enabled = true;
-    //    ventFour.GetComponent<SpriteRenderer>().color = Color.white;
-    //}
-
+ 
 
 }
