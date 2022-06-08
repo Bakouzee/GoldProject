@@ -5,12 +5,12 @@ using UnityEngine;
 using GoldProject.Rooms;
 namespace Enemies.States
 {
-    public class InteractState : EnemyFollowedState
+    public class EnemyInteractState : EnemyFollowedState
     {
         private IInteractable interactable;
         private Tile aimedTile;
 
-        public InteractState(EnemyBase enemy, EnemyBaseState nextState, IInteractable interactable) : base(enemy,
+        public EnemyInteractState(EnemyBase enemy, EnemyBaseState nextState, IInteractable interactable) : base(enemy,
             nextState)
         {
             this.aimedTile = gridController.gridManager.FindClosestTile(interactable.Transform.position);

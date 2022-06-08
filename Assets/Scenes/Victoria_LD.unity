@@ -66923,7 +66923,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   vm: []
   actionCountForVent: 0
-  actionPerPhase: 10
+  actionPerPhase: 25
   actionCount: 0
   dayNightTurnCooldown: {x: 2, y: 4}
   undoButton: {fileID: 1099195713}
@@ -66938,9 +66938,9 @@ MonoBehaviour:
     - type: 0
       prefab: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
     - type: 1
-      prefab: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
+      prefab: {fileID: 3852210745330209509, guid: 0bf2a1a630b1fcc419ba6b51eafc625f, type: 3}
     - type: 2
-      prefab: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
+      prefab: {fileID: 559875899386926124, guid: cdc20811152770c4d9409e57dbb1ce17, type: 3}
   waves:
   - chief:
       chiefType: 0

@@ -21,7 +21,9 @@ namespace Enemies
         /// <summary>Is the enemy the chief of exploration</summary>
         public bool chief;
         /// <summary>Is sensible to frightening traps</summary>
-        public bool canBeAfraid;
+        [SerializeField] bool canBeAfraid;
+        /// <summary>Is sensible to attracting traps</summary>
+        [SerializeField] private bool canBeAttracted;
 
         
         [Header("Window")]
@@ -40,7 +42,7 @@ namespace Enemies
         
         // States
         protected EnemyBaseState currentState;
-        protected ExplorationStateBase explorationState;
+        protected EnemyBaseState lastState;
         public GridController GridController => gridController;
 
         [Header("Afraid vars")]
@@ -97,21 +99,13 @@ namespace Enemies
                 // }
             };
             
-            DefineStates();
-            SetState(explorationState);
+            SetState(new ExplorationStateBase(this));
 
             stateColor = Color.yellow;
             stateColor.a = 0.1f;
 
             gridController.OnMoved += OnMoved;
         }
-        
-        /// <summary>
-        /// Method only used to define each EnemyBaseState
-        /// and called by default in the start
-        /// </summary>
-        protected virtual void DefineStates() =>  explorationState = new ExplorationStateBase(this);
-
         
 
         protected virtual void Update() => currentState?.OnStateUpdate();
@@ -141,9 +135,9 @@ namespace Enemies
 
             if ((isInSight || isAlerted) && canSightPlayer) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
                 roomEnemies.ForEach(delegate (EnemyBase enemy) {
-                    if (!(enemy.currentState is ChaseState))  {
+                    if (!(enemy.currentState is EnemyChaseState))  {
                         this.gameObject.name = "Chief Of Patrol";
-                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
+                        enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player,this));
                         enemy.stateColor = Color.red;
                         enemy.stateColor.a = 0.1f;
                         enemy.isAlerted = true;
@@ -152,10 +146,10 @@ namespace Enemies
   
             }
 
-            if(currentState is ChaseState) {
-                ChaseState chase = (ChaseState)currentState;    
-                if(!chase.chief.isInSight) {
-                    chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
+            if(currentState is EnemyChaseState) {
+                EnemyChaseState enemyChase = (EnemyChaseState)currentState;    
+                if(!enemyChase.chief.isInSight) {
+                    enemyChase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
                         if(enemy.isAlerted && enemy.canSightPlayer) {
                             enemy.SetState(new ExplorationStateBase(enemy));
                             enemy.stateColor = Color.yellow;
@@ -183,6 +177,7 @@ namespace Enemies
             if (enemyBaseState == null)
                 return;
             if(currentState != null) StartCoroutine(currentState.OnStateExit());
+            lastState = currentState;
             currentState = enemyBaseState;
             StartCoroutine(currentState.OnStateEnter());
         }
@@ -198,7 +193,7 @@ namespace Enemies
                 return;
             
             SetState(
-                new RunningState(
+                new EnemyAfraidState(
                     enemy: this,
                     frighteningSource: source,
                     numberOfTurn: 3,
@@ -207,6 +202,20 @@ namespace Enemies
             );
 
             Debug.Log("The enemy is afraid !");
+        }
+
+        public void GetAttracted(Vector2Int attractionGridPos, System.Action onArrived)
+        {
+            if (!canBeAttracted)
+                return;
+            
+            SetState(new EnemyGoToState(
+                enemy: this, 
+                aimedGridPos: attractionGridPos,
+                onArrived: onArrived, 
+                nextState: new ExplorationStateBase(this)
+                )
+            );
         }
         
         
@@ -226,17 +235,14 @@ namespace Enemies
 
         private void OnMoved(Vector2Int newGridPos)
         {
-            if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
-                PlayerManager.Instance.PlayerHealth.Death();
-
             Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
             if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
-                && !(currentState is InteractState) && !closest.IsOpened)    {
+                && !(currentState is EnemyInteractState) && !closest.IsOpened)    {
                 int random = Random.Range(0, 100);
 
                 if (random <= curtainProbability)            
-                    SetState(new InteractState(this, new ExplorationStateBase(this), closest));
+                    SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
                 
             }
             

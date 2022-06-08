@@ -28,6 +28,7 @@ public class VentManager : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        //ventOne.transform.position = GridSystem.GridManager.Instance.GetGridPosition(ventOne.transform.position);
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
         player = PlayerManager.Instance.Player;
     }
@@ -48,9 +49,10 @@ public class VentManager : MonoBehaviour, IInteractable
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         return true;
     }
-    //public System.Action<int> OnLaunchedTurn;
+    
     public void LaunchTurnVent(int vent)
     {
+        
         if(vent > 0)
         {
             ventOne.GetComponent<BoxCollider2D>().enabled = false;
