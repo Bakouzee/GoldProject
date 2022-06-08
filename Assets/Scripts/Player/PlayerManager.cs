@@ -37,6 +37,8 @@ public class PlayerManager : SingletonBase<PlayerManager>
         if(miniMap) miniMap.SetActive(false);
     }
 
+
+    public System.Action onShowMap;
     public void ShowMap()
     {
         if (miniMap != null)
@@ -51,6 +53,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 arrowToMovePlayer.SetActive(false);
                 textEnemyTrap.text = "Show Enemies";
                 mainCam.SetActive(false);
+                onShowMap?.Invoke();
             } else
             {
                 foreach (EnemyBase enemy in Player.CurrentRoom.enemies)
@@ -61,6 +64,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 arrowToMovePlayer.SetActive(true);
                 textEnemyTrap.text = "Show Traps";
                 miniMap.SetActive(false);
+                onShowMap?.Invoke();
             }
         }
         mapSeen = !mapSeen;

@@ -32281,17 +32281,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 1556712902}
     m_Modifications:
     - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1775470521}
+      objectReference: {fileID: 1775470522}
     - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
@@ -32300,26 +32292,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 1039780758}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: Undo
-      objectReference: {fileID: 0}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
-      value: Undo
-      objectReference: {fileID: 0}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
-      value: GoldProject.FrighteningEvent.FrighteningEventBase, Assembly-CSharp
-      objectReference: {fileID: 0}
-    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     - target: {fileID: 1332961391849306929, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -66107,11 +66079,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5504029497289882092, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 8.920538
+      value: 7.47
       objectReference: {fileID: 0}
     - target: {fileID: 5504029497289882092, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.851163
+      value: 3.03
       objectReference: {fileID: 0}
     - target: {fileID: 5504029497289882092, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -66145,30 +66117,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5504029498884095881, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
-      propertyPath: m_Radius
-      value: 0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 5504029498884095882, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
-      propertyPath: distanceToBeScared
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 5504029498884095886, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.94828
-      objectReference: {fileID: 0}
-    - target: {fileID: 5504029498884095886, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2.94828
-      objectReference: {fileID: 0}
-    - target: {fileID: 5504029498884095886, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2.94828
-      objectReference: {fileID: 0}
-    - target: {fileID: 5504029498884095887, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
-      propertyPath: m_SortingLayer
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
 --- !u!4 &1775470520 stripped
@@ -66176,9 +66124,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5504029497289882092, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
   m_PrefabInstance: {fileID: 1775470519}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1775470521 stripped
+--- !u!114 &1775470522 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5504029498884095882, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
+  m_CorrespondingSourceObject: {fileID: 1775470522, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
   m_PrefabInstance: {fileID: 1775470519}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -68118,7 +68066,7 @@ MonoBehaviour:
   - {fileID: 1644721869}
   - {fileID: 1843747632}
   actionCountForVent: 0
-  actionPerPhase: 25
+  actionPerPhase: 10
   actionCount: 0
   dayNightTurnCooldown: {x: 2, y: 4}
   undoButton: {fileID: 1099195713}
