@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5928846784230785548, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
       propertyPath: m_Name
-      value: Window Right
+      value: Window Right (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
       propertyPath: m_RootOrder
@@ -21,11 +21,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 79.633
       objectReference: {fileID: 0}
     - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 17.97
       objectReference: {fileID: 0}
     - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -61,3 +61,41 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+--- !u!114 &2355344651425948771 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5928846783471239001, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+  m_PrefabInstance: {fileID: 8280047992419457850}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &2355344652276734262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5928846784230785548, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+  m_PrefabInstance: {fileID: 8280047992419457850}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8284863974817569428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2355344652276734262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 2355344651425948771}
+  dayLight:
+    color: {r: 1, g: 0.5411765, b: 0, a: 1}
+    intensity: 1
+  dayObjects: []
+  nightLight:
+    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
+    intensity: 0.7
+  nightObjects: []
