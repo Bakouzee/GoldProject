@@ -9,17 +9,40 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
 
+    public GameObject pauseButton;
+
+    public bool buttonActivated = false;
+
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
+        //if(buttonActivated)
+        //{
+        //    if (gameIsPaused)
+        //    {
+        //        Resume();
+                
+        //    }
+        //    else
+        //    {
+        //        Pause();
+        //    }
+        //}
+    }
+
+    public void ButtonDown()
+    {
+        buttonActivated = true;
+        if (buttonActivated)
         {
             if (gameIsPaused)
             {
                 Resume();
+
             }
             else
             {
                 Pause();
+
             }
         }
     }
@@ -54,6 +77,6 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("Jean-Michel");
+        SceneManager.LoadScene("Victoria_LD");
     }
 }
