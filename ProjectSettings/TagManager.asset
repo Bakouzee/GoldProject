@@ -11,6 +11,7 @@ TagManager:
   - FakeMirror
   - WatchingPainting
   - Vent
+  - Music
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - Trap
   - post_process
-  - 
+  - Pathfinding
   - 
   - 
   - 

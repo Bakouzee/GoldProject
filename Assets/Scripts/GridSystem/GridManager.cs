@@ -170,8 +170,16 @@ namespace GridSystem
         {
             Tile startTile = GetTileAtPosition(startGridPos);
             Tile endTile = GetTileAtPosition(targetGridPos);
-            if (!startTile || !endTile)
+            if (!startTile)
+            {
+                Debug.LogWarning($"Start tile at {startGridPos} is null");
                 return null;
+            }
+            if (!endTile)
+            {
+                Debug.LogWarning($"End tile at {targetGridPos} is null");
+                return null;
+            }
 
             List<Tile> openList = new List<Tile>() {startTile};
             List<Tile> closedList = new List<Tile>();
