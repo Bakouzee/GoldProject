@@ -8,7 +8,11 @@ using System.Collections;
 
 namespace Enemies.States
 {
-    public class RunningState : EnemyFollowedState
+    /// <summary>
+    /// State where the enemy runs away from
+    /// a frightening source for a certain period of time
+    /// </summary>
+    public class EnemyAfraidState : EnemyFollowedState
     {
         protected Transform frighteningSource;
         private Vector2 frighteningSourceLastPos;
@@ -18,7 +22,7 @@ namespace Enemies.States
 
         private System.Action endAction;
         
-        public RunningState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState) : base(enemy, nextState)
+        public EnemyAfraidState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState) : base(enemy, nextState)
         {
             this.frighteningSource = frighteningSource;
             this.frighteningSourceLastPos = this.frighteningSource.position;
@@ -27,7 +31,7 @@ namespace Enemies.States
             this.turnCounter = 0;
         }
 
-        public RunningState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState,System.Action endAction) : this(enemy,frighteningSource,numberOfTurn,nextState)
+        public EnemyAfraidState(EnemyBase enemy, Transform frighteningSource, int numberOfTurn, EnemyBaseState nextState,System.Action endAction) : this(enemy,frighteningSource,numberOfTurn,nextState)
         {
             this.endAction = endAction;
         }

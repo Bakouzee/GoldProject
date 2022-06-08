@@ -1,8 +1,8 @@
 ﻿namespace Enemies.States
 {
-    public class IdleState : EnemyBaseState
+    public class EnemyIdleState : EnemyBaseState
     {
-        public IdleState(EnemyBase enemy) : base(enemy)
+        public EnemyIdleState(EnemyBase enemy) : base(enemy)
         {
         }
 

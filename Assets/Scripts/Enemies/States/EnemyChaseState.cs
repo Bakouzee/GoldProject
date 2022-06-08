@@ -5,14 +5,14 @@ using GoldProject;
 using GridSystem;
 
 namespace Enemies.States {
-    public class ChaseState : EnemyBaseState {
+    public class EnemyChaseState : EnemyBaseState {
 
         private Entity chaseEntity;
         private Vector2Int lastChasePos;
 
         public EnemyBase chief;
 
-        public ChaseState(EnemyBase enemy,Entity chaseEntity, EnemyBase chief) : base(enemy) {
+        public EnemyChaseState(EnemyBase enemy,Entity chaseEntity, EnemyBase chief) : base(enemy) {
             this.chaseEntity = chaseEntity;
             this.chief = chief;
         }
