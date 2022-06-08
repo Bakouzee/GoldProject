@@ -26,7 +26,8 @@ public class GameManager : SingletonBase<GameManager>
     public static DayState dayState = DayState.DAY;
     public static EventSystem eventSystem;
 
-    [Header("Turns")] [SerializeField] private int actionPerPhase;
+    [Header("Turns")] 
+    public int actionPerPhase;
     public int actionCount;
     private int currentDay;
     public System.Action<int> OnDayChanged;
@@ -144,7 +145,7 @@ public class GameManager : SingletonBase<GameManager>
 
     #endregion
 
-    public System.Action<int> OnLaunchedTurn;
+    public System.Action<int, int> OnLaunchedTurn;
     public void LaunchTurn()
     {
         // Enemies make their turn
@@ -184,7 +185,7 @@ public class GameManager : SingletonBase<GameManager>
         // Cooldown of turn
         turnCooldown.SetCooldown();
         
-        OnLaunchedTurn?.Invoke(actionCount);
+        OnLaunchedTurn?.Invoke(actionCount, actionPerPhase);
     }
 
     private void StartSpawningWave()

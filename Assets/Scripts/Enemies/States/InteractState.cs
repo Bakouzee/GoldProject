@@ -32,12 +32,12 @@ namespace Enemies.States
                     return;
                 }
 
-                interactable.Interact();
+                interactable.TryInteract();
                 GoToNextState();
                 return;
             }
 
-            gridController.Move(directions.Dequeue());
+            gridController.Move(directions.Dequeue(), animator);
         }
     }
 }

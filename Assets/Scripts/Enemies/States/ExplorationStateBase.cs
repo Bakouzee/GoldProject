@@ -38,7 +38,7 @@ namespace Enemies.States
 
             // Move if has direction
             if (directions.Count > 0)
-                gridController.Move(directions.Dequeue());
+                gridController.Move(directions.Dequeue(), animator);
 
             // If no more directions, choose next target
             if (directions.Count == 0)
