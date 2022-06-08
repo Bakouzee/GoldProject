@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 56850661}
   - component: {fileID: 56850660}
   - component: {fileID: 56850659}
-  - component: {fileID: 56850658}
+  - component: {fileID: 56850662}
   m_Layer: 0
   m_Name: PaintingTrap
   m_TagString: Untagged
@@ -229,18 +229,6 @@ Transform:
   m_Father: {fileID: 4683056608198975962}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &56850658
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56850656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6946555d1002f04d8b877b45eb8e0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &56850659
 Animator:
   serializedVersion: 4
@@ -339,6 +327,20 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &56850662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56850656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debb48fd387904e4e95d5c8da226e949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToBeScared: 6
+  animationTrigger: Painting
 --- !u!1 &76809914 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6888564651719965389, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
@@ -32078,7 +32080,6 @@ GameObject:
   - component: {fileID: 1039780757}
   - component: {fileID: 1039780760}
   - component: {fileID: 1039780759}
-  - component: {fileID: 1039780758}
   m_Layer: 3
   m_Name: TrapIconNoise
   m_TagString: Untagged
@@ -32101,20 +32102,6 @@ Transform:
   m_Father: {fileID: 56850657}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1039780758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1039780756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: debb48fd387904e4e95d5c8da226e949, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToBeScared: 6
-  animationTrigger: Painting
 --- !u!58 &1039780759
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -32287,11 +32274,19 @@ PrefabInstance:
     - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1934375707}
+      objectReference: {fileID: 7449267421817897841}
     - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
-      objectReference: {fileID: 1039780758}
+      objectReference: {fileID: 56850662}
+    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: Undo
+      objectReference: {fileID: 0}
+    - target: {fileID: 1332961391849306928, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: Undo
+      objectReference: {fileID: 0}
     - target: {fileID: 1332961391849306929, guid: 672f93b7bbc789f4e8e4762a71e3fbf0, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -66642,7 +66637,6 @@ GameObject:
   - component: {fileID: 1934375705}
   - component: {fileID: 1934375706}
   - component: {fileID: 1934375708}
-  - component: {fileID: 1934375707}
   m_Layer: 3
   m_Name: TrapIconNoise
   m_TagString: Untagged
@@ -66717,20 +66711,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1934375707
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1934375704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: debb48fd387904e4e95d5c8da226e949, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  distanceToBeScared: 6
-  animationTrigger: Puppet
 --- !u!58 &1934375708
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -67199,18 +67179,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &2119142048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449267421817897805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6946555d1002f04d8b877b45eb8e0b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2126416560
 GameObject:
   m_ObjectHideFlags: 0
@@ -68298,7 +68266,7 @@ GameObject:
   - component: {fileID: 7449267421817897840}
   - component: {fileID: 7449267421817897807}
   - component: {fileID: 2119142047}
-  - component: {fileID: 2119142048}
+  - component: {fileID: 7449267421817897841}
   m_Layer: 0
   m_Name: PuppetTrap
   m_TagString: Untagged
@@ -68400,3 +68368,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7449267421817897841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7449267421817897805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: debb48fd387904e4e95d5c8da226e949, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceToBeScared: 6
+  animationTrigger: Puppet

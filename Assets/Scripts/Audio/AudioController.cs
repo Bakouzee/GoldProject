@@ -58,7 +58,9 @@ namespace AudioController
         Blood_Drink,
         Blood_PickUp,
         Garlic_Use,
-        Garlic_Dispawn
+        Garlic_Dispawn,
+        Thunder,
+        Cocorico,
     }
 
     public enum MusicAudioTracks
@@ -75,5 +77,12 @@ namespace AudioController
         Sc_Ghost,
         Sc_Mirror,
         Sc_Painting
+    }
+
+    public enum MapAudioTracks
+    {
+        Map_Open,
+        Map_Close,
+        Map_Switch
     }
 }
