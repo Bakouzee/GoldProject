@@ -22,13 +22,20 @@ namespace Enemies.States {
         }
 
         public override void DoAction() {
+            
+            // Attack entity if in range
+            if (gridManager.GetManhattanDistance(chaseEntity.gridController.gridPosition, gridPos) <= 1)
+            {
+                // this is hardcoded, not very good. It doesn't depends on the current chased entity -> bad
+                PlayerManager.Instance.PlayerHealth.Death();
+                return;
+            }
+            
+            // Else, move towards entity
             lastChasePos = GridManager.Instance.GetGridPosition(chaseEntity.transform.position);
             directions = new Queue<Direction>(GridManager.Instance.GetPath(gridController.gridPosition,GridManager.Instance.GetGridPosition(chaseEntity.transform.position)));
-
             if(directions.Count > 0)
                 gridController.Move(directions.Dequeue(), animator);
-
-            
         }
 
         public override IEnumerator OnStateExit()  {

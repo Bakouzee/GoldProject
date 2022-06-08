@@ -226,9 +226,6 @@ namespace Enemies
 
         private void OnMoved(Vector2Int newGridPos)
         {
-            if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
-                PlayerManager.Instance.PlayerHealth.Death();
-
             Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
             if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
