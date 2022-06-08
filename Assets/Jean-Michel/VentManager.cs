@@ -33,7 +33,6 @@ public class VentManager : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        //ventOne.transform.position = GridSystem.GridManager.Instance.GetGridPosition(ventOne.transform.position);
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
         player = PlayerManager.Instance.Player;
     }
