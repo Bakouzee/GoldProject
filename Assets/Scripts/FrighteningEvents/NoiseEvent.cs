@@ -23,13 +23,17 @@ public class NoiseEvent : FrighteningEventBase
         thisSr = GetComponent<SpriteRenderer>();
     }
 
-    public override void Interact()
+    public override bool TryInteract()
     {
+        if (!base.TryInteract())
+            return false;
+        
         // normally have to activate the trap AND WHEN an enemy is at his range or in the room
         // the armor will move to him
         Debug.Log("NoiseTrap");
         Do();
 
+        return true;
     }
 
     // Check if enemy is in range to activate the animation
@@ -48,12 +52,12 @@ public class NoiseEvent : FrighteningEventBase
 
         foreach(EnemyBase enemy in CurrentRoom.enemies)
         {
-            List<Direction> directionBetweenTrapAndEnemy = GridManager.Instance.GetPath(thisPos, enemy.GridController.gridPosition);
+            int directionBetweenTrapAndEnemy = GridManager.Instance.GetManhattanDistance(transform.position, enemy.transform.position);
 
-            Debug.Log(directionBetweenTrapAndEnemy.Count);
+            Debug.Log(directionBetweenTrapAndEnemy);
             
             // If enemies are directly next to the trap -> they will be scared !
-            if(directionBetweenTrapAndEnemy.Count < distanceToBeScared)
+            if(directionBetweenTrapAndEnemy < distanceToBeScared)
             {
                 enemy.GetAfraid(transform);
             }

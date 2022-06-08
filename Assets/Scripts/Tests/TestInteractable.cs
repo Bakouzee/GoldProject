@@ -12,9 +12,13 @@ namespace GoldProject.Tests
         public bool IsInteractable => true;
         public bool NeedToBeInRange => true;
 
-        public void Interact()
+        public bool TryInteract()
         {
+            if (!IsInteractable)
+                return false;
+            
             Debug.Log($"Interacted with {name}");
+            return true;
         }
     }
 }

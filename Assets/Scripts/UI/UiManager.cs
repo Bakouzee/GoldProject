@@ -13,7 +13,7 @@ namespace GoldProject.UI
 
         // Action counter
         [SerializeField] private TMP_Text actionCounter;
-        public void SetActionCount(int actionCount) => actionCounter.text = actionCount.ToString();
+        public void SetActionCount(int actionCount, int actionPerPhase) => actionCounter.text = actionCount.ToString();
 
         // Health bar
         [SerializeField] private HealthBar playerHealthBar;
@@ -24,6 +24,9 @@ namespace GoldProject.UI
         [SerializeField] private Button leftArrowButton;
         [SerializeField] private Button downArrowButton;
         [SerializeField] private Button rightArrowButton;
+
+        [Header("Clock"), Tooltip("Image of the clock that is going to be rotated"), SerializeField] 
+        private Transform clock;
         
         private void Start()
         {
@@ -54,6 +57,19 @@ namespace GoldProject.UI
             SetButtonListener(topArrowButton, () => instancePlayer.MoveUp());
             SetButtonListener(rightArrowButton, () => instancePlayer.MoveRight());
             SetButtonListener(downArrowButton, () => instancePlayer.MoveDown());
+            
+            // Rotate the clock showing day/night
+            if (clock)
+            {
+                clock.eulerAngles = Vector3.zero;
+                gameManager.OnLaunchedTurn += (actionCount, actionPerPhase) =>
+                {
+                    float z = (actionCount / (float)actionPerPhase) * 180f;
+                    if (GameManager.dayState == GameManager.DayState.NIGHT)
+                        z += 180f;
+                    clock.eulerAngles = Vector3.forward * z;
+                };
+            }
         }
 
         private void SetButtonListener(Button button, UnityAction listener)

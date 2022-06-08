@@ -21,32 +21,35 @@ namespace Enemies
         /// <summary>Is the enemy the chief of exploration</summary>
         public bool chief;
         /// <summary>Is sensible to frightening traps</summary>
-        public bool canBeAfraid;
+        [SerializeField] bool canBeAfraid;
+        /// <summary>Is sensible to attracting traps</summary>
+        [SerializeField] private bool canBeAttracted;
 
-        
-        [Space(20)]
-        [Tooltip("Windows, vents, etc... will not be detected if too far")]
-        [SerializeField] private int objectDetectionRange;
         
         [Header("Window")]
         [Tooltip("Probabilty of opening a windowwhen passing next to a closed window")]
         [Range(0f, 1f)] public float openWindowProba;
+        [SerializeField] private int closedWindowDetectionRange;
         
         [Header("Garlic")]
         [Tooltip("Probability of putting a garlic on the floor when passing next to an open window")]
+        public int detectionRangeForGarlic;
         [Range(0f, 1f)] public float garlicProba;
-        public Garlic garlicPrefab; 
+        public Garlic garlicPrefab;
+        public bool HasPlacedGarlic { get; set; }
         
         protected Health health;
         
         // States
         protected EnemyBaseState currentState;
-        protected ExplorationStateBase explorationState;
+        protected EnemyBaseState lastState;
         public GridController GridController => gridController;
 
+        [Header("Afraid vars")]
         public int afraidToLeave;
         private int afraidCount;
 
+        [Header("Player Detection")]
         [Range(0,90)]
         public int sightAngle;
 
@@ -58,11 +61,6 @@ namespace Enemies
         public int curtainProbability;
 
 
-        public int garlicRange;
-        [Range(0, 100)]
-        public int garlicProbability;
-
-
         public Color stateColor;
 
         public bool isAlerted;
@@ -71,6 +69,11 @@ namespace Enemies
         public Vector2Int lastPlayerPos;
         
         
+        private bool lastIsInSight;
+
+        private List<EnemyBase> roomEnemies;
+        public Animator animator;
+
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy()
@@ -99,21 +102,13 @@ namespace Enemies
                 // }
             };
             
-            DefineStates();
-            SetState(explorationState);
+            SetState(new ExplorationStateBase(this));
 
             stateColor = Color.yellow;
             stateColor.a = 0.1f;
 
             gridController.OnMoved += OnMoved;
         }
-        
-        /// <summary>
-        /// Method only used to define each EnemyBaseState
-        /// and called by default in the start
-        /// </summary>
-        protected virtual void DefineStates() =>  explorationState = new ExplorationStateBase(this);
-
         
 
         protected virtual void Update() => currentState?.OnStateUpdate();
@@ -186,6 +181,7 @@ namespace Enemies
             if (enemyBaseState == null)
                 return;
             if(currentState != null) StartCoroutine(currentState.OnStateExit());
+            lastState = currentState;
             currentState = enemyBaseState;
             StartCoroutine(currentState.OnStateEnter());
         }
@@ -201,7 +197,7 @@ namespace Enemies
                 return;
             
             SetState(
-                new RunningState(
+                new EnemyAfraidState(
                     enemy: this,
                     frighteningSource: source,
                     numberOfTurn: 3,
@@ -211,19 +207,34 @@ namespace Enemies
 
             Debug.Log("The enemy is afraid !");
         }
+
+        public void GetAttracted(Vector2Int attractionGridPos, System.Action onArrived)
+        {
+            if (!canBeAttracted)
+                return;
+            
+            SetState(new EnemyGoToState(
+                enemy: this, 
+                aimedGridPos: attractionGridPos,
+                onArrived: onArrived, 
+                nextState: new ExplorationStateBase(this)
+                )
+            );
+        }
         
         
         // IInteractable implementation
         public Transform Transform => transform;
         public bool IsInteractable => Player.transformed;
         public bool NeedToBeInRange => true;
-        public void Interact()
+        public bool TryInteract()
         {
             if (health.TakeDamage(1))
             {
                 // If died -> call OnEnemyKilled event
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
+            return true;
         }
 
         private void OnMoved(Vector2Int newGridPos)
@@ -234,11 +245,11 @@ namespace Enemies
             Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
             if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
-                && !(currentState is InteractState) && !closest.IsOpened)    {
+                && !(currentState is EnemyInteractState) && !closest.IsOpened)    {
                 int random = Random.Range(0, 100);
 
                 if (random <= curtainProbability)            
-                    SetState(new InteractState(this, new ExplorationStateBase(this), closest));
+                    SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
                 
             }
          

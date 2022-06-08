@@ -14,12 +14,16 @@ public class KnightEvent : FrighteningEventBase
 
     public int NumberOfTurnTheKnightCanMove = 5;
 
-    public override void Interact()
+    public override bool TryInteract()
     {
+        if (!base.TryInteract())
+            return false;
+        
         // normally have to activate the trap AND WHEN an enemy is at his range or in the room
         // the armor will move to him
         Debug.Log("KnightTrap");
         Do();
+        return true;
     }
 
 
