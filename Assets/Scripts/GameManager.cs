@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using GridSystem;
+using AudioController;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -85,6 +86,14 @@ public class GameManager : SingletonBase<GameManager>
         // Init days
         currentDay = 0;
         StartDay();
+
+        OnDayStart += () =>
+        {
+            AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Entrance);
+            AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Cocorico);
+        };
+
+        OnNightStart += () => AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
     }
 
     private void Update()

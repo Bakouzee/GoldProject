@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Enemies;
+using AudioController;
 
 public class PlayerManager : SingletonBase<PlayerManager>
 {
@@ -45,6 +46,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
         {
             if (!mapSeen)
             {
+                AudioManager.Instance.PlayMapSound(MapAudioTracks.Map_Open);
                 foreach(EnemyBase enemy in Player.CurrentRoom.enemies)
                 {
                     enemy.gameObject.layer = 3;
@@ -56,6 +58,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 onShowMap?.Invoke();
             } else
             {
+                AudioManager.Instance.PlayMapSound(MapAudioTracks.Map_Close);
                 foreach (EnemyBase enemy in Player.CurrentRoom.enemies)
                 {
                     enemy.gameObject.layer = 0;

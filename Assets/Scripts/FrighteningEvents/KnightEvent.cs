@@ -4,6 +4,7 @@ using UnityEngine;
 using GoldProject.FrighteningEvent;
 using GridSystem;
 using Enemies;
+using AudioController;
 
 public class KnightEvent : FrighteningEventBase
 {
@@ -141,6 +142,7 @@ public class KnightEvent : FrighteningEventBase
                 if (gridController != null)
                 {
                     gridController.Move(directionKnight[index], animKnight);
+                    AudioManager.Instance.PlayScarySound(ScaryAudioTracks.Sc_StatueWalk);
                     index++;
                 }
             }

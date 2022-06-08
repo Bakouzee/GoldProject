@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GoldProject;
+using AudioController;
 
 
 public class NewVentManager : SingletonBase<NewVentManager>
@@ -29,6 +30,7 @@ public class NewVentManager : SingletonBase<NewVentManager>
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
+        AudioManager.Instance.PlayVentSound(VentAudioTracks.V_Use);
     }
 
     public void SecondRoomVent()
@@ -37,6 +39,7 @@ public class NewVentManager : SingletonBase<NewVentManager>
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
+        AudioManager.Instance.PlayVentSound(VentAudioTracks.V_Use);
     }
     public void ThirdRoomVent()
     {
@@ -44,6 +47,7 @@ public class NewVentManager : SingletonBase<NewVentManager>
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
+        AudioManager.Instance.PlayVentSound(VentAudioTracks.V_Use);
     }
 
     public void FourthRoomVent()
@@ -52,5 +56,6 @@ public class NewVentManager : SingletonBase<NewVentManager>
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
+        AudioManager.Instance.PlayVentSound(VentAudioTracks.V_Use);
     }
 }

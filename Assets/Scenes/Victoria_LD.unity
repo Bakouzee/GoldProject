@@ -46521,6 +46521,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 7951639151741504598, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: mixerSFX
+      value: 
+      objectReference: {fileID: 744846702250237903, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
+    - target: {fileID: 7951639151741504598, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: mixerMusic
+      value: 
+      objectReference: {fileID: -7224956915682821941, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
+    - target: {fileID: 7951639151741504598, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: playerSounds.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7951639151741504598, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: playerSounds.Array.data[1].playerTracks
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
 --- !u!4 &1275326995 stripped

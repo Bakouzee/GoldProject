@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using AudioController;
 
 public class VentManager : MonoBehaviour, IInteractable
 {
@@ -43,7 +44,9 @@ public class VentManager : MonoBehaviour, IInteractable
     {
         if (!IsInteractable || waitForVent)
             return false;
-        
+
+        AudioManager.Instance.PlayVentSound(VentAudioTracks.V_Use);
+
         ventSysteme.SetActive(true);
         NewVentManager.choosingVent = true;
         PlayerManager.Instance.arrowToMovePlayer.SetActive(false);

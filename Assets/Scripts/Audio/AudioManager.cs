@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace AudioController
 {
@@ -76,16 +77,30 @@ namespace AudioController
         }
         [SerializeField] private WindowSounds[] windowSounds;
 
+        [System.Serializable]
+        public struct MapSounds
+        {
+            public MapAudioTracks mapTracks;
+            public List<AudioClip> mapClipList;
+        }
+        [SerializeField] private MapSounds[] mapSounds;
+
         private AudioSource sourceMusic;
         private AudioSource sourceFoliage;
+
+        [Header("!!! DO NOT TOUCH !!!")]
+        [SerializeField] private AudioMixerGroup mixerSFX;
+        [SerializeField] private AudioMixerGroup mixerMusic;
 
         private void Start()
         {
             sourceMusic = GetComponent<AudioSource>();
             //Add audio mixer music
+            sourceMusic.outputAudioMixerGroup = mixerMusic;
 
             sourceFoliage = gameObject.AddComponent<AudioSource>();
             //Add audio mixer sfx
+            sourceFoliage.outputAudioMixerGroup = mixerSFX;
         }
 
         #region Player Methods
@@ -321,6 +336,33 @@ namespace AudioController
                     else
                     {
                         AudioClip clipToPlay = scarySounds[i].scaryClipList[0];
+                        sourceFoliage.PlayOneShot(clipToPlay);
+                        return;
+                    }
+                }
+            }
+        }
+
+        #endregion
+
+        #region Map Methods
+
+        public void PlayMapSound(MapAudioTracks audioToPlay)
+        {
+            for (int i = 0; i < mapSounds.Length; i++)
+            {
+                if (mapSounds[i].mapTracks == audioToPlay)
+                {
+                    if (mapSounds[i].mapClipList.Count > 1)
+                    {
+                        int randomSound = UnityEngine.Random.Range(0, mapSounds[i].mapClipList.Count);
+                        AudioClip clipToPlay = mapSounds[i].mapClipList[randomSound];
+                        sourceFoliage.PlayOneShot(clipToPlay);
+                        return;
+                    }
+                    else
+                    {
+                        AudioClip clipToPlay = mapSounds[i].mapClipList[0];
                         sourceFoliage.PlayOneShot(clipToPlay);
                         return;
                     }

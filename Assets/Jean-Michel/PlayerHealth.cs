@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using AudioController;
 
 public class PlayerHealth : Health
 {
@@ -47,6 +48,7 @@ public class PlayerHealth : Health
         // Temporary just for apk
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             .buildIndex);
+        AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
         // Time.timeScale = 0;
     }
 

@@ -214,6 +214,8 @@ namespace GoldProject
             canTransform = false;
             transformed = true;
 
+            AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
+
             // Frighten enemies in the room
             foreach (var enemy in currentRoom.enemies)
                 enemy.GetAfraid(source: transform);
