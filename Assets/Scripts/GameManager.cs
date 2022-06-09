@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Enemies;
 using GoldProject;
@@ -8,8 +5,8 @@ using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using GridSystem;
 using AudioController;
+using PlayStoreScripts;
 
 public class GameManager : SingletonBase<GameManager>
 {

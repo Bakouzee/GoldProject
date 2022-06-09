@@ -1,8 +1,6 @@
-﻿using GooglePlayGames;
-using UnityEngine;
-using UnityEngine.SocialPlatforms;
+﻿using UnityEngine;
 
-namespace GoldProject
+namespace PlayStoreScripts
 {
     public static class Achievements
     {
@@ -10,6 +8,9 @@ namespace GoldProject
 
         public static void Unlock(string achievementId)
         {
+            if (!PlayServices.usePlayServices)
+                return;
+            
             Social.ReportProgress(achievementId, 100.0d, success =>
             {
                 // Handle success or not
