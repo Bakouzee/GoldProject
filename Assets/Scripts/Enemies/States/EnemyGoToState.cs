@@ -26,7 +26,7 @@ namespace Enemies.States
         {
             // Move
             if (directions.Count > 0)
-                gridController.Move(directions.Dequeue());
+                gridController.Move(directions.Dequeue(), animator);
             
             // If arrived, go to next state and call onArrived
             if (directions.Count == 0)
