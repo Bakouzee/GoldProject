@@ -27,7 +27,7 @@ public class GoToState : EnemyFollowedState
     public override void DoAction()
     {
 
-        gridController.Move(directions.Dequeue());
+        gridController.Move(directions.Dequeue(), animator);
 
         if (directions.Count == 0)
             GoToNextState();
