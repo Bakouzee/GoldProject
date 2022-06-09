@@ -241,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chief: 0
   canBeAfraid: 1
-  canBeAttracted: 0
+  canBeAttracted: 1
   openWindowProba: 0.5
   closedWindowDetectionRange: 2
   detectionRangeForGarlic: 2

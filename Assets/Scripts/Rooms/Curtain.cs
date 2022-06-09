@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using AudioController;
 
 namespace GoldProject.Rooms
 {
@@ -56,6 +57,8 @@ namespace GoldProject.Rooms
                 return;
             opened = true;
 
+            AudioManager.Instance.PlayWindowSound(WindowAudioTracks.W_Open);
+
             animator.SetTrigger("open");
             light2D.gameObject.SetActive(GameManager.dayState == GameManager.DayState.DAY && opened);
 
@@ -67,6 +70,8 @@ namespace GoldProject.Rooms
             if (!opened)
                 return;
             opened = false;
+
+            AudioManager.Instance.PlayWindowSound(WindowAudioTracks.W_Close);
 
             animator.SetTrigger("close");
             light2D.gameObject.SetActive(false);

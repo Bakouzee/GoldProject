@@ -9,6 +9,7 @@ using UnityEngine.SceneManagement;
 using Enemies;
 using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
+using AudioController;
 
 namespace Enemies
 {
@@ -143,6 +144,11 @@ namespace Enemies
                         enemy.stateColor.a = 0.1f;
                         enemy.isAlerted = true;
                         enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
+                        AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
+                    }
+                });
+  
+            }
 
 
 
@@ -210,6 +216,7 @@ namespace Enemies
                 )
             );
 
+            AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Fear);
             Debug.Log("The enemy is afraid !");
         }
 

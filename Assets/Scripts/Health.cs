@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-
+using AudioController;
 public class Health : MonoBehaviour
 {
     public int healthMax = 100;
@@ -40,6 +40,7 @@ public class Health : MonoBehaviour
         if (dead)
             return;
         dead = true;
+        AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Kill);
 
         OnDeath?.Invoke();
         Destroy(gameObject);
