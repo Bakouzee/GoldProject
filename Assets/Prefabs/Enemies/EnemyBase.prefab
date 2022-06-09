@@ -256,7 +256,7 @@ MonoBehaviour:
   isInSight: 0
   canSightPlayer: 1
   lastPlayerPos: {x: 0, y: 0}
-  animator: {fileID: 0}
+  animator: {fileID: 1351950459}
 --- !u!58 &2110391225984441415
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -95,6 +95,8 @@ public class GameManager : SingletonBase<GameManager>
         };
 
         OnNightStart += () => AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
+        
+        Achievements.Unlock(Achievements.BOO);
     }
 
     private void Update()

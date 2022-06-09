@@ -3,7 +3,6 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Enemies;
@@ -265,7 +264,7 @@ namespace Enemies
 
         private void OnDrawGizmos() {
            //
-            Handles.color = stateColor;
+            // Handles.color = stateColor;
             Transform viewTransform = transform.GetChild(0);
 
           //  Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
