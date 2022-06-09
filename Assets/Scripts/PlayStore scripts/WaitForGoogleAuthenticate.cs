@@ -11,7 +11,7 @@ namespace GoldProject.PlayStore_scripts
     {
         public void Start()
         {
-            PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
+            //PlayGamesPlatform.Instance.Authenticate(ProcessAuthentication);
         }
 
         internal void ProcessAuthentication(SignInStatus status)

@@ -12,4 +12,12 @@ public class SettingMenu : MonoBehaviour
     {
         audioMixer.SetFloat("Volume", volume);
     }
+    public void SetMusic(float volume)
+    {
+        audioMixer.SetFloat("Music", volume);
+    }
+    public void SetSFX(float volume)
+    {
+        audioMixer.SetFloat("SFX", volume);
+    }
 }
