@@ -168,7 +168,6 @@ public class GameManager : SingletonBase<GameManager>
                 enemy.DoAction();
             }
 
-            Debug.Log("Count of knights : " + EnemyManager.knights.Count);
             // Knight too
             foreach (var knight in EnemyManager.knights)
             {
