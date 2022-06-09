@@ -14,12 +14,14 @@ public class NoiseEvent : FrighteningEventBase
 
     public string animationTrigger;
 
+    public bool canBeSeen;
+
     private void Start()
     {
         anim = transform.GetComponent<Animator>();
 
         sr = GetComponent<SpriteRenderer>();
-        sr.enabled = false;
+        sr.enabled = canBeSeen;
 
         srMap = GetComponentsInChildren<SpriteRenderer>();
 
@@ -56,7 +58,7 @@ public class NoiseEvent : FrighteningEventBase
             Debug.Log("No enemy in sight -> the trap didn't work !");
             srMap[1].color = Color.red;
             anim.SetTrigger(animationTrigger);
-            sr.enabled = false;
+            sr.enabled = canBeSeen;
             yield break;
         }
 
@@ -89,7 +91,7 @@ public class NoiseEvent : FrighteningEventBase
         // Reset animation
         anim.SetBool(animationTrigger, false);
         yield return new WaitForSeconds(1f);
-        sr.enabled = false;
+        sr.enabled = canBeSeen;
         Debug.Log("undone");
     }
 }
