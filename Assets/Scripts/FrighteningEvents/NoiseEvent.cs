@@ -25,11 +25,7 @@ public class NoiseEvent : FrighteningEventBase
 
         srMap = GetComponentsInChildren<SpriteRenderer>();
 
-        PlayerManager.Instance.onShowMap += () =>
-        {
-            needToBeInRange = PlayerManager.mapSeen;
-            Debug.Log(needToBeInRange);
-        };
+        PlayerManager.Instance.onShowMap += () => needToBeInRange = PlayerManager.mapSeen;
     }
 
     public void MakeScarySound(ScaryAudioTracks audioToPlay)
@@ -44,7 +40,6 @@ public class NoiseEvent : FrighteningEventBase
         
         // normally have to activate the trap AND WHEN an enemy is at his range or in the room
         // the armor will move to him
-        Debug.Log("NoiseTrap");
         Do();
 
         return true;
@@ -55,7 +50,7 @@ public class NoiseEvent : FrighteningEventBase
     {
         if (CurrentRoom.enemies.Count == 0)
         {
-            Debug.Log("No enemy in sight -> the trap didn't work !");
+            // show the trap didn't work
             srMap[1].color = Color.red;
             anim.SetTrigger(animationTrigger);
             sr.enabled = canBeSeen;
@@ -66,8 +61,6 @@ public class NoiseEvent : FrighteningEventBase
         {
             int directionBetweenTrapAndEnemy = GridManager.Instance.GetManhattanDistance(transform.position, enemy.transform.position);
 
-            Debug.Log(directionBetweenTrapAndEnemy);
-            
             // If enemies are directly next to the trap -> they will be scared !
             if(directionBetweenTrapAndEnemy < distanceToBeScared)
             {
@@ -81,7 +74,6 @@ public class NoiseEvent : FrighteningEventBase
         anim.SetBool(animationTrigger, true);
 
         yield return new WaitForSeconds(1f);
-        Debug.Log("done");
     }
 
     protected override IEnumerator UndoActionCoroutine()
@@ -92,6 +84,5 @@ public class NoiseEvent : FrighteningEventBase
         anim.SetBool(animationTrigger, false);
         yield return new WaitForSeconds(1f);
         sr.enabled = canBeSeen;
-        Debug.Log("undone");
     }
 }

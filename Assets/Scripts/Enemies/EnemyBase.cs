@@ -123,8 +123,6 @@ namespace Enemies
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
-
-         
         public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
             Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
@@ -135,49 +133,47 @@ namespace Enemies
 
             isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;          
 
-            if(isInSight && !isAlerted && canSightPlayer) {
-                foreach (EnemyBase enemy in currentRoom.enemies) {
-                    if (enemy != null) {
-                        this.gameObject.name = "Chief Of Patrol";                 
-                        enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player, this));
-                        enemy.stateColor = Color.red;
-                        enemy.stateColor.a = 0.1f;
-                        enemy.isAlerted = true;
-                        enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
-                        AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
-                    }
-                });
-  
-            }
+            if(isInSight && !isAlerted && canSightPlayer)
+            {
+                gameObject.name = "Chief Of Patrol";
+                foreach (var enemy in currentRoom.enemies)
+                {
+                    if (enemy == null)
+                        continue;
 
-
-
-                        this.GetComponent<EnemyBase>().stateColor = Color.green;
-                        this.GetComponent<EnemyBase>().stateColor.a = 0.1f;
-                    }
+                    enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player, this));
+                    enemy.stateColor = Color.red;
+                    enemy.stateColor.a = 0.1f;
+                    enemy.isAlerted = true;
+                    enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
+                    AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
                 }
             }
-            else if(!isInSight && isAlerted && currentState is EnemyChaseState && ((EnemyChaseState)currentState).chief == this) {
-                EnemyChaseState chase = (EnemyChaseState)currentState;
-                
-                foreach (EnemyBase enemy in currentRoom.enemies) {
-                    if (enemy != null) {
-                        if (enemy == chase.chief)
-                            enemy.SetState(new GoToState(enemy, enemy.lastPlayerPos, new ExplorationStateBase(enemy)));                    
-                        else
-                            enemy.SetState(new ExplorationStateBase(enemy));
+            else if(!isInSight && isAlerted)
+                if(currentState is EnemyChaseState chase)
+                    if (chase.chief == this)
+                    {
+                        foreach (var roomEnemy in currentRoom.enemies)
+                        {
+                            if (roomEnemy == null)
+                                continue;
 
-                        enemy.stateColor = Color.yellow;
-                        enemy.stateColor.a = 0.1f;
-                        enemy.isAlerted = false;
+                            if (roomEnemy == chase.chief)
+                                roomEnemy.SetState(new GoToState(roomEnemy, roomEnemy.lastPlayerPos,
+                                    new ExplorationStateBase(roomEnemy)));
+                            else
+                                roomEnemy.SetState(new ExplorationStateBase(roomEnemy));
+
+                            roomEnemy.stateColor = Color.yellow;
+                            roomEnemy.stateColor.a = 0.1f;
+                            roomEnemy.isAlerted = false;
+                        }
                     }
-                }
 
-            }
+            // Update last player pos
+            if (isAlerted) lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
 
-            if (isAlerted)
-                lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
-
+            // Delegate action to current state
             currentState?.DoAction();
         }
 
