@@ -9,6 +9,7 @@ using Enemies;
 using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using AudioController;
+using UnityEditor;  
 
 namespace Enemies
 {
@@ -72,6 +73,8 @@ namespace Enemies
         public Animator animator;
         public Light2D detectionSpotlight;
 
+        private GameObject sightRef;
+
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy()
@@ -113,11 +116,14 @@ namespace Enemies
                 light.pointLightOuterRadius = sightRange;
                 light.pointLightOuterAngle = sightAngle * 2;
             }
-        }
-        
 
-        protected virtual void Update() => currentState?.OnStateUpdate();
-            
+            sightRef = transform.GetChild(0).gameObject;
+        }
+
+
+        protected virtual void Update() {
+            currentState?.OnStateUpdate();
+        }
         
         /// <summary>
         /// Do Action method, let the current state choose the action to do
@@ -125,17 +131,22 @@ namespace Enemies
         /// </summary>
         public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
-            Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
-            Vector3 sight = transform.up * sightRange;
+
+            Vector3 upDir = sightRef.transform. up;
+
+            Vector3 playerToSightCenter = playerPos - (transform.position + upDir * 0.5f);
+            Vector3 sight = upDir * sightRange;
 
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
 
-            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;          
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;       
 
             if(isInSight && !isAlerted && canSightPlayer)
             {
                 gameObject.name = "Chief Of Patrol";
+                Debug.Log("see player");
+
                 foreach (var enemy in currentRoom.enemies)
                 {
                     if (enemy == null)
@@ -264,18 +275,12 @@ namespace Enemies
             if (direction == null)
                 return;
             Vector2Int dir = Direction.ToVector2Int(direction.ToString());
+
             detectionSpotlight.transform.eulerAngles =
                 new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
-        }
 
-        private void OnDrawGizmos() {
-           //
-            // Handles.color = stateColor;
-            Transform viewTransform = transform.GetChild(0);
-
-          //  Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
-        }
-
-        
+            sightRef.transform.eulerAngles = new Vector3(Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg - 90f,90f,-90f);
+            
+        }      
     }
 }
