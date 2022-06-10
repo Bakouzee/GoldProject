@@ -13,10 +13,10 @@ namespace PlayStoreScripts
     
         public void Start()
         {
+            PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
             
-            PlayGamesPlatform.Instance.Authenticate(OnSignInResult);
         }
 
         private void OnSignInResult(SignInStatus status)

@@ -27,6 +27,7 @@ namespace GoldProject.UI
 
         [Header("Clock"), Tooltip("Image of the clock that is going to be rotated"), SerializeField] 
         private Transform clock;
+        private float clockStartOffset;
         
         private void Start()
         {
@@ -61,13 +62,13 @@ namespace GoldProject.UI
             // Rotate the clock showing day/night
             if (clock)
             {
-                clock.eulerAngles = Vector3.zero;
+                clockStartOffset = clock.eulerAngles.z;
                 gameManager.OnLaunchedTurn += (actionCount, actionPerPhase) =>
                 {
                     float z = (actionCount / (float)actionPerPhase) * 180f;
                     if (GameManager.dayState == GameManager.DayState.NIGHT)
                         z += 180f;
-                    clock.eulerAngles = Vector3.forward * z;
+                    clock.eulerAngles = Vector3.forward * (z + clockStartOffset);
                 };
             }
         }
