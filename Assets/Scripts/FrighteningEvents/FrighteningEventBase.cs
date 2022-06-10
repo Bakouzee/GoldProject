@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using GoldProject.Rooms;
 using UnityEngine;
 using GridSystem;
@@ -79,6 +80,12 @@ namespace GoldProject.FrighteningEvent
             isTriggered = false;
         }
         #endregion
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, distanceToBeScared);
+        }
 
         // Temporary for debug reasons
         public Transform Transform => transform;

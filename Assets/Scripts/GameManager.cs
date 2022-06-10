@@ -164,7 +164,14 @@ public class GameManager : SingletonBase<GameManager>
             // Enemies make their turn
             foreach (var enemy in EnemyManager.enemies)
             {
-                enemy.DoAction();
+                try
+                {
+                    enemy.DoAction();
+                }
+                catch
+                {
+                    Debug.LogError($"{enemy} DoAction method crashed", enemy);
+                }
             }
 
             // Knight too
@@ -198,6 +205,7 @@ public class GameManager : SingletonBase<GameManager>
         }
         catch
         {
+            Debug.LogError("Something went wrong during LaunchTurn", this);
             // ignored
         }
 

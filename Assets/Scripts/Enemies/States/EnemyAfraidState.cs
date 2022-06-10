@@ -69,6 +69,12 @@ namespace Enemies.States
         {
             Vector2Int[] allDirections = new Vector2Int[] {Vector2Int.up, Vector2Int.left, Vector2Int.down, Vector2Int.right};
 
+            // Get current frigthening source grid pos
+            var frighteningSourcePosition = frighteningSource.position;
+            Tile tile = gridManager.GetTileAtPosition(frighteningSourcePosition);
+            if (!tile) tile = gridManager.FindClosestTile(frighteningSourcePosition);
+            Vector2Int currentFrighteningSourceGridPos = tile.GridPos;
+            
             // Initialize array containing directions and values
             (Vector2Int, int)[] tuples = new (Vector2Int, int)[allDirections.Length];
             for (int i = 0; i < allDirections.Length; i++)
@@ -80,7 +86,7 @@ namespace Enemies.States
                 {
                     // Calculate the number of move needed to join the frighteningSource from current position + direction
                     tuples[i].Item2 = gridManager.GetPath(enemy.gridController.gridPosition + tuples[i].Item1,
-                        gridManager.GetGridPosition(frighteningSource.position)).Count;
+                        currentFrighteningSourceGridPos).Count;
                 }
                 else
                     tuples[i].Item2 = 0;

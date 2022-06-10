@@ -282,7 +282,7 @@ namespace Enemies
                 new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
 
             sightRef.transform.eulerAngles = new Vector3(Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg - 90f,90f,-90f);
-            
+
         }      
     }
 }

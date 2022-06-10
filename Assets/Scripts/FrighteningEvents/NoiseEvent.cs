@@ -52,8 +52,8 @@ public class NoiseEvent : FrighteningEventBase
         {
             // show the trap didn't work
             srMap[1].color = Color.red;
-            anim.SetTrigger(animationTrigger);
-            sr.enabled = canBeSeen;
+            anim.SetBool(animationTrigger, true);
+            sr.enabled = true;
             yield break;
         }
 

@@ -23,7 +23,7 @@ public class KnightEvent : FrighteningEventBase
     private void Start()
     {
         // srMap[1] -> child srMap[0] -> this
-        // need to be in range quand la map est désactivé
+        // need to be in range quand la map est dÃ©sactivÃ©
         srMap = GetComponentsInChildren<SpriteRenderer>();
 
         gridController = new GridController(transform);

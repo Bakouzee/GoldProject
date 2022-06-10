@@ -71,7 +71,6 @@ namespace GoldProject
         }
 
         #region Set Events
-
         private void SetGameHandlerEvents(GameManager gameManager)
         {
             // Transform or Untransform on day or night start

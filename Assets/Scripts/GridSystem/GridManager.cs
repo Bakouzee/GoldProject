@@ -57,8 +57,10 @@ namespace GridSystem
             tilemap.gameObject.SetActive(false);
         }
 
-        public Vector2Int GetGridPosition(Vector3 worldPosition) =>
-            new Vector2Int((int) worldPosition.x, (int) worldPosition.y);
+        public Vector2Int GetGridPosition(Vector3 worldPosition)
+        {
+            return new Vector2Int((int) worldPosition.x, (int) worldPosition.y);
+        }
 
         #region Get Tile at Position
         public Tile GetTileAtPosition(Vector3 worldPosition) =>
