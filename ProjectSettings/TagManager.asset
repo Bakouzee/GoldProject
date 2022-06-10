@@ -52,3 +52,6 @@ TagManager:
   - name: Minimap
     uniqueID: 762831707
     locked: 0
+  - name: Characters
+    uniqueID: 4038850929
+    locked: 0

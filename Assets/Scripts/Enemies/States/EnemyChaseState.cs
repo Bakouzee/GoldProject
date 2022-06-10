@@ -33,7 +33,7 @@ namespace Enemies.States {
             
             // Else, move towards entity
             lastChasePos = GridManager.Instance.GetGridPosition(chaseEntity.transform.position);
-            directions = new Queue<Direction>(GridManager.Instance.GetPath(gridController.gridPosition,GridManager.Instance.GetGridPosition(chaseEntity.transform.position)));
+            DefinePath(GridManager.Instance.GetGridPosition(chaseEntity.transform.position));
             if(directions.Count > 0)
                 gridController.Move(directions.Dequeue(), animator);
         }

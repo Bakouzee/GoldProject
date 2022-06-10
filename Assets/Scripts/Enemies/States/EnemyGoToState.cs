@@ -18,7 +18,7 @@ namespace Enemies.States
 
         public override IEnumerator OnStateEnter()
         {
-            directions = new Queue<Direction>(gridManager.GetPath(gridPos, aimedGridPos));
+            DefinePath(aimedGridPos);
             yield return null;
         }
         
