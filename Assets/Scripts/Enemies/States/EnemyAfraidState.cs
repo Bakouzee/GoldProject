@@ -42,8 +42,9 @@ namespace Enemies.States
             Direction runDirection = Direction.FromVector2(runningDir);
 
             var bestRunningDirections = GetBestRunningDirections();
-            Debug.Log("size: " + bestRunningDirections.Length);
 
+            Debug.Log("runSize: " + bestRunningDirections.Length);
+            
             foreach (var runningDirection in bestRunningDirections)
             {
                 if (gridController.Move(runningDirection, animator))
@@ -53,6 +54,7 @@ namespace Enemies.States
             turnCounter++;
             if (turnCounter >= numberOfTurn)
             {
+                Debug.Log("go to next state");
                 GoToNextState();
             }
         }

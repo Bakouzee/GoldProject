@@ -108,7 +108,11 @@ namespace Enemies.States
             // Set target and path
             // Debug.Log($"{enemy.name}: {room.pathPoints.Length} // {index}");
             targetGridPos = GridManager.Instance.GetGridPosition(room.pathPoints[index].position);
-            DefinePath(targetGridPos);
+
+            // Define path
+            if (!DefinePath(targetGridPos))
+                // If it didn't work --> change of room
+                ChangeOfRoom();
         }
 
         #endregion

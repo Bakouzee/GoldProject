@@ -24,11 +24,25 @@ namespace Enemies
         public Queue<Direction> directions;
 
 
-        protected void DefinePath(Vector2Int targetGridPos)
+        protected bool DefinePath(Vector2Int targetGridPos)
         {
             // Debug.Log($"{enemy.GridPosition} // {targetGridPos}");
-            directions = new Queue<Direction>(GridManager.Instance
-                .GetPath(gridPos, targetGridPos));
+            List<Direction> temp = GridManager.Instance
+                .GetPath(gridPos, targetGridPos);
+            if (temp == null)
+            {
+                Debug.LogWarning("Directions list is null", gameObject);
+                return false;
+            }
+
+            if (temp.Count == 0)
+            {
+                Debug.LogWarning("Direction count is equal to zero", gameObject);
+                return false;
+            }
+
+            directions = new Queue<Direction>(temp);
+            return true;
         }
 
         public EnemyBaseState(EnemyBase enemy)

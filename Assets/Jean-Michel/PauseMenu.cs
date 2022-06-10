@@ -9,6 +9,8 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
 
+    public GameObject settingMenuUI;
+
     public GameObject pauseButton;
 
     public bool buttonActivated = false;
@@ -78,5 +80,18 @@ public class PauseMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Victoria_LD");
+    }
+
+    public void Settings()
+    {
+        pauseMenuUI.SetActive(false);
+        settingMenuUI.SetActive(true);
+        
+    }
+
+    public void BackFromSettings()
+    {
+        pauseMenuUI.SetActive(true);
+        settingMenuUI.SetActive(false);
     }
 }

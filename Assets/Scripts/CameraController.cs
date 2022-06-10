@@ -67,7 +67,7 @@ namespace GoldProject
                         wantedPos = new Vector2(room.Position.x, room.Position.y);
                         break;
                     default:
-                        wantedPos = new Vector2(room.Position.x + 2, room.Position.y + 2);
+                        wantedPos = new Vector2(room.Position.x, room.Position.y);
                         break;
                 }
                 // Focus only room

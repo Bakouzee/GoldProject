@@ -20,7 +20,7 @@ namespace Enemies.States
 
         public override IEnumerator OnStateEnter()
         {
-            SetPath();
+            DefinePath(aimedPos);
             yield return null;
         }
 
@@ -40,7 +40,7 @@ namespace Enemies.States
                     newRoom = RoomsManager.Instance.GetRandomRoom();
 
                 SetTarget(RoomsManager.Instance.GetRandomRoom());
-                SetPath();
+                DefinePath(aimedPos);
             }
             else Debug.Log("Arrived but too far");
         }
@@ -53,7 +53,5 @@ namespace Enemies.States
             this.curtainTarget = room.curtains[room.curtains.Length];
             this.aimedPos = gridManager.FindClosestTile(this.curtainTarget.transform.position).GridPos;
         }
-
-        private void SetPath() => directions = new Queue<Direction>(gridManager.GetPath(gridPos, aimedPos));
     }
 }

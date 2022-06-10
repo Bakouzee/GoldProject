@@ -11,6 +11,7 @@ TagManager:
   - FakeMirror
   - WatchingPainting
   - Vent
+  - Music
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - UI
   - Trap
   - post_process
-  - 
+  - Pathfinding
   - 
   - 
   - 
@@ -50,4 +51,7 @@ TagManager:
     locked: 0
   - name: Minimap
     uniqueID: 762831707
+    locked: 0
+  - name: Characters
+    uniqueID: 4038850929
     locked: 0

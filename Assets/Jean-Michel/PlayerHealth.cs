@@ -46,6 +46,9 @@ public class PlayerHealth : Health
     public void Death()
     {
         // Temporary just for apk
+
+        //ParticuleManager.Instance.OnPlayerDeathParticule();
+
         UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
             .buildIndex);
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);

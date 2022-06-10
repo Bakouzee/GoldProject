@@ -33,20 +33,9 @@ namespace Enemies.States {
             
             // Else, move towards entity
             lastChasePos = GridManager.Instance.GetGridPosition(chaseEntity.transform.position);
-            directions = new Queue<Direction>(GridManager.Instance.GetPath(gridController.gridPosition,GridManager.Instance.GetGridPosition(chaseEntity.transform.position)));
+            DefinePath(GridManager.Instance.GetGridPosition(chaseEntity.transform.position));
             if(directions.Count > 0)
                 gridController.Move(directions.Dequeue(), animator);
-        }
-
-        public override IEnumerator OnStateExit()  {
-            Debug.Log("exit: " + enemy + " chief " + chief);
-            if (enemy == chief)
-            {
-                Debug.Log("exit enter");
-                directions = new Queue<Direction>(GridManager.Instance.GetPath(gridPos, lastChasePos));
-                Debug.Log("size " + directions.Count);
-            }
-            yield return null;
         }
 
     }

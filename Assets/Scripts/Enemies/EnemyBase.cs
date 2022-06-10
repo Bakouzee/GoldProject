@@ -3,12 +3,13 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Enemies;
 using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
 using AudioController;
+using UnityEditor;  
 
 namespace Enemies
 {
@@ -62,15 +63,17 @@ namespace Enemies
         public int curtainProbability;
 
 
-        public Color stateColor;
+        private Color stateColor;
 
         public bool isAlerted;
         public bool isInSight;
         public bool canSightPlayer;
-        private bool lastIsInSight;
+        public Vector2Int lastPlayerPos;
 
-        private List<EnemyBase> roomEnemies;
         public Animator animator;
+        public Light2D detectionSpotlight;
+
+        private GameObject sightRef;
 
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
@@ -106,66 +109,83 @@ namespace Enemies
             stateColor.a = 0.1f;
 
             gridController.OnMoved += OnMoved;
-        }
-        
 
-        protected virtual void Update() => currentState?.OnStateUpdate();
-            
+            GameObject lightObj = transform.GetChild(2).gameObject;
+
+            if(lightObj.TryGetComponent<Light2D>(out Light2D light)) {
+                light.pointLightOuterRadius = sightRange;
+                light.pointLightOuterAngle = sightAngle * 2;
+            }
+
+            sightRef = transform.GetChild(0).gameObject;
+        }
+
+
+        protected virtual void Update() {
+            currentState?.OnStateUpdate();
+        }
         
         /// <summary>
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
-
-         
         public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
-            Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
-            Vector3 sight = transform.up * sightRange;
+
+            Vector3 upDir = sightRef.transform. up;
+
+            Vector3 playerToSightCenter = playerPos - (transform.position + upDir * 0.5f);
+            Vector3 sight = upDir * sightRange;
 
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
 
-            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;       
 
-            if (isInSight && !lastIsInSight) {
-                Debug.Log("enter vision");
-                roomEnemies = currentRoom.enemies;
-            }
+            if(isInSight && !isAlerted && canSightPlayer)
+            {
+                gameObject.name = "Chief Of Patrol";
+                Debug.Log("see player");
 
+                foreach (var enemy in currentRoom.enemies)
+                {
+                    if (enemy == null)
+                        continue;
 
-            if ((isInSight || isAlerted) && canSightPlayer) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
-                roomEnemies.ForEach(delegate (EnemyBase enemy) {
-                    if (!(enemy.currentState is EnemyChaseState))  {
-                        this.gameObject.name = "Chief Of Patrol";
-                        enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player,this));
-                        enemy.stateColor = Color.red;
-                        enemy.stateColor.a = 0.1f;
-                        enemy.isAlerted = true;
-                        AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
-                    }
-                });
-  
-            }
-
-            if(currentState is EnemyChaseState) {
-                EnemyChaseState enemyChase = (EnemyChaseState)currentState;    
-                if(!enemyChase.chief.isInSight) {
-                    enemyChase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
-                        if(enemy.isAlerted && enemy.canSightPlayer) {
-                            enemy.SetState(new ExplorationStateBase(enemy));
-                            enemy.stateColor = Color.yellow;
-                            enemy.stateColor.a = 0.1f;
-                            enemy.isAlerted = false;
-                        }
-                    });
+                    enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player, this));
+                    enemy.stateColor = Color.red;
+                    enemy.stateColor.a = 0.1f;
+                    enemy.isAlerted = true;
+                    enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
+                    AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
                 }
             }
-            
+            else if(!isInSight && isAlerted)
+                if(currentState is EnemyChaseState chase)
+                    if (chase.chief == this)
+                    {
+                        foreach (var roomEnemy in currentRoom.enemies)
+                        {
+                            if (roomEnemy == null)
+                                continue;
 
+                            if (roomEnemy == chase.chief)
+                                roomEnemy.SetState(new GoToState(roomEnemy, roomEnemy.lastPlayerPos,
+                                    new ExplorationStateBase(roomEnemy)));
+                            else
+                                roomEnemy.SetState(new ExplorationStateBase(roomEnemy));
+
+                            roomEnemy.stateColor = Color.yellow;
+                            roomEnemy.stateColor.a = 0.1f;
+                            roomEnemy.isAlerted = false;
+                        }
+                    }
+
+            // Update last player pos
+            if (isAlerted) lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
+
+            // Delegate action to current state
             currentState?.DoAction();
-
-            lastIsInSight = isInSight;
         }
 
         /// <summary>
@@ -203,8 +223,9 @@ namespace Enemies
                 )
             );
 
+            ParticuleManager.Instance.OnEnemyScared();
+
             AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Fear);
-            Debug.Log("The enemy is afraid !");
         }
 
         public void GetAttracted(Vector2Int attractionGridPos, System.Action onArrived)
@@ -231,13 +252,17 @@ namespace Enemies
             if (health.TakeDamage(1))
             {
                 // If died -> call OnEnemyKilled event
+                ParticuleManager.Instance.OnEnemyDeath();
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
             return true;
         }
 
-        private void OnMoved(Vector2Int newGridPos)
+        private void OnMoved(Direction direction)
         {
+           // if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
+             //   PlayerManager.Instance.PlayerHealth.Death();
+
             Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
             if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
@@ -246,36 +271,18 @@ namespace Enemies
 
                 if (random <= curtainProbability)            
                     SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
-                
             }
+
+            // Rotate light in pointing direction
+            if (direction == null)
+                return;
+            Vector2Int dir = Direction.ToVector2Int(direction.ToString());
+
+            detectionSpotlight.transform.eulerAngles =
+                new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
+
+            sightRef.transform.eulerAngles = new Vector3(Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg - 90f,90f,-90f);
             
-           /* VentManager vent = currentRoom.GetClosestVent(transform.position);
-            vent.GetComponent<SpriteRenderer>().color = Color.green;
-
-            Vector2Int ventPos = new Vector2Int((int)vent.transform.position.x, (int)vent.transform.position.y);
-
-            if (GridManager.Instance.GetManhattanDistance(gridController.gridPosition, ventPos) <= garlicRange && !(currentState is RunningState))
-            {
-                int random = Random.Range(0, 100);
-                Debug.Log(ventPos);
-                Debug.Log(garlicRange);
-                if (random <= garlicProbability)
-                    SetState(new RunningState(enemy: this,frighteningSource: vent.transform,numberOfTurn: garlicRange,nextState: new ExplorationStateBase(this),() =>
-                    {
-                        //Debug.Log("end state");
-                    }));
-            }
-
-    */
-        }
-
-        private void OnDrawGizmos() {
-            //Handles.color = stateColor;
-            Transform viewTransform = transform.GetChild(0);
-
-            //Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
-        }
-
-        
+        }      
     }
 }

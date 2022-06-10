@@ -34,11 +34,7 @@ public class KnightEvent : FrighteningEventBase
 
         isReseting = false;
 
-        PlayerManager.Instance.onShowMap += () =>
-        {
-            needToBeInRange = PlayerManager.mapSeen;
-            Debug.Log(needToBeInRange);
-        };
+        PlayerManager.Instance.onShowMap += () => needToBeInRange = PlayerManager.mapSeen;
     }
 
     public override bool TryInteract()
@@ -51,12 +47,10 @@ public class KnightEvent : FrighteningEventBase
 
         if (!isReseting)
         {
-            Debug.Log("KnightTrap");
             Do();
             return true;
         } else
         {
-            Debug.Log("Trap didn't work");
             return false;
         }
 
@@ -68,7 +62,7 @@ public class KnightEvent : FrighteningEventBase
     {
         if (CurrentRoom.enemies.Count == 0)
         {
-            Debug.Log("No enemy in sight -> the trap didn't work !");
+            // Show the trap didn't work
             srMap[1].color = Color.red;
             isReseting = false;
             yield break;
@@ -83,7 +77,6 @@ public class KnightEvent : FrighteningEventBase
         srMap[1].color = Color.green;
 
         enemyToScare = CurrentRoom.GetClosestEnemy(transform.position);
-        Debug.Log("Enemy found : " + enemyToScare.name);
 
         //Get the path to do
         directionKnight = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
@@ -113,15 +106,12 @@ public class KnightEvent : FrighteningEventBase
         if (GridManager.Instance.GetGridPosition(transform.position) == knightPos)
         {
             isReseting = false;
-            Debug.Log("It worked");
         }
 
             yield return new WaitForSeconds(1f);
 
         Color32 readyColor = new Color32(166, 79, 0, 255);
         srMap[1].color = readyColor;
-
-        Debug.Log("undone");
     }
 
     public void MoveKnight()
