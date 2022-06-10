@@ -1816,7 +1816,6 @@ GameObject:
   m_Component:
   - component: {fileID: 423594963}
   - component: {fileID: 423594965}
-  - component: {fileID: 423594964}
   m_Layer: 5
   m_Name: Slider (1)
   m_TagString: Untagged
@@ -1847,18 +1846,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -140}
   m_SizeDelta: {x: 400, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &423594964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423594962}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46f99c7a5746294d8c2b3b16d6be57c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &423594965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1910,9 +1897,9 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 238659582}
+      - m_Target: {fileID: 238659584}
         m_TargetAssemblyTypeName: SettingMenu, Assembly-CSharp
-        m_MethodName: 
+        m_MethodName: SetMusic
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -32016,7 +32003,6 @@ GameObject:
   m_Component:
   - component: {fileID: 940958434}
   - component: {fileID: 940958436}
-  - component: {fileID: 940958435}
   m_Layer: 5
   m_Name: Slider (2)
   m_TagString: Untagged
@@ -32047,18 +32033,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -289}
   m_SizeDelta: {x: 400, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &940958435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 940958433}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46f99c7a5746294d8c2b3b16d6be57c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &940958436
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32132,7 +32106,6 @@ GameObject:
   m_Component:
   - component: {fileID: 996146787}
   - component: {fileID: 996146789}
-  - component: {fileID: 996146788}
   m_Layer: 5
   m_Name: Slider
   m_TagString: Untagged
@@ -32163,18 +32136,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 400, y: 43}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &996146788
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 996146786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f46f99c7a5746294d8c2b3b16d6be57c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &996146789
 MonoBehaviour:
   m_ObjectHideFlags: 0
