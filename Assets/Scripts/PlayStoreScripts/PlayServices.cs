@@ -1,4 +1,4 @@
-﻿namespace PlayStore_scripts
+﻿namespace PlayStoreScripts
 {
     public static class PlayServices
     {
