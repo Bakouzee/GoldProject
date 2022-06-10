@@ -19,6 +19,8 @@ public class TutorialManager : CoroutineSystem {
     private TutorialState actualState;
     [SerializeField]
     private Text stateText;
+    [SerializeField]
+    private Vector2Int tileMovement;
 
     private TutorialState lastState;
 
