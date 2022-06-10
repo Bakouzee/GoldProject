@@ -950,7 +950,7 @@ Transform:
   - {fileID: 4683056606781480884}
   - {fileID: 4683056607019604171}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &263505564
 GameObject:
@@ -989,7 +989,7 @@ MonoBehaviour:
   m_Intensity: 0.6
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
+  m_ApplyToSortingLayers: 000000005be3772d71f9bbf0
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
   m_LightOrder: 0
@@ -56009,7 +56009,7 @@ Transform:
   - {fileID: 438173826}
   - {fileID: 1710732496}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1914143235
 GameObject:
@@ -56709,7 +56709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2740115944687631314, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2740115944687631314, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_AnchorMax.x

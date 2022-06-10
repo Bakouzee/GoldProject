@@ -70,6 +70,7 @@ namespace Enemies
         public Vector2Int lastPlayerPos;
 
         public Animator animator;
+        public Light2D detectionSpotlight;
 
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
@@ -244,7 +245,7 @@ namespace Enemies
             return true;
         }
 
-        private void OnMoved(Vector2Int newGridPos)
+        private void OnMoved(Direction direction)
         {
            // if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
              //   PlayerManager.Instance.PlayerHealth.Death();
@@ -257,9 +258,14 @@ namespace Enemies
 
                 if (random <= curtainProbability)            
                     SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
-                
             }
-         
+
+            // Rotate light in pointing direction
+            if (direction == null)
+                return;
+            Vector2Int dir = Direction.ToVector2Int(direction.ToString());
+            detectionSpotlight.transform.eulerAngles =
+                new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
         }
 
         private void OnDrawGizmos() {

@@ -32,7 +32,7 @@ namespace Enemies.States
                 return;
             }
 
-            directions = new Queue<Direction>(gridManager.GetPath(gridPos, aimedTile.GridPos));
+            DefinePath(aimedTile.GridPos);
             this.interactable = interactable;
         }
 

@@ -26,10 +26,13 @@ namespace GridSystem
             if (!gridManager.HasTile(newGridPos))
                 return false;
             
+            // Calculate direction
+            Direction direction = Direction.FromVector2(newGridPos - gridPosition);
+            
             gridPosition = newGridPos;
             transform.position = (Vector2)gridManager.GetTileAtPosition(gridPosition).transform.position;
             
-            OnMoved?.Invoke(gridPosition);
+            OnMoved?.Invoke(direction);
             return true;
         }
 
@@ -54,6 +57,6 @@ namespace GridSystem
             return false;
         }
 
-        public System.Action<Vector2Int> OnMoved;
+        public System.Action<Direction> OnMoved;
     }
 }

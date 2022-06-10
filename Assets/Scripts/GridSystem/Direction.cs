@@ -36,7 +36,10 @@ namespace GridSystem
         public static Direction FromVector2(Vector2 vec)
         {
             if (vec == Vector2.zero)
-                throw new Exception("Vector2 can't be null");
+            {
+                // throw new Exception("Vector2 can't be null");
+                return null;
+            }
 
             float xAbs = Mathf.Abs(vec.x);
             float yAbs = Mathf.Abs(vec.y);
