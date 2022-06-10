@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using AudioController;
 
 namespace GoldProject.Rooms
 {
@@ -13,7 +14,7 @@ namespace GoldProject.Rooms
         [SerializeField] private Light2D light2D;
 
         private bool opened;
-        public bool IsOpened => opened;
+        public bool IsOpened => opened || broken;
         public System.Action onStateChanged;
 
         private void Awake() => curtains.Add(this);
@@ -29,17 +30,25 @@ namespace GoldProject.Rooms
         public bool IsInteractable => true; //opened;
         public bool NeedToBeInRange => true;
 
-        public void Interact()
+        public bool TryInteract()
         {
-            SetOpened(!opened);
+            if (broken)
+                return false;
+            
+            return SetOpened(!opened);
         }
 
         #region Open/Close
 
-        public void SetOpened(bool newOpened)
+        public bool SetOpened(bool newOpened)
         {
+            if (broken)
+                return false;
+            
             if (newOpened) Open();
             else Close();
+
+            return true;
         }
 
         private void Open()
@@ -47,6 +56,8 @@ namespace GoldProject.Rooms
             if (opened)
                 return;
             opened = true;
+
+            AudioManager.Instance.PlayWindowSound(WindowAudioTracks.W_Open);
 
             animator.SetTrigger("open");
             light2D.gameObject.SetActive(GameManager.dayState == GameManager.DayState.DAY && opened);
@@ -59,6 +70,8 @@ namespace GoldProject.Rooms
             if (!opened)
                 return;
             opened = false;
+
+            AudioManager.Instance.PlayWindowSound(WindowAudioTracks.W_Close);
 
             animator.SetTrigger("close");
             light2D.gameObject.SetActive(false);
@@ -94,6 +107,17 @@ namespace GoldProject.Rooms
             }
 
             return Vector2.Distance(light2D.transform.position, worldPosition) < light2D.pointLightOuterRadius;
+        }
+
+        private bool broken;
+        public bool IsBroken => broken;
+        public void Break()
+        {
+            if (broken)
+                return;
+            broken = true;
+            
+            animator.SetTrigger("break");
         }
     }
 }

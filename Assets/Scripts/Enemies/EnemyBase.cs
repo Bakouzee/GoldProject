@@ -3,9 +3,12 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using Enemies;
+using System.Collections.Generic;
+using UnityEngine.Rendering.Universal;
+using AudioController;
 
 namespace Enemies
 {
@@ -19,44 +22,55 @@ namespace Enemies
         /// <summary>Is the enemy the chief of exploration</summary>
         public bool chief;
         /// <summary>Is sensible to frightening traps</summary>
-        public bool canBeAfraid;
+        [SerializeField] bool canBeAfraid;
+        /// <summary>Is sensible to attracting traps</summary>
+        [SerializeField] private bool canBeAttracted;
 
-        
-        [Space(20)]
-        [Tooltip("Windows, vents, etc... will not be detected if too far")]
-        [SerializeField] private int objectDetectionRange;
         
         [Header("Window")]
         [Tooltip("Probabilty of opening a windowwhen passing next to a closed window")]
         [Range(0f, 1f)] public float openWindowProba;
+        [SerializeField] private int closedWindowDetectionRange;
         
         [Header("Garlic")]
         [Tooltip("Probability of putting a garlic on the floor when passing next to an open window")]
+        public int detectionRangeForGarlic;
         [Range(0f, 1f)] public float garlicProba;
-        public Garlic garlicPrefab; 
+        public Garlic garlicPrefab;
+        public bool HasPlacedGarlic { get; set; }
         
         protected Health health;
         
         // States
         protected EnemyBaseState currentState;
-        protected ExplorationStateBase explorationState;
+        protected EnemyBaseState lastState;
         public GridController GridController => gridController;
 
+        [Header("Afraid vars")]
         public int afraidToLeave;
         private int afraidCount;
 
+        [Header("Player Detection")]
         [Range(0,90)]
         public int sightAngle;
 
         [Range(0,10)]
         public int sightRange;
 
-        public Color stateColor;
+        public int curtainRange;
+        [Range(0,100)]
+        public int curtainProbability;
+
+
+        private Color stateColor;
 
         public bool isAlerted;
         public bool isInSight;
-        
-        
+        public bool canSightPlayer;
+        public Vector2Int lastPlayerPos;
+
+        public Animator animator;
+
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy()
@@ -85,21 +99,20 @@ namespace Enemies
                 // }
             };
             
-            DefineStates();
-            SetState(explorationState);
+            SetState(new ExplorationStateBase(this));
 
             stateColor = Color.yellow;
             stateColor.a = 0.1f;
 
             gridController.OnMoved += OnMoved;
-        }
-        
-        /// <summary>
-        /// Method only used to define each EnemyBaseState
-        /// and called by default in the start
-        /// </summary>
-        protected virtual void DefineStates() =>  explorationState = new ExplorationStateBase(this);
 
+            GameObject lightObj = transform.GetChild(2).gameObject;
+
+            if(lightObj.TryGetComponent<Light2D>(out Light2D light)) {
+                light.pointLightOuterRadius = sightRange;
+                light.pointLightOuterAngle = sightAngle * 2;
+            }
+        }
         
 
         protected virtual void Update() => currentState?.OnStateUpdate();
@@ -109,8 +122,6 @@ namespace Enemies
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
-
-         
         public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
             Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
@@ -119,36 +130,49 @@ namespace Enemies
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
 
-            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;
-            
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;          
 
-            if (isInSight || isAlerted) { // Quand un ennemi spawn après qu'il y a eu l'alerte il le chase qd mm          
-                currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
-                    if (!(enemy.currentState is ChaseState))  {
-                        this.gameObject.name = "Chief Of Patrol";
-                        enemy.SetState(new ChaseState(enemy, PlayerManager.Instance.Player,this));
-                        enemy.stateColor = Color.red;
-                        enemy.stateColor.a = 0.1f;
-                        enemy.isAlerted = true;
-                    }
-                });
-  
-            }
+            if(isInSight && !isAlerted && canSightPlayer)
+            {
+                gameObject.name = "Chief Of Patrol";
+                foreach (var enemy in currentRoom.enemies)
+                {
+                    if (enemy == null)
+                        continue;
 
-            if(currentState is ChaseState) {
-                ChaseState chase = (ChaseState)currentState;
-                Debug.Log(chase.chief.currentRoom.name);
-                if(!chase.chief.isInSight) {
-                    chase.chief.currentRoom.enemies.ForEach(delegate (EnemyBase enemy) {
-                        enemy.SetState(new ExplorationStateBase(enemy));
-                        enemy.stateColor = Color.yellow;
-                        enemy.stateColor.a = 0.1f;
-                        enemy.isAlerted = false;
-                    });
+                    enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player, this));
+                    enemy.stateColor = Color.red;
+                    enemy.stateColor.a = 0.1f;
+                    enemy.isAlerted = true;
+                    enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
+                    AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
                 }
             }
-            
+            else if(!isInSight && isAlerted)
+                if(currentState is EnemyChaseState chase)
+                    if (chase.chief == this)
+                    {
+                        foreach (var roomEnemy in currentRoom.enemies)
+                        {
+                            if (roomEnemy == null)
+                                continue;
 
+                            if (roomEnemy == chase.chief)
+                                roomEnemy.SetState(new GoToState(roomEnemy, roomEnemy.lastPlayerPos,
+                                    new ExplorationStateBase(roomEnemy)));
+                            else
+                                roomEnemy.SetState(new ExplorationStateBase(roomEnemy));
+
+                            roomEnemy.stateColor = Color.yellow;
+                            roomEnemy.stateColor.a = 0.1f;
+                            roomEnemy.isAlerted = false;
+                        }
+                    }
+
+            // Update last player pos
+            if (isAlerted) lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
+
+            // Delegate action to current state
             currentState?.DoAction();
         }
 
@@ -163,6 +187,7 @@ namespace Enemies
             if (enemyBaseState == null)
                 return;
             if(currentState != null) StartCoroutine(currentState.OnStateExit());
+            lastState = currentState;
             currentState = enemyBaseState;
             StartCoroutine(currentState.OnStateEnter());
         }
@@ -178,7 +203,7 @@ namespace Enemies
                 return;
             
             SetState(
-                new RunningState(
+                new EnemyAfraidState(
                     enemy: this,
                     frighteningSource: source,
                     numberOfTurn: 3,
@@ -186,7 +211,22 @@ namespace Enemies
                 )
             );
 
+            AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Fear);
             Debug.Log("The enemy is afraid !");
+        }
+
+        public void GetAttracted(Vector2Int attractionGridPos, System.Action onArrived)
+        {
+            if (!canBeAttracted)
+                return;
+            
+            SetState(new EnemyGoToState(
+                enemy: this, 
+                aimedGridPos: attractionGridPos,
+                onArrived: onArrived, 
+                nextState: new ExplorationStateBase(this)
+                )
+            );
         }
         
         
@@ -194,27 +234,40 @@ namespace Enemies
         public Transform Transform => transform;
         public bool IsInteractable => Player.transformed;
         public bool NeedToBeInRange => true;
-        public void Interact()
+        public bool TryInteract()
         {
             if (health.TakeDamage(1))
             {
                 // If died -> call OnEnemyKilled event
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
+            return true;
         }
 
         private void OnMoved(Vector2Int newGridPos)
         {
-            if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
-                PlayerManager.Instance.PlayerHealth.Death();
+           // if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
+             //   PlayerManager.Instance.PlayerHealth.Death();
+
+            Curtain closest = currentRoom.GetClosestCurtain(transform.position);
             
+            if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
+                && !(currentState is EnemyInteractState) && !closest.IsOpened)    {
+                int random = Random.Range(0, 100);
+
+                if (random <= curtainProbability)            
+                    SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
+                
+            }
+         
         }
 
         private void OnDrawGizmos() {
-            Handles.color = stateColor;
+           //
+            // Handles.color = stateColor;
             Transform viewTransform = transform.GetChild(0);
 
-            Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
+          //  Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
         }
 
         

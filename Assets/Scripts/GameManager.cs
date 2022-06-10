@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Enemies;
 using GoldProject;
@@ -8,11 +5,13 @@ using GoldProject.Rooms;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-using GridSystem;
+using AudioController;
+using PlayStoreScripts;
 
 public class GameManager : SingletonBase<GameManager>
 {
     public VentManager[] vm;
+
     public enum DayState
     {
         DAY,
@@ -26,10 +25,11 @@ public class GameManager : SingletonBase<GameManager>
     public static DayState dayState = DayState.DAY;
     public static EventSystem eventSystem;
 
-    [Header("Turns")] [SerializeField] private int actionPerPhase;
-    private int actionCount;
+    [Header("Turns")] public int actionPerPhase;
+    public int actionCount;
     private int currentDay;
     public System.Action<int> OnDayChanged;
+
     public int CurrentDay
     {
         get => currentDay;
@@ -84,6 +84,16 @@ public class GameManager : SingletonBase<GameManager>
         // Init days
         currentDay = 0;
         StartDay();
+
+        OnDayStart += () =>
+        {
+            AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Entrance);
+            AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Cocorico);
+        };
+
+        OnNightStart += () => AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
+        
+        Achievements.Unlock(Achievements.BOO);
     }
 
     private void Update()
@@ -92,13 +102,13 @@ public class GameManager : SingletonBase<GameManager>
             LaunchTurn();
 
 
-        if(dayState == DayState.DAY)
+        if (dayState == DayState.DAY)
         {
-            if(undoButton != null) undoButton.SetActive(false);
+            if (undoButton != null) undoButton.SetActive(false);
         }
         else
         {
-            if(undoButton != null) undoButton.SetActive(true);
+            if (undoButton != null) undoButton.SetActive(true);
         }
     }
 
@@ -106,20 +116,21 @@ public class GameManager : SingletonBase<GameManager>
 
     public System.Action OnDayStart;
     public System.Action OnNightStart;
+
     public void StartDay()
     {
         Debug.Log("Day");
         StartPhaseBase();
         CurrentDay++;
         dayState = DayState.DAY;
-        
+
         StartSpawningWave();
 
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
-        
+
         Curtain.SetDay(true);
-        
+
         OnDayStart?.Invoke();
     }
 
@@ -128,12 +139,12 @@ public class GameManager : SingletonBase<GameManager>
         Debug.Log("Night");
         StartPhaseBase();
         dayState = DayState.NIGHT;
-        
+
         // Set turn cooldown
-        turnCooldown.cooldownDuration = dayNightTurnCooldown.y;        
-        
+        turnCooldown.cooldownDuration = dayNightTurnCooldown.y;
+
         Curtain.SetDay(false);
-        
+
         OnNightStart?.Invoke();
     }
 
@@ -144,47 +155,56 @@ public class GameManager : SingletonBase<GameManager>
 
     #endregion
 
-    public System.Action<int> OnLaunchedTurn;
+    public System.Action<int, int> OnLaunchedTurn;
+
     public void LaunchTurn()
     {
-        // Enemies make their turn
-        foreach (var enemy in EnemyManager.enemies)
+        try
         {
-            enemy.DoAction();
-        }
+            // Enemies make their turn
+            foreach (var enemy in EnemyManager.enemies)
+            {
+                enemy.DoAction();
+            }
 
-        // Knight too
-        foreach(var knight in EnemyManager.knights)
-        {
-            knight.MoveKnight();
-        }
+            // Knight too
+            foreach (var knight in EnemyManager.knights)
+            {
+                knight.MoveKnight();
+            }
 
-        for(int i = 0; i < vm.Length; i++)
-        {
-            vm[i].LaunchTurnVent(actionCountForVent);
-        }
-        if(actionCountForVent > 0)
-        {
-            actionCountForVent--;
-        }
+            for (int i = 0; i < vm.Length; i++)
+            {
+                vm[i].LaunchTurnVent(actionCountForVent);
+            }
 
-        // Spawn enemies
-        SpawnCurrentEnemy();
+            if (actionCountForVent > 0)
+            {
+                actionCountForVent--;
+            }
 
-        // Count 
-        actionCount++;        
-        if (actionCount >= actionPerPhase)
+            // Spawn enemies
+            SpawnCurrentEnemy();
+
+            // Count 
+            actionCount++;
+            if (actionCount >= actionPerPhase)
+            {
+                if (dayState == DayState.DAY)
+                    StartNight();
+                else if (dayState == DayState.NIGHT)
+                    StartDay();
+            }
+        }
+        catch
         {
-            if (dayState == DayState.DAY)
-                StartNight();
-            else if (dayState == DayState.NIGHT)
-                StartDay();
+            // ignored
         }
 
         // Cooldown of turn
         turnCooldown.SetCooldown();
-        
-        OnLaunchedTurn?.Invoke(actionCount);
+
+        OnLaunchedTurn?.Invoke(actionCount, actionPerPhase);
     }
 
     private void StartSpawningWave()
@@ -194,6 +214,7 @@ public class GameManager : SingletonBase<GameManager>
         enemiesToSpawn = CurrentWave.ToArray();
         enemySpawned = 0;
     }
+
     private void SpawnCurrentEnemy()
     {
         if (!spawningEnemies)
@@ -219,6 +240,7 @@ public class GameManager : SingletonBase<GameManager>
             EnemyBase enemyIns = Instantiate(prefab, enemySpawnPoint.position, Quaternion.identity);
             enemyIns.name = enemySpawned + "";
         }
+
         enemySpawned++;
 
         if (enemySpawned >= enemiesToSpawn.Length && chiefSpawned)
@@ -232,6 +254,7 @@ public class GameManager : SingletonBase<GameManager>
     }
 
     #region UI Methods*
+
     public void ActivateTrap(Button trapButton)
     {
         // Have to reset if the player reactivates the trap
@@ -269,8 +292,7 @@ public class GameManager : SingletonBase<GameManager>
     public struct ChiefOrder
     {
         public Enemies.EnemyChiefType chiefType;
-        [Range(1, 50)]
-        public int spawnOrder;
+        [Range(1, 50)] public int spawnOrder;
     }
 
     [System.Serializable]

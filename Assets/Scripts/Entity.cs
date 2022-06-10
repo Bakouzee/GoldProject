@@ -35,7 +35,7 @@ namespace GoldProject
         private Collider2D lastCollider2D;
         protected void OnTriggerEnter2D(Collider2D other)
         {
-            if (lastCollider2D != other)
+            if (lastCollider2D != other && other.tag != "Vent")
             {
                 Room newRoom = RoomsManager.Instance.GetColliderRoom(other);
                 if (newRoom != null)

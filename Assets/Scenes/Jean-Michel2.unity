@@ -2016,7 +2016,7 @@ GameObject:
   - component: {fileID: 1122146362}
   - component: {fileID: 1122146363}
   m_Layer: 5
-  m_Name: VentManager
+  m_Name: VentManagerUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Enemies;
+using AudioController;
 
 public class PlayerManager : SingletonBase<PlayerManager>
 {
@@ -37,12 +38,15 @@ public class PlayerManager : SingletonBase<PlayerManager>
         if(miniMap) miniMap.SetActive(false);
     }
 
+
+    public System.Action onShowMap;
     public void ShowMap()
     {
         if (miniMap != null)
         {
             if (!mapSeen)
             {
+                AudioManager.Instance.PlayMapSound(MapAudioTracks.Map_Open);
                 foreach(EnemyBase enemy in Player.CurrentRoom.enemies)
                 {
                     enemy.gameObject.layer = 3;
@@ -51,8 +55,10 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 arrowToMovePlayer.SetActive(false);
                 textEnemyTrap.text = "Show Enemies";
                 mainCam.SetActive(false);
+                onShowMap?.Invoke();
             } else
             {
+                AudioManager.Instance.PlayMapSound(MapAudioTracks.Map_Close);
                 foreach (EnemyBase enemy in Player.CurrentRoom.enemies)
                 {
                     enemy.gameObject.layer = 0;
@@ -61,6 +67,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 arrowToMovePlayer.SetActive(true);
                 textEnemyTrap.text = "Show Traps";
                 miniMap.SetActive(false);
+                onShowMap?.Invoke();
             }
         }
         mapSeen = !mapSeen;
