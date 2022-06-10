@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d690abdb567d40641aea9325429fe4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particules: []
+  particules:
+  - Type: 0
+    Particle: {fileID: 0}

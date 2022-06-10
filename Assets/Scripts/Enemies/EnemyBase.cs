@@ -223,8 +223,9 @@ namespace Enemies
                 )
             );
 
+            ParticuleManager.Instance.OnEnemyScared();
+
             AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Fear);
-            Debug.Log("The enemy is afraid !");
         }
 
         public void GetAttracted(Vector2Int attractionGridPos, System.Action onArrived)
@@ -251,6 +252,7 @@ namespace Enemies
             if (health.TakeDamage(1))
             {
                 // If died -> call OnEnemyKilled event
+                ParticuleManager.Instance.OnEnemyDeath();
                 EnemyManager.OnEnemyKilled?.Invoke(this);
             }
             return true;
