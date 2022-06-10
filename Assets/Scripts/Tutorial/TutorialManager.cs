@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum TutorialState
 {
     NONE,
+    MOVEMENT,
     TRAPS,
     CURTAIN,
     VENT,
@@ -15,11 +17,13 @@ public class TutorialManager : CoroutineSystem {
 
     [SerializeField]
     private TutorialState actualState;
+    [SerializeField]
+    private Text stateText;
 
     private TutorialState lastState;
 
     private void Start() {
-        SwitchState(TutorialState.TRAPS);
+        SwitchState(TutorialState.MOVEMENT);
         lastState = actualState;
     }
 
@@ -45,8 +49,7 @@ public class TutorialManager : CoroutineSystem {
 
     private void TrapsState() {
         RunDelayed(2f, () => {
-            PlayerManager.Instance.ShowMap();
-            Debug.Log("show my mâp");
+            
          });
     }
 }

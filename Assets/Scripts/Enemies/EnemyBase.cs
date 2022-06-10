@@ -3,13 +3,13 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using Enemies;
 using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using AudioController;
+using UnityEditor;  
 
 namespace Enemies
 {
@@ -71,6 +71,9 @@ namespace Enemies
         public Vector2Int lastPlayerPos;
 
         public Animator animator;
+        public Light2D detectionSpotlight;
+
+        private GameObject sightRef;
 
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
@@ -113,11 +116,14 @@ namespace Enemies
                 light.pointLightOuterRadius = sightRange;
                 light.pointLightOuterAngle = sightAngle * 2;
             }
-        }
-        
 
-        protected virtual void Update() => currentState?.OnStateUpdate();
-            
+            sightRef = transform.GetChild(0).gameObject;
+        }
+
+
+        protected virtual void Update() {
+            currentState?.OnStateUpdate();
+        }
         
         /// <summary>
         /// Do Action method, let the current state choose the action to do
@@ -125,17 +131,22 @@ namespace Enemies
         /// </summary>
         public void DoAction() {      
             Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
-            Vector3 playerToSightCenter = playerPos - (transform.position + transform.up * 0.5f);
-            Vector3 sight = transform.up * sightRange;
+
+            Vector3 upDir = sightRef.transform. up;
+
+            Vector3 playerToSightCenter = playerPos - (transform.position + upDir * 0.5f);
+            Vector3 sight = upDir * sightRange;
 
             float angle = Vector2.Angle(playerToSightCenter, sight);
 
 
-            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;          
+            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;       
 
             if(isInSight && !isAlerted && canSightPlayer)
             {
                 gameObject.name = "Chief Of Patrol";
+                Debug.Log("see player");
+
                 foreach (var enemy in currentRoom.enemies)
                 {
                     if (enemy == null)
@@ -245,7 +256,7 @@ namespace Enemies
             return true;
         }
 
-        private void OnMoved(Vector2Int newGridPos)
+        private void OnMoved(Direction direction)
         {
            // if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
              //   PlayerManager.Instance.PlayerHealth.Death();
@@ -258,19 +269,18 @@ namespace Enemies
 
                 if (random <= curtainProbability)            
                     SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
-                
             }
-         
-        }
 
-        private void OnDrawGizmos() {
-           //
-            Handles.color = stateColor;
-            Transform viewTransform = transform.GetChild(0);
+            // Rotate light in pointing direction
+            if (direction == null)
+                return;
+            Vector2Int dir = Direction.ToVector2Int(direction.ToString());
 
-          //  Handles.DrawSolidArc(viewTransform.position + transform.up * 0.5f, viewTransform.up, viewTransform.right,sightAngle * 2,sightRange); 
-        }
+            detectionSpotlight.transform.eulerAngles =
+                new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
 
-        
+            sightRef.transform.eulerAngles = new Vector3(Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg - 90f,90f,-90f);
+            
+        }      
     }
 }

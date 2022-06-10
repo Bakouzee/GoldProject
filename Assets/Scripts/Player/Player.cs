@@ -234,7 +234,7 @@ namespace GoldProject
 
         #endregion
 
-        private void OnMoved(Vector2Int newGridPos)
+        private void OnMoved(Direction direction)
         {
             if (!currentRoom.IsInside(transform.position))
                 UpdateCurrentRoom();
@@ -290,5 +290,8 @@ namespace GoldProject
         }
 
         #endregion
+
+        public ColorCurves cruves;
+        public Gradient gradient;
     }
 }

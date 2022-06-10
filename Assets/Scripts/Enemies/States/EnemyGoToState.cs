@@ -18,7 +18,7 @@ namespace Enemies.States
 
         public override IEnumerator OnStateEnter()
         {
-            directions = new Queue<Direction>(gridManager.GetPath(gridPos, aimedGridPos));
+            DefinePath(aimedGridPos);
             yield return null;
         }
         
@@ -26,7 +26,7 @@ namespace Enemies.States
         {
             // Move
             if (directions.Count > 0)
-                gridController.Move(directions.Dequeue());
+                gridController.Move(directions.Dequeue(), animator);
             
             // If arrived, go to next state and call onArrived
             if (directions.Count == 0)
