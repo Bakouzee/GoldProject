@@ -9,17 +9,12 @@
     {
         protected EnemyBaseState nextState;
         
-        public EnemyFollowedState(EnemyBase enemy, EnemyBaseState nextState) : base(enemy)
+        protected EnemyFollowedState(EnemyBase enemy, EnemyBaseState nextState) : base(enemy)
         {
             this.nextState = nextState;
         }
         
         /// <summary>Method used to force the enemy to switch to the new state</summary>
-        protected void GoToNextState()
-        {
-            enemy.SetState(nextState);
-        }
-
-        
+        protected void GoToNextState() => enemy.SetState(nextState);
     }
 }

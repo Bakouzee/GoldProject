@@ -36,6 +36,12 @@ namespace Enemies.States
             this.endAction = endAction;
         }
 
+        public override IEnumerator OnStateEnter()
+        {
+            enemy.Afraid = true;
+            yield return null;
+        }
+
         public override void DoAction()
         {
             Vector2 runningDir = transform.position - frighteningSource.position;
@@ -59,9 +65,11 @@ namespace Enemies.States
             }
         }
 
-        public override IEnumerator OnStateExit() {
+        public override IEnumerator OnStateExit()
+        {
+            enemy.Afraid = false;
             endAction?.Invoke();
-            Debug.Log("do end action");
+            // Debug.Log("do end action");
             yield return null;
         }
 

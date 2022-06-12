@@ -3,13 +3,8 @@ using GoldProject;
 using GoldProject.Rooms;
 using GridSystem;
 using UnityEngine;
-using System.Collections;
-using UnityEngine.SceneManagement;
-using Enemies;
-using System.Collections.Generic;
 using UnityEngine.Rendering.Universal;
 using AudioController;
-using UnityEditor;  
 
 namespace Enemies
 {
@@ -20,16 +15,18 @@ namespace Enemies
     /// </summary>
     public class EnemyBase : Entity, IInteractable
     {
+        public GridController GridController => gridController;
+        
         /// <summary>Is the enemy the chief of exploration</summary>
         public bool chief;
         /// <summary>Is sensible to frightening traps</summary>
         [SerializeField] bool canBeAfraid;
         /// <summary>Is sensible to attracting traps</summary>
-        [SerializeField] private bool canBeAttracted;
+        [SerializeField] bool canBeAttracted;
 
         
         [Header("Window")]
-        [Tooltip("Probabilty of opening a windowwhen passing next to a closed window")]
+        [Tooltip("Probabilty of opening a window when passing next to a closed window")]
         [Range(0f, 1f)] public float openWindowProba;
         [SerializeField] private int closedWindowDetectionRange;
         
@@ -44,20 +41,21 @@ namespace Enemies
         
         // States
         protected EnemyBaseState currentState;
+        public EnemyBaseState CurrentState => currentState;
+        private string currentStateName;
         protected EnemyBaseState lastState;
-        public GridController GridController => gridController;
 
         [Header("Afraid vars")]
-        public int afraidToLeave;
+        public int bravery = 1;
         private int afraidCount;
 
         [Header("Player Detection")]
-        [Range(0,90)]
-        public int sightAngle;
-
+        [Range(0,180)]
+        public int sightAngle = 90;
         [Range(0,10)]
         public int sightRange;
 
+        [Header("Open Curtains var")]
         public int curtainRange;
         [Range(0,100)]
         public int curtainProbability;
@@ -73,7 +71,16 @@ namespace Enemies
         public Animator animator;
         public Light2D detectionSpotlight;
 
+        private Vector2Int lastMoveDirection;
+        public bool Chasing { get; set; }
+        public bool Attracted { get; set; }
+        public bool Leaving { get; set; }
+        public bool Afraid { get; set; }
+
+
         private GameObject sightRef;
+        
+        
 
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
@@ -92,29 +99,30 @@ namespace Enemies
             base.Start();
 
             health = GetComponent<Health>();
-            
             // Call EnemyManager.OnEnemyDeath when dead
             health.OnDeath += () =>
             {
                 EnemyManager.OnEnemyDeath?.Invoke(this);
-                // foreach (var enemy in currentRoom.enemies)
-                // {
-                //     enemy.Afraid();
-                // }
+                foreach (var enemy in currentRoom.enemies)
+                {
+                    enemy.GetAfraid(transform);
+                }
             };
+            
+            gridController.OnMoved += OnMoved;
             
             SetState(new ExplorationStateBase(this));
 
             stateColor = Color.yellow;
             stateColor.a = 0.1f;
 
-            gridController.OnMoved += OnMoved;
-
-            GameObject lightObj = transform.GetChild(2).gameObject;
-
-            if(lightObj.TryGetComponent<Light2D>(out Light2D light)) {
-                light.pointLightOuterRadius = sightRange;
-                light.pointLightOuterAngle = sightAngle * 2;
+            // Set light radius and range depending on the enemy stats
+            if (!detectionSpotlight) detectionSpotlight = GetComponentInChildren<Light2D>();
+            if (detectionSpotlight)
+            {
+                detectionSpotlight.pointLightOuterRadius = sightRange;
+                detectionSpotlight.pointLightInnerAngle = sightAngle;
+                detectionSpotlight.pointLightOuterAngle = sightAngle;
             }
 
             sightRef = transform.GetChild(0).gameObject;
@@ -129,64 +137,112 @@ namespace Enemies
         /// Do Action method, let the current state choose the action to do
         /// This method is called by the GameManager in every enemy at each turn
         /// </summary>
-        public void DoAction() {      
-            Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
-
-            Vector3 upDir = sightRef.transform. up;
-
-            Vector3 playerToSightCenter = playerPos - (transform.position + upDir * 0.5f);
-            Vector3 sight = upDir * sightRange;
-
-            float angle = Vector2.Angle(playerToSightCenter, sight);
-
-
-            isInSight = angle < sightAngle && Vector2.Distance(playerPos, transform.position + transform.up * 0.5f) <= sightRange;       
-
-            if(isInSight && !isAlerted && canSightPlayer)
-            {
-                gameObject.name = "Chief Of Patrol";
-                Debug.Log("see player");
-
-                foreach (var enemy in currentRoom.enemies)
-                {
-                    if (enemy == null)
-                        continue;
-
-                    enemy.SetState(new EnemyChaseState(enemy, PlayerManager.Instance.Player, this));
-                    enemy.stateColor = Color.red;
-                    enemy.stateColor.a = 0.1f;
-                    enemy.isAlerted = true;
-                    enemy.lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
-                    AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Trigger);
-                }
-            }
-            else if(!isInSight && isAlerted)
-                if(currentState is EnemyChaseState chase)
-                    if (chase.chief == this)
-                    {
-                        foreach (var roomEnemy in currentRoom.enemies)
-                        {
-                            if (roomEnemy == null)
-                                continue;
-
-                            if (roomEnemy == chase.chief)
-                                roomEnemy.SetState(new GoToState(roomEnemy, roomEnemy.lastPlayerPos,
-                                    new ExplorationStateBase(roomEnemy)));
-                            else
-                                roomEnemy.SetState(new ExplorationStateBase(roomEnemy));
-
-                            roomEnemy.stateColor = Color.yellow;
-                            roomEnemy.stateColor.a = 0.1f;
-                            roomEnemy.isAlerted = false;
-                        }
-                    }
-
-            // Update last player pos
-            if (isAlerted) lastPlayerPos = GridManager.Instance.GetGridPosition(playerPos);
-
+        public void DoAction() {
             // Delegate action to current state
             currentState?.DoAction();
         }
+        
+        /// <summary>
+        /// Function called by the GridController after moving
+        /// </summary>
+        /// <param name="direction"></param>
+        private void OnMoved(Direction direction)
+        {
+            UpdateCurrentRoom();
+            
+            // Kill player if next and we are chasing
+            if (Chasing)
+            {
+                if (GridManager.Instance.GetManhattanDistance(gridController.gridPosition,
+                    PlayerManager.Instance.Player.gridController.gridPosition) <= 1)
+                {
+                    PlayerManager.Instance.PlayerHealth.Death();
+                    return;
+                } 
+            }
+            
+            if(!Chasing && !Afraid && !Attracted && !Leaving)
+            {
+                // Check if player is in sight
+                Vector3 playerPos = PlayerManager.Instance.Player.transform.position;
+                if (IsObjectInSight(playerPos))
+                {
+                    // Start chase
+                    SetState(new EnemyChaseState(this, PlayerManager.Instance.Player, currentState));
+                    return;
+                }
+                
+                // Check to open closes
+                Curtain closest = currentRoom.GetClosestCurtain(transform.position);
+                
+                if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
+                                   && !(currentState is EnemyInteractState) && !closest.IsOpened)    {
+                    int random = Random.Range(0, 100);
+
+                    if (random <= curtainProbability)            
+                        SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
+                }
+            }
+
+
+            // Rotate light in pointing direction
+            if (direction == null)
+                return;
+            Vector2Int dir = Direction.ToVector2Int(direction.ToString());
+            lastMoveDirection = dir;
+
+            detectionSpotlight.transform.eulerAngles =
+                new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
+
+            sightRef.transform.eulerAngles = new Vector3(Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg - 90f,90f,-90f);
+        }      
+
+
+        #region Detection functions
+        public bool HasLineOfSight(Vector2 targetWorldPos)
+        {
+            Vector2 position = transform.position;
+            int manhattanDistance = gridController.gridManager.GetManhattanDistance(position, targetWorldPos);
+            float distance = Vector2.Distance(position, targetWorldPos);
+
+            float temp = distance / manhattanDistance;
+            for (int i = 0; i < manhattanDistance * 2 - 1; i++)
+            {
+                float startF = temp * (i / (float) (manhattanDistance * 2 - 1));
+                Vector2 startPos = Vector2.Lerp(position, targetWorldPos, startF);
+                // float endF = temp * ((i + 1) / (float) (manhattanDistance * 2 - 1));
+                // Vector2 endPos = Vector2.Lerp(position, targetWorldPos, endF);
+
+                // Debug.Log($"start: {startF} // end: {endF}");
+
+                bool valid = gridController.gridManager.GetTileAtPosition(startPos) != null;
+                if (!valid)
+                    return false;
+                // Debug.DrawLine(startPos, endPos, valid ? Color.green : Color.red, 2f);
+            }
+            Debug.DrawLine(position, targetWorldPos, Color.green, 2f);
+            return true;
+        }
+
+        public bool IsObjectInSight(Vector3 objectWorldPos)
+        {
+            var position = transform.position;
+            
+            // Check distance from object
+            float distanceFromPlayer = Vector2.Distance(objectWorldPos, position);
+            if (distanceFromPlayer <= sightRange)
+            {
+                // Check if object in sight angle
+                float degAngle = Vector2.Angle(lastMoveDirection, (objectWorldPos - position).normalized);
+                if (degAngle <= sightAngle * 0.5f)
+                {
+                    return HasLineOfSight(objectWorldPos);
+                }
+            }
+            return false;
+        }
+
+        #endregion
 
         /// <summary>
         /// Method to change the current state
@@ -202,6 +258,8 @@ namespace Enemies
             lastState = currentState;
             currentState = enemyBaseState;
             StartCoroutine(currentState.OnStateEnter());
+
+            currentStateName = currentState.GetType().ToString();
         }
 
         // Add or Remove self to room enemie list when entering or exiting
@@ -213,18 +271,38 @@ namespace Enemies
         {
             if (!canBeAfraid)
                 return;
+            // Don't frigthen if already frightened
+            if (currentState is EnemyAfraidState)
+                return;
+
+            // Increment the count
+            afraidCount++;
+
+            // Choose what do to after being afraid depending on the bravery and the afraidCount
+            EnemyBaseState afterAfraidState;
+            if (afraidCount >= bravery)
+            {
+                Vector2Int exitGridPos =
+                    gridController.gridManager.GetGridPosition(GameManager.Instance.EnemySpawnPoint.position);
+                afterAfraidState = new EnemyLeaveState(this, exitGridPos);
+            }
+            else
+            {
+                afterAfraidState = new ExplorationStateBase(this);
+            }
             
+            // Set state to afraid
+            Debug.Log("Get Afraid");
             SetState(
                 new EnemyAfraidState(
                     enemy: this,
                     frighteningSource: source,
                     numberOfTurn: 3,
-                    nextState: new ExplorationStateBase(this)
+                    nextState: afterAfraidState
                 )
             );
 
             ParticuleManager.Instance.OnEnemyScared();
-
             AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Fear);
         }
 
@@ -233,7 +311,7 @@ namespace Enemies
             if (!canBeAttracted)
                 return;
             
-            SetState(new EnemyGoToState(
+            SetState(new EnemyAttractedState(
                 enemy: this, 
                 aimedGridPos: attractionGridPos,
                 onArrived: onArrived, 
@@ -257,32 +335,5 @@ namespace Enemies
             }
             return true;
         }
-
-        private void OnMoved(Direction direction)
-        {
-           // if(GridManager.Instance.GetManhattanDistance(newGridPos,PlayerManager.Instance.Player.gridController.gridPosition) <= 1)     
-             //   PlayerManager.Instance.PlayerHealth.Death();
-
-            Curtain closest = currentRoom.GetClosestCurtain(transform.position);
-            
-            if(closest != null && GridManager.Instance.GetManhattanDistance(gridController.gridPosition, new Vector2Int((int)closest.transform.position.x, (int)closest.transform.position.y)) <= curtainRange 
-                && !(currentState is EnemyInteractState) && !closest.IsOpened)    {
-                int random = Random.Range(0, 100);
-
-                if (random <= curtainProbability)            
-                    SetState(new EnemyInteractState(this, new ExplorationStateBase(this), closest));
-            }
-
-            // Rotate light in pointing direction
-            if (direction == null)
-                return;
-            Vector2Int dir = Direction.ToVector2Int(direction.ToString());
-
-            detectionSpotlight.transform.eulerAngles =
-                new Vector3(0, 0, Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f);
-
-            sightRef.transform.eulerAngles = new Vector3(Mathf.Atan2(dir.y,dir.x) * Mathf.Rad2Deg - 90f,90f,-90f);
-
-        }      
     }
 }

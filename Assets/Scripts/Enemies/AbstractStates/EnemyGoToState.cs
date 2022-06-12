@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Enemies.States
 {
-    public class EnemyGoToState : EnemyFollowedState
+    public abstract class EnemyGoToState : EnemyFollowedState
     {
-        private Vector2Int aimedGridPos;
-        private System.Action onArrived;
+        protected Vector2Int aimedGridPos;
+        protected System.Action onArrived;
         
-        public EnemyGoToState(EnemyBase enemy, Vector2Int aimedGridPos, System.Action onArrived, EnemyBaseState nextState) : base(enemy, nextState)
+        protected EnemyGoToState(EnemyBase enemy, Vector2Int aimedGridPos, System.Action onArrived, EnemyBaseState nextState) : base(enemy, nextState)
         {
             this.aimedGridPos = aimedGridPos;
             this.onArrived = onArrived;
