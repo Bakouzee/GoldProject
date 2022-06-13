@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -37,10 +38,21 @@ public class NoiseEvent : FrighteningEventBase
     {
         if (!base.TryInteract())
             return false;
-        
+
+        switch (GameManager.dayState)
+        {
+            case GameManager.DayState.DAY:
+                Do();
+                return true;
+            case GameManager.DayState.NIGHT:
+                if(IsTriggered)
+                    Undo();
+                else Do();
+                break;
+        }
         // normally have to activate the trap AND WHEN an enemy is at his range or in the room
         // the armor will move to him
-        Do();
+        // Do();
 
         return true;
     }

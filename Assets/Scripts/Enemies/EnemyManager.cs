@@ -15,7 +15,7 @@ namespace Enemies
         public static Action<EnemyBase> OnEnemyDeath = enemy => OnEnemyDisappeared?.Invoke(enemy);
 
         /// <summary>Event called by an enemy when he leaves the game</summary>
-        public static Action<EnemyBase> OnEnemyLeft = enemy => OnEnemyDisappeared?.Invoke(enemy);
+        public static Action<EnemyBase> OnEnemyStartLeaving = enemy => OnEnemyDisappeared?.Invoke(enemy);
         
         /// <summary>Event called by OnEnemyLeft and OnEnemyDeath</summary>
         public static Action<EnemyBase> OnEnemyDisappeared;

@@ -10,7 +10,19 @@ namespace GoldProject
     {
         public GridController gridController;
         protected Room currentRoom;
-        public Room CurrentRoom => currentRoom;
+        public Room CurrentRoom
+        {
+            get
+            {
+                return currentRoom;
+            }
+            protected set
+            {
+                if(currentRoom != null) OnExitRoom(currentRoom);
+                currentRoom = value;
+                OnEnterRoom(currentRoom);
+            }
+        }
 
         protected virtual void Start()
         {
@@ -26,7 +38,7 @@ namespace GoldProject
             {
                 if (room.IsInside(transform.position))
                 {
-                    currentRoom = room;
+                    CurrentRoom = room;
                     break;
                 }
             }
@@ -40,9 +52,7 @@ namespace GoldProject
                 Room newRoom = RoomsManager.Instance.GetColliderRoom(other);
                 if (newRoom != null)
                 {
-                    if(currentRoom != null) OnExitRoom(currentRoom);
-                    currentRoom = newRoom;
-                    OnEnterRoom(currentRoom);
+                    CurrentRoom = newRoom;
                 }
 
                 lastCollider2D = other;

@@ -9,6 +9,7 @@ using AudioController;
 public class KnightEvent : FrighteningEventBase
 {
     private EnemyBase enemyToScare;
+    private List<EnemyBase> afraidEnemies = new List<EnemyBase>();
     private SpriteRenderer[] srMap;
     private Animator animKnight;
 
@@ -42,18 +43,17 @@ public class KnightEvent : FrighteningEventBase
         if (!base.TryInteract())
             return false;
         
+        // Can't interact if it is rearming
+        if (isReseting)
+            return false;
+        
         // normally have to activate the trap AND WHEN an enemy is at his range or in the room
         // the armor will move to him
-
-        if (!isReseting)
-        {
-            Do();
-            return true;
-        } else
-        {
-            return false;
-        }
-
+        
+        if(IsTriggered)
+            Undo();
+        else Do();
+        return true;
     }
 
 
@@ -77,6 +77,7 @@ public class KnightEvent : FrighteningEventBase
         srMap[1].color = Color.green;
 
         enemyToScare = CurrentRoom.GetClosestEnemy(transform.position);
+        afraidEnemies.Clear();
 
         //Get the path to do
         directionKnight = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
@@ -85,6 +86,7 @@ public class KnightEvent : FrighteningEventBase
         if(directionKnight.Count < distanceToBeScared)
         {
             enemyToScare.GetAfraid(transform);
+            afraidEnemies.Add(enemyToScare);
         }
         yield return new WaitForSeconds(1f);
 
@@ -108,7 +110,7 @@ public class KnightEvent : FrighteningEventBase
             isReseting = false;
         }
 
-            yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
 
         Color32 readyColor = new Color32(166, 79, 0, 255);
         srMap[1].color = readyColor;
@@ -120,10 +122,27 @@ public class KnightEvent : FrighteningEventBase
         if (index < NumberOfTurnTheKnightCanMove && !isReseting)
         {
             // Check if the knight is at distance to scare the enemy
-            List<Direction> refreshedDistance = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
-            if (refreshedDistance.Count < distanceToBeScared)
+            // List<Direction> refreshedDistance = GridManager.Instance.GetPath(knightPos, enemyToScare.GridController.gridPosition);
+            // if (refreshedDistance.Count < distanceToBeScared)
+            // {
+            //     enemyToScare.GetAfraid(transform);
+            // }
+
+            // Afray close enemies
+            foreach (var enemyInRoom in CurrentRoom.enemies)
             {
-                enemyToScare.GetAfraid(transform);
+                // If too far, continue
+                if (gridController.gridManager.GetManhattanDistance(enemyInRoom.gridController.gridPosition,
+                    gridController.gridPosition) > distanceToBeScared) 
+                    continue;
+                
+                // If already afraid, continue
+                if (afraidEnemies.Contains(enemyInRoom))
+                    continue;
+                
+                // Frigten enemy and add to the list
+                enemyInRoom.GetAfraid(transform);
+                afraidEnemies.Add(enemyInRoom);
             }
 
             // Move the knight until he can't

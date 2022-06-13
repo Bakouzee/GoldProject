@@ -65,6 +65,7 @@ public class GameManager : SingletonBase<GameManager>
 
     // Enemy Spawn
     [SerializeField] private Transform enemySpawnPoint;
+    public Transform EnemySpawnPoint => enemySpawnPoint;
     private bool spawningEnemies;
     private bool chiefSpawned;
     private Enemies.EnemyType[] enemiesToSpawn;
@@ -164,55 +165,63 @@ public class GameManager : SingletonBase<GameManager>
 
     public void LaunchTurn()
     {
+#if !UNITY_EDITOR
         try
         {
-            // Enemies make their turn
-            foreach (var enemy in EnemyManager.enemies)
-            {
+#endif
+        // Enemies make their turn
+        foreach (var enemy in EnemyManager.enemies)
+        {
+#if !UNITY_EDITOR
                 try
                 {
-                    enemy.DoAction();
+#endif
+            enemy.DoAction();
+#if !UNITY_EDITOR
                 }
                 catch
                 {
                     Debug.LogError($"{enemy} DoAction method crashed", enemy);
                 }
-            }
+#endif
+        }
 
-            // Knight too
-            foreach (var knight in EnemyManager.knights)
-            {
-                knight.MoveKnight();
-            }
+        // Knight too
+        foreach (var knight in EnemyManager.knights.ToArray())
+        {
+            knight.MoveKnight();
+        }
 
-            for (int i = 0; i < vm.Length; i++)
-            {
-                vm[i].LaunchTurnVent(actionCountForVent);
-            }
+        for (int i = 0; i < vm.Length; i++)
+        {
+            vm[i].LaunchTurnVent(actionCountForVent);
+        }
 
-            if (actionCountForVent > 0)
-            {
-                actionCountForVent--;
-            }
+        if (actionCountForVent > 0)
+        {
+            actionCountForVent--;
+        }
 
-            // Spawn enemies
-            SpawnCurrentEnemy();
+        // Spawn enemies
+        SpawnCurrentEnemy();
 
-            // Count 
-            actionCount++;
-            if (actionCount >= actionPerPhase)
-            {
-                if (dayState == DayState.DAY)
-                    StartNight();
-                else if (dayState == DayState.NIGHT)
-                    StartDay();
-            }
+        // Count 
+        actionCount++;
+        if (actionCount >= actionPerPhase)
+        {
+            if (dayState == DayState.DAY)
+                StartNight();
+            else if (dayState == DayState.NIGHT)
+                StartDay();
+        }
+#if !UNITY_EDITOR
         }
         catch
         {
             Debug.LogError("Something went wrong during LaunchTurn", this);
             // ignored
         }
+#endif
 
         // Cooldown of turn
         turnCooldown.SetCooldown();

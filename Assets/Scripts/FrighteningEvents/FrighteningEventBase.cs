@@ -89,7 +89,28 @@ namespace GoldProject.FrighteningEvent
 
         // Temporary for debug reasons
         public Transform Transform => transform;
-        public bool IsInteractable => true;
+        public bool IsInteractable
+        {
+            get
+            {
+                if (inProgress)
+                    return false;
+                
+                switch (GameManager.dayState)
+                {
+                    case GameManager.DayState.DAY:
+                        return !IsTriggered;
+                    case GameManager.DayState.NIGHT:
+                        if (isTriggered)
+                            return GridManager.Instance.GetManhattanDistance(transform.position,
+                                PlayerManager.Instance.transform.position) <= 1;
+                        return true;
+                    default:
+                        return false;
+                }
+                
+            }
+        }
 
         protected bool needToBeInRange = true;
         public bool NeedToBeInRange => needToBeInRange;

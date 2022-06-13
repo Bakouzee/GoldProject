@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace GoldProject.Rooms
@@ -9,18 +10,32 @@ namespace GoldProject.Rooms
         public Vector2 mapSize;
         public Vector2 playerFovSize;
         [SerializeField] private Room[] rooms;
+        
         #region Rooms getter/setter
         public Room[] Rooms => rooms;
-        public Room GetRandomRoom() => GetRoom(UnityEngine.Random.Range(0, rooms.Length));
-        public Room GetRoom(int index) => rooms[index % rooms.Length];
-        [HideInInspector] public Room FirstRoom;
-        #endregion
-
-        protected override void Awake()
+        public Room GetRandomRoom()
         {
-            base.Awake();
-            FirstRoom = rooms[0];
+            var roomsLength = rooms.Length;
+            Room room = GetRoom(UnityEngine.Random.Range(0, roomsLength));
+            float random = UnityEngine.Random.value;
+            if (random <= 0.75f)
+            {
+                // Only take non corridor room
+                while (room == null || room.isCorridor)
+                {
+                    room = GetRoom(UnityEngine.Random.Range(0, roomsLength));
+                }
+            }
+            else
+            {
+                // Only take corridor room
+                while(room == null || !room.isCorridor)
+                    room = GetRoom(UnityEngine.Random.Range(0, roomsLength));
+            }
+            return room;
         }
+        public Room GetRoom(int index) => rooms[index % rooms.Length];
+        #endregion
 
         private void Start()
         {
