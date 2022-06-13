@@ -131,8 +131,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   range: 5
-  damage: 20
-  durationInDays: 1
+  damage: 10
+  durationInTurns: 60
 --- !u!1 &1313222802956955080
 GameObject:
   m_ObjectHideFlags: 0

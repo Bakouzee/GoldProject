@@ -8,7 +8,17 @@ public class Garlic : MonoBehaviour
 
     public int damage;
 
-    public int durationInDays;
+    public int durationInTurns;
+    public bool DecrementLifeTime()
+    {
+        durationInTurns--;
+        if (durationInTurns <= 0)
+        {
+            Destroy(gameObject);
+            return true;
+        }
+        return false;
+    }
 
     private void OnDrawGizmos()
     {
