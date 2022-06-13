@@ -16,10 +16,8 @@ public class StageBase : TutorialStage {
     public override void OnStageUpdate() {
 
         if (isFinish)
-        {
             OnStageFinish();
-            Debug.Log("go to finish");
-        }
+        
         
    }
     public override void OnStageFinish() {
@@ -29,5 +27,9 @@ public class StageBase : TutorialStage {
 
         if (nextStage != null)
             TutorialManager.Instance.currentStage = nextStage;
+        else {
+            TutorialManager.Instance.currentStage = null;
+            Debug.Log("end of tuto");
+        }
     }
 }
