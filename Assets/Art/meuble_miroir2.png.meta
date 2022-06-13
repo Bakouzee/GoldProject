@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fd7d10afceda3a248b218cfcd53cf85f
+guid: 33df9f9d72e1d594c8a001af2fe7ee53
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -104,49 +104,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: meuble_miroir_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 600
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 914347d5c7124914b83da3ae6becbe55
-      internalID: 985054752
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: meuble_miroir_1
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 600
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 05993d8003fca2743a4c0a5755e6f7ee
-      internalID: -1722145294
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: meuble_miroir_2
+      name: meuble_miroir2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -160,35 +118,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25f1c429a136a4d4bb7f48a076a62f94
-      internalID: -1459158872
+      spriteID: 44898603fe32cd44da6075d223de2f57
+      internalID: -847118728
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: meuble_miroir_3
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 300
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2b2d4c84ea5d41040b130bd2c22dbe70
-      internalID: 601448376
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: meuble_miroir_4
+      name: meuble_miroir2_1
       rect:
         serializedVersion: 2
         x: 0
@@ -202,29 +139,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7bdbeb5fbd16ba34d9c339e76eab13f6
-      internalID: 899838607
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: meuble_miroir_5
-      rect:
-        serializedVersion: 2
-        x: 300
-        y: 0
-        width: 300
-        height: 300
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 32b8afb7d0483dd49a71e2bac81f597a
-      internalID: -1789502365
+      spriteID: d25d3a2cc0c284b439d355281d0fbce1
+      internalID: -1383608005
       vertices: []
       indices: 
       edges: []
@@ -240,12 +156,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      meuble_miroir_5: -1789502365
-      meuble_miroir_3: 601448376
-      meuble_miroir_2: -1459158872
-      meuble_miroir_4: 899838607
-      meuble_miroir_0: 985054752
-      meuble_miroir_1: -1722145294
+      meuble_miroir2_1: -1383608005
+      meuble_miroir2_0: -847118728
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
