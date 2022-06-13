@@ -11,8 +11,20 @@ namespace GoldProject.UI
         [SerializeField] private TMP_Text dayCounter;
         [SerializeField] private TMP_Text dayCounterForMenu;
 
+        [SerializeField] private TMP_Text enemyKilled;
+
+        [SerializeField] private TMP_Text enemyScared;
+
+
+
+
         public void SetDay(int day) => dayCounter.text = day.ToString();
         public void SetDayForMenu(int day) => dayCounterForMenu.text = day.ToString();
+
+        public void SetEnemyKilled(int day) => enemyKilled.text = day.ToString();
+
+        public void SetEnemyScared(int day) => enemyScared.text = day.ToString();
+
 
 
         // Action counter
@@ -49,6 +61,16 @@ namespace GoldProject.UI
             {
                 SetDayForMenu(gameManager.CurrentDay);
                 gameManager.OnDayChanged += SetDayForMenu;
+            }
+            if (enemyKilled != null)
+            {
+                SetEnemyKilled(Enemies.EnemyManager.enemyKilled);
+                //Enemies.EnemyManager.OnEnemyKilled += SetEnemyKilled;
+            }
+            if (enemyScared != null)
+            {
+                SetEnemyScared(Enemies.EnemyManager.enemyAfraid);
+                //Enemies.EnemyManager.OnEnemyStartLeaving += SetEnemyScared;
             }
 
             // Action counter
