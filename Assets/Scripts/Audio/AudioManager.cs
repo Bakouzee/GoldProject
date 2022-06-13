@@ -95,6 +95,7 @@ namespace AudioController
         private void Start()
         {
             sourceMusic = GetComponent<AudioSource>();
+            sourceMusic.loop = true;
             //Add audio mixer music
             sourceMusic.outputAudioMixerGroup = mixerMusic;
 
@@ -295,6 +296,11 @@ namespace AudioController
 
         public void PlayMusic(MusicAudioTracks audioToPlay)
         {
+            if (sourceMusic.isPlaying)
+            {
+                sourceMusic.Stop();
+            }
+
             for (int i = 0; i < musics.Length; i++)
             {
                 if (musics[i].musicTracks == audioToPlay)
@@ -303,13 +309,13 @@ namespace AudioController
                     {
                         int randomSound = UnityEngine.Random.Range(0, musics[i].soundtrackClipList.Count);
                         AudioClip clipToPlay = musics[i].soundtrackClipList[randomSound];
-                        sourceFoliage.PlayOneShot(clipToPlay);
+                        sourceMusic.PlayOneShot(clipToPlay);
                         return;
                     }
                     else
                     {
                         AudioClip clipToPlay = musics[i].soundtrackClipList[0];
-                        sourceFoliage.PlayOneShot(clipToPlay);
+                        sourceMusic.PlayOneShot(clipToPlay);
                         return;
                     }
                 }

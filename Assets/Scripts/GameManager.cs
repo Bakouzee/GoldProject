@@ -87,11 +87,16 @@ public class GameManager : SingletonBase<GameManager>
 
         OnDayStart += () =>
         {
+            AudioManager.Instance.PlayMusic(MusicAudioTracks.M_DAY);
             AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Entrance);
             AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Cocorico);
         };
 
-        OnNightStart += () => AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
+        OnNightStart += () =>
+        {
+            AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
+            AudioManager.Instance.PlayMusic(MusicAudioTracks.M_NIGHT);
+        };
         
         Achievements.Unlock(Achievements.BOO);
     }
