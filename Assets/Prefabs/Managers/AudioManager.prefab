@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7951639151741504597
+--- !u!1 &2092904056556547357
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7951639151741504592}
-  - component: {fileID: 7951639151741504599}
-  - component: {fileID: 7951639151741504598}
+  - component: {fileID: 2092904056556547352}
+  - component: {fileID: 2092904056556547359}
+  - component: {fileID: 2092904056556547358}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -18,13 +18,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7951639151741504592
+--- !u!4 &2092904056556547352
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7951639151741504597}
+  m_GameObject: {fileID: 2092904056556547357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 19.92547, y: 9.683437, z: -0.15972586}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,13 +33,13 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &7951639151741504599
+--- !u!82 &2092904056556547359
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7951639151741504597}
+  m_GameObject: {fileID: 2092904056556547357}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
@@ -129,26 +129,102 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &7951639151741504598
+--- !u!114 &2092904056556547358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7951639151741504597}
+  m_GameObject: {fileID: 2092904056556547357}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5dc0e39bb2cb59c4f8adc7d1df9d12dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSounds: []
-  enemySounds: []
-  musics: []
-  ambianceSounds: []
+  playerSounds:
+  - playerTracks: 2
+    playerClipList:
+    - {fileID: 8300000, guid: c94a60ae5490fa845a21bbed731be3bf, type: 3}
+  - playerTracks: 3
+    playerClipList:
+    - {fileID: 8300000, guid: 26b84a849f601ea44b1ec09e12c5adec, type: 3}
+    - {fileID: 8300000, guid: e51afcf2e4c171f4cb9acccaf1984615, type: 3}
+  - playerTracks: 5
+    playerClipList:
+    - {fileID: 8300000, guid: 0df6ccb900849ee4cb5ef15408b4bccc, type: 3}
+  enemySounds:
+  - enemyTracks: 0
+    enemyClipList:
+    - {fileID: 8300000, guid: 6a9db32c9cb74ea4b8c1d603561dec7a, type: 3}
+  - enemyTracks: 1
+    enemyClipList:
+    - {fileID: 8300000, guid: e773ffdddac6d434488b5fce56d0169a, type: 3}
+    - {fileID: 8300000, guid: 06b73caa06bdd864a8389362ef1e3a3f, type: 3}
+    - {fileID: 8300000, guid: 6982402ebf03f1d489351f75d8c7b79e, type: 3}
+    - {fileID: 8300000, guid: d1d1ed4787942654d83c03ec4c1df6f5, type: 3}
+  - enemyTracks: 6
+    enemyClipList:
+    - {fileID: 8300000, guid: 609361d6adf8ede49bfd43871f80ef1c, type: 3}
+  musics:
+  - musicTracks: 0
+    soundtrackClipList:
+    - {fileID: 8300000, guid: 59b6e8b00adaf3b4fbac32dd34387b10, type: 3}
+  - musicTracks: 2
+    soundtrackClipList:
+    - {fileID: 8300000, guid: 30044fa6ccc410a43808e2dbbc80f766, type: 3}
+  - musicTracks: 3
+    soundtrackClipList:
+    - {fileID: 8300000, guid: 17bb4125fdfa065448284d921fbc6c8e, type: 3}
+  ambianceSounds:
+  - ambianceTracks: 9
+    ambianceClipList:
+    - {fileID: 8300000, guid: 5be60fce5fab655408770fa915ad29c7, type: 3}
+  - ambianceTracks: 8
+    ambianceClipList:
+    - {fileID: 8300000, guid: fa7b545db5908ab46b275ce019bb39ff, type: 3}
   scarySounds:
+  - scaryTracks: 0
+    scaryClipList:
+    - {fileID: 8300000, guid: d505371d9bdc4de459b3d13dbf123d75, type: 3}
   - scaryTracks: 1
     scaryClipList:
-    - {fileID: 8300000, guid: b5713bdf57b03c040af2a1fe08c34222, type: 3}
-  menuSounds: []
-  ventSounds: []
-  windowSounds: []
+    - {fileID: 8300000, guid: 7bd40161ed039d14ab8d3898c02eae7c, type: 3}
+  - scaryTracks: 2
+    scaryClipList:
+    - {fileID: 8300000, guid: fb6032f74ce0da54d940c0e1b16c0116, type: 3}
+  - scaryTracks: 4
+    scaryClipList:
+    - {fileID: 8300000, guid: fb6032f74ce0da54d940c0e1b16c0116, type: 3}
+  menuSounds:
+  - menuTracks: 3
+    menuClipList:
+    - {fileID: 8300000, guid: ddb5d9381f0c9f94ca39cb67c24f279f, type: 3}
+  - menuTracks: 4
+    menuClipList:
+    - {fileID: 8300000, guid: 3dcb36dbbe690eb449e8cb51e37453e8, type: 3}
+  ventSounds:
+  - ventTracks: 0
+    ventClipList:
+    - {fileID: 8300000, guid: 10205694d5acffe4bbdbe5418676be97, type: 3}
+  windowSounds:
+  - windowTracks: 0
+    windowClipList:
+    - {fileID: 8300000, guid: 3b1f5de56f23941478456270ecd26cac, type: 3}
+  - windowTracks: 1
+    windowClipList:
+    - {fileID: 8300000, guid: a11c022ed7ba0654d8db3d47b9190f57, type: 3}
+  - windowTracks: 2
+    windowClipList:
+    - {fileID: 8300000, guid: 11cdf6a6290dcea4c8240d2b74d9bad6, type: 3}
+  mapSounds:
+  - mapTracks: 0
+    mapClipList:
+    - {fileID: 8300000, guid: fa033f7b0083a3f41ac6bc034206789d, type: 3}
+  - mapTracks: 1
+    mapClipList:
+    - {fileID: 8300000, guid: fa033f7b0083a3f41ac6bc034206789d, type: 3}
+  - mapTracks: 2
+    mapClipList:
+    - {fileID: 8300000, guid: fa033f7b0083a3f41ac6bc034206789d, type: 3}
+  mixerSFX: {fileID: 744846702250237903, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
+  mixerMusic: {fileID: -7224956915682821941, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
