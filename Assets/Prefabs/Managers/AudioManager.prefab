@@ -228,3 +228,5 @@ MonoBehaviour:
     - {fileID: 8300000, guid: fa033f7b0083a3f41ac6bc034206789d, type: 3}
   mixerSFX: {fileID: 744846702250237903, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
   mixerMusic: {fileID: -7224956915682821941, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
+  minPitch: 0.9
+  maxPitch: 1.1

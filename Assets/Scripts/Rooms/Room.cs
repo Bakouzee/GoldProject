@@ -99,6 +99,16 @@ namespace GoldProject.Rooms
             vents = roomTransform.GetComponentsInChildren<VentManager>();
             // Find garlics
             garlics = new List<Garlic>(roomTransform.GetComponentsInChildren<Garlic>());
+            GameManager.Instance.OnLaunchedTurn += (turnCount, turnPerPhase) =>
+            {
+                foreach (var garlic in garlics.ToArray())
+                {
+                    if (garlic.DecrementLifeTime())
+                    {
+                        garlics.Remove(garlic);
+                    }
+                }
+            };
             
             // Initialize colliders
             if (!roomTransform)
