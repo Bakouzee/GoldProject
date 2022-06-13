@@ -3658,6 +3658,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioManager
       objectReference: {fileID: 0}
+    - target: {fileID: 2092904056556547358, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: ambianceSounds.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092904056556547358, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: ambianceSounds.Array.data[2].ambianceTracks
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092904056556547358, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: ambianceSounds.Array.data[2].ambianceClipList.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2092904056556547358, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
+      propertyPath: ambianceSounds.Array.data[2].ambianceClipList.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: fa7b545db5908ab46b275ce019bb39ff, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d06571bcadb57f2468f162156d8dc980, type: 3}
 --- !u!1 &1705209370
