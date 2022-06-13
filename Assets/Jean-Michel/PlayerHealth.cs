@@ -16,6 +16,8 @@ public class PlayerHealth : Health
     [HideInInspector]
     public bool IsInvincible = false;
 
+    public GameObject deathUI;
+
     /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
     /// <params>newHealth, healthMax </params>
     public System.Action<int, int> OnHealthUpdated;
@@ -49,9 +51,11 @@ public class PlayerHealth : Health
 
         //ParticuleManager.Instance.OnPlayerDeathParticule();
 
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            .buildIndex);
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+        //    .buildIndex);
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
+
+        deathUI.SetActive(true);
         // Time.timeScale = 0;
     }
 
