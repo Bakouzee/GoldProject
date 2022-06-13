@@ -130,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdae2ea3bb7ed6a499fc054fe431912e
-      internalID: 1403704900
+      spriteID: 3d271abb6508f924e85474103ab60ab8
+      internalID: -425495132
       vertices: []
       indices: 
       edges: []
@@ -151,8 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0e5ce1136fc6ab8449d3f423d464f4f1
-      internalID: -1590135089
+      spriteID: 2d0840e491cbf144a8b806878c8176fb
+      internalID: -1680133839
       vertices: []
       indices: 
       edges: []
@@ -172,8 +172,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a21efe863561514d80a0a5e85f25cef
-      internalID: -1195144443
+      spriteID: fa50f3da326fcf4459c3fd728d903f83
+      internalID: -1528014199
       vertices: []
       indices: 
       edges: []
@@ -193,8 +193,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2c070d0c4e4d1784ca93005ff68ebeb3
-      internalID: -791512211
+      spriteID: 5ef533fdd0453fe4a94346315e7a840f
+      internalID: -1029069685
       vertices: []
       indices: 
       edges: []
@@ -214,8 +214,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 781b716883e1a5044af6fe262242f64a
-      internalID: -423010203
+      spriteID: f82eef14e7dad534fab405e31fd0d914
+      internalID: -1401812017
       vertices: []
       indices: 
       edges: []
@@ -235,8 +235,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d90fd6cdb774e274aa1c34737014fece
-      internalID: 335261687
+      spriteID: e75d4b8aafa0c2143a778ea5f7a4a535
+      internalID: -1615056644
       vertices: []
       indices: 
       edges: []
@@ -252,12 +252,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      "table_abim\xE9e_4": -423010203
-      "table_abim\xE9e_1": -1590135089
-      "table_abim\xE9e_5": 335261687
-      "table_abim\xE9e_2": -1195144443
-      "table_abim\xE9e_0": 1403704900
-      "table_abim\xE9e_3": -791512211
+      "table_abim\xE9e_4": -1401812017
+      "table_abim\xE9e_1": -1680133839
+      "table_abim\xE9e_5": -1615056644
+      "table_abim\xE9e_2": -1528014199
+      "table_abim\xE9e_0": -425495132
+      "table_abim\xE9e_3": -1029069685
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
