@@ -377,5 +377,16 @@ namespace AudioController
         }
 
         #endregion
+
+        #region Stop Every sounds
+
+        public void StopEverySound()
+        {
+            sourceFoliage.Stop();
+            sourceMusic.Stop();
+        }
+
+        #endregion
+
     }
 }

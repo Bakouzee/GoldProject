@@ -196,10 +196,10 @@ MonoBehaviour:
     scaryClipList:
     - {fileID: 8300000, guid: fb6032f74ce0da54d940c0e1b16c0116, type: 3}
   menuSounds:
-  - menuTracks: 3
+  - menuTracks: 0
     menuClipList:
     - {fileID: 8300000, guid: ddb5d9381f0c9f94ca39cb67c24f279f, type: 3}
-  - menuTracks: 4
+  - menuTracks: 1
     menuClipList:
     - {fileID: 8300000, guid: 3dcb36dbbe690eb449e8cb51e37453e8, type: 3}
   ventSounds:
