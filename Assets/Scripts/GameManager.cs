@@ -65,6 +65,7 @@ public class GameManager : SingletonBase<GameManager>
 
     // Enemy Spawn
     [SerializeField] private Transform enemySpawnPoint;
+    public Transform EnemySpawnPoint => enemySpawnPoint;
     private bool spawningEnemies;
     private bool chiefSpawned;
     private Enemies.EnemyType[] enemiesToSpawn;
@@ -87,12 +88,18 @@ public class GameManager : SingletonBase<GameManager>
 
         OnDayStart += () =>
         {
+            AudioManager.Instance.PlayMusic(MusicAudioTracks.M_DAY);
             AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Entrance);
             AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Cocorico);
         };
 
-        OnNightStart += () => AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
+        OnNightStart += () =>
+        {
+            AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
+            AudioManager.Instance.PlayMusic(MusicAudioTracks.M_NIGHT);
+        };
         
+        EnemyManager.Reset();
         Achievements.Unlock(Achievements.BOO);
     }
 
@@ -159,47 +166,63 @@ public class GameManager : SingletonBase<GameManager>
 
     public void LaunchTurn()
     {
+#if !UNITY_EDITOR
         try
         {
-            // Enemies make their turn
-            foreach (var enemy in EnemyManager.enemies)
-            {
-                enemy.DoAction();
-            }
+#endif
+        // Enemies make their turn
+        foreach (var enemy in EnemyManager.enemies)
+        {
+#if !UNITY_EDITOR
+                try
+                {
+#endif
+            enemy.DoAction();
+#if !UNITY_EDITOR
+                }
+                catch
+                {
+                    Debug.LogError($"{enemy} DoAction method crashed", enemy);
+                }
+#endif
+        }
 
-            // Knight too
-            foreach (var knight in EnemyManager.knights)
-            {
-                knight.MoveKnight();
-            }
+        // Knight too
+        foreach (var knight in EnemyManager.knights.ToArray())
+        {
+            knight.MoveKnight();
+        }
 
-            for (int i = 0; i < vm.Length; i++)
-            {
-                vm[i].LaunchTurnVent(actionCountForVent);
-            }
+        for (int i = 0; i < vm.Length; i++)
+        {
+            vm[i].LaunchTurnVent(actionCountForVent);
+        }
 
-            if (actionCountForVent > 0)
-            {
-                actionCountForVent--;
-            }
+        if (actionCountForVent > 0)
+        {
+            actionCountForVent--;
+        }
 
-            // Spawn enemies
-            SpawnCurrentEnemy();
+        // Spawn enemies
+        SpawnCurrentEnemy();
 
-            // Count 
-            actionCount++;
-            if (actionCount >= actionPerPhase)
-            {
-                if (dayState == DayState.DAY)
-                    StartNight();
-                else if (dayState == DayState.NIGHT)
-                    StartDay();
-            }
+        // Count 
+        actionCount++;
+        if (actionCount >= actionPerPhase)
+        {
+            if (dayState == DayState.DAY)
+                StartNight();
+            else if (dayState == DayState.NIGHT)
+                StartDay();
+        }
+#if !UNITY_EDITOR
         }
         catch
         {
+            Debug.LogError("Something went wrong during LaunchTurn", this);
             // ignored
         }
+#endif
 
         // Cooldown of turn
         turnCooldown.SetCooldown();

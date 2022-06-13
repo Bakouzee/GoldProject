@@ -1,13 +1,23 @@
-﻿namespace Enemies.States
+﻿using Unity.VisualScripting;
+
+namespace Enemies.States
 {
     public class EnemyIdleState : EnemyBaseState
     {
-        public EnemyIdleState(EnemyBase enemy) : base(enemy)
+        private int idleTurnCount;
+        
+        public EnemyIdleState(EnemyBase enemy, int idleTurnCount) : base(enemy)
         {
+            this.idleTurnCount = idleTurnCount;
         }
 
         public override void DoAction()
         {
+            idleTurnCount--;
+            if (idleTurnCount <= 0)
+            {
+                
+            }
             // Nothing == Idle
         }
     }

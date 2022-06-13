@@ -54,7 +54,8 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 miniMap.SetActive(true);
                 arrowToMovePlayer.SetActive(false);
                 textEnemyTrap.text = "Show Enemies";
-                mainCam.SetActive(false);
+                //mainCam.SetActive(false);
+                mainCam.GetComponent<AudioListener>().enabled = false;
                 onShowMap?.Invoke();
             } else
             {
@@ -63,7 +64,8 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 {
                     enemy.gameObject.layer = 0;
                 }
-                mainCam.SetActive(true);
+                mainCam.GetComponent<AudioListener>().enabled = true;
+                //mainCam.SetActive(true);
                 arrowToMovePlayer.SetActive(true);
                 textEnemyTrap.text = "Show Traps";
                 miniMap.SetActive(false);

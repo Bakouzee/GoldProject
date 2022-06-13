@@ -16,6 +16,8 @@ public class PlayerHealth : Health
     [HideInInspector]
     public bool IsInvincible = false;
 
+    public GameObject deathUI;
+
     /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
     /// <params>newHealth, healthMax </params>
     public System.Action<int, int> OnHealthUpdated;
@@ -46,9 +48,16 @@ public class PlayerHealth : Health
     public void Death()
     {
         // Temporary just for apk
-        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
-            .buildIndex);
-        AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
+
+        //ParticuleManager.Instance.OnPlayerDeathParticule();
+
+        //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
+        //    .buildIndex);
+        
+        StartCoroutine(SoundDeath());
+        
+
+        
         // Time.timeScale = 0;
     }
 
@@ -133,5 +142,14 @@ public class PlayerHealth : Health
     {
         yield return new WaitForSeconds(2f);
         IsInvincible = false;
+    }
+
+    public IEnumerator SoundDeath()
+    {
+
+        AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
+        yield return new WaitForSeconds(0.8f);
+        Time.timeScale = 0;        
+        deathUI.SetActive(true);
     }
 }

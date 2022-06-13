@@ -92,9 +92,12 @@ namespace AudioController
         [SerializeField] private AudioMixerGroup mixerSFX;
         [SerializeField] private AudioMixerGroup mixerMusic;
 
+        private float rPicth;
+
         private void Start()
         {
             sourceMusic = GetComponent<AudioSource>();
+            sourceMusic.loop = true;
             //Add audio mixer music
             sourceMusic.outputAudioMixerGroup = mixerMusic;
 
@@ -107,6 +110,7 @@ namespace AudioController
 
         public void PlayPlayerSound(PlayerAudioTracks audioToPlay)
         {
+            sourceFoliage.pitch = RandomPitch();
             for(int i = 0; i < playerSounds.Length; i++)
             {
                 if(playerSounds[i].playerTracks == audioToPlay)
@@ -134,6 +138,8 @@ namespace AudioController
 
         public void PlayEnemySound(EnemyAudioTracks audioToPlay)
         {
+            sourceFoliage.pitch = RandomPitch();
+
             for (int i = 0; i < enemySounds.Length; i++)
             {
                 if (enemySounds[i].enemyTracks == audioToPlay)
@@ -182,38 +188,15 @@ namespace AudioController
             }
         }
 
-        #region Menu Methods
-
-        public void PlaySoundForMenu(MenuAudioTracks audioToPlay)
-        {
-            for (int i = 0; i < menuSounds.Length; i++)
-            {
-                if (menuSounds[i].menuTracks == audioToPlay)
-                {
-                    if (menuSounds[i].menuClipList.Count > 1)
-                    {
-                        int randomSound = UnityEngine.Random.Range(0, menuSounds[i].menuClipList.Count);
-                        AudioClip clipToPlay = menuSounds[i].menuClipList[randomSound];
-                        sourceFoliage.PlayOneShot(clipToPlay);
-                        return;
-                    }
-                    else
-                    {
-                        AudioClip clipToPlay = menuSounds[i].menuClipList[0];
-                        sourceFoliage.PlayOneShot(clipToPlay);
-                        return;
-                    }
-                }
-            }
-        }
-
-        #endregion
+        
         #endregion
 
         #region Window Methods
 
         public void PlayWindowSound(WindowAudioTracks audioToPlay)
         {
+            sourceFoliage.pitch = RandomPitch();
+
             for (int i = 0; i < windowSounds.Length; i++)
             {
                 if (windowSounds[i].windowTracks == audioToPlay)
@@ -268,6 +251,8 @@ namespace AudioController
 
         public void PlayAmbianceSound(AmbianceAudioTracks audioToPlay)
         {
+            sourceFoliage.pitch = RandomPitch();
+
             for (int i = 0; i < ambianceSounds.Length; i++)
             {
                 if (ambianceSounds[i].ambianceTracks == audioToPlay)
@@ -295,6 +280,11 @@ namespace AudioController
 
         public void PlayMusic(MusicAudioTracks audioToPlay)
         {
+            if (sourceMusic.isPlaying)
+            {
+                sourceMusic.Stop();
+            }
+
             for (int i = 0; i < musics.Length; i++)
             {
                 if (musics[i].musicTracks == audioToPlay)
@@ -303,13 +293,13 @@ namespace AudioController
                     {
                         int randomSound = UnityEngine.Random.Range(0, musics[i].soundtrackClipList.Count);
                         AudioClip clipToPlay = musics[i].soundtrackClipList[randomSound];
-                        sourceFoliage.PlayOneShot(clipToPlay);
+                        sourceMusic.PlayOneShot(clipToPlay);
                         return;
                     }
                     else
                     {
                         AudioClip clipToPlay = musics[i].soundtrackClipList[0];
-                        sourceFoliage.PlayOneShot(clipToPlay);
+                        sourceMusic.PlayOneShot(clipToPlay);
                         return;
                     }
                 }
@@ -322,6 +312,8 @@ namespace AudioController
 
         public void PlayScarySound(ScaryAudioTracks audioToPlay)
         {
+            sourceFoliage.pitch = RandomPitch();
+
             for (int i = 0; i < scarySounds.Length; i++)
             {
                 if (scarySounds[i].scaryTracks == audioToPlay)
@@ -371,5 +363,22 @@ namespace AudioController
         }
 
         #endregion
+
+        #region Stop Every sounds
+
+        public void StopEverySound()
+        {
+            sourceFoliage.Stop();
+            sourceMusic.Stop();
+            sourceMusic.clip = mapSounds[1].mapClipList[0];
+            sourceMusic.Play();
+        }
+
+        #endregion
+
+        private float RandomPitch()
+        {
+            return rPicth = UnityEngine.Random.Range(-1f, 1f);
+        }
     }
 }

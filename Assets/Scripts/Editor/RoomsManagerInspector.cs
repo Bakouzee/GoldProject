@@ -1,4 +1,5 @@
 ﻿using GoldProject.Rooms;
+using GridSystem;
 using UnityEditor;
 using UnityEngine;
 
@@ -30,6 +31,28 @@ namespace GoldProject.Editor
                         room.size = new Vector2Int(Mathf.RoundToInt(boxCollider2D.size.x),
                             Mathf.RoundToInt(boxCollider2D.size.y));
                     }
+                }
+            }
+
+            if (Application.isPlaying)
+            {
+                GUILayout.Space(10);
+                if (GUILayout.Button("Check all pathpoints"))
+                {
+                    GridManager gridManager = GridManager.Instance;
+                    bool allValid = true;
+                    foreach (var room in roomsManager.Rooms)
+                    {
+                        foreach (var pathPoint in room.pathPoints)
+                        {
+                            if (!gridManager.GetTileAtPosition(pathPoint.position))
+                            {
+                                Debug.LogWarning($"{pathPoint.name} is invalid", pathPoint);
+                                allValid = false;
+                            }
+                        }
+                    }
+                    if(allValid) Debug.Log("<color=green>Each pathpoint registered in the rooms manager is valid</color>");
                 }
             }
         }

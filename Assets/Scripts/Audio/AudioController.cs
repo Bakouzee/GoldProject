@@ -6,9 +6,6 @@ namespace AudioController
 {
     public enum MenuAudioTracks
     {
-        MainMenu,
-        MT_DAY,
-        MT_NIGHT,
         S_Victory,
         S_Defeat
     }
@@ -66,7 +63,9 @@ namespace AudioController
     public enum MusicAudioTracks
     {
         M_Menu,
-        M_Game
+        M_Game,
+        M_DAY,
+        M_NIGHT
         // anything else?
     }
 

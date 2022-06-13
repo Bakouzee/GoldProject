@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using AudioController;
+using GridSystem;
 
 public class VentManager : MonoBehaviour, IInteractable
 {
@@ -14,9 +15,7 @@ public class VentManager : MonoBehaviour, IInteractable
     public GameObject ventThree;
     public GameObject ventFour;
 
-    public GameObject ventSysteme;  
-
-
+    public GameObject ventSysteme;
 
 
     public bool waitForVent = false;
@@ -33,11 +32,20 @@ public class VentManager : MonoBehaviour, IInteractable
 
     private void Start()
     {
+        // Snap position to grid
+        transform.position = GridManager.Instance.GetTileAtPosition(transform.position).transform.position;
+
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
         player = PlayerManager.Instance.Player;
+
+        // Set vent system if unassigned in the inspector
+        if (!ventSysteme)
+        {
+            var newVentManager = FindObjectOfType<NewVentManager>();
+            if (newVentManager) ventSysteme = newVentManager.gameObject;
+        }
     }
 
-    
 
     public bool TryInteract()
     {
@@ -55,59 +63,51 @@ public class VentManager : MonoBehaviour, IInteractable
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = false;
         return true;
     }
-    
+
     public void LaunchTurnVent(int vent)
     {
-        
-        if(vent > 0)
+        if (vent > 0)
         {
             ventOne.GetComponent<BoxCollider2D>().enabled = false;
-            
+
             ventOne.GetComponent<SpriteRenderer>().sprite = spriteClosed;
-            
 
 
             ventTwo.GetComponent<BoxCollider2D>().enabled = false;
-            
+
             ventTwo.GetComponent<SpriteRenderer>().sprite = spriteClosed;
 
 
             ventThree.GetComponent<BoxCollider2D>().enabled = false;
-            
+
             ventThree.GetComponent<SpriteRenderer>().sprite = spriteClosed;
 
 
             ventFour.GetComponent<BoxCollider2D>().enabled = false;
-           
+
             ventFour.GetComponent<SpriteRenderer>().sprite = spriteClosed;
-
-
         }
         else
         {
             waitForVent = false;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
             ventOne.GetComponent<BoxCollider2D>().enabled = true;
-           
+
             ventOne.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
             ventTwo.GetComponent<BoxCollider2D>().enabled = true;
-            
+
             ventTwo.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
 
             ventThree.GetComponent<BoxCollider2D>().enabled = true;
-            
+
             ventThree.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
 
             ventFour.GetComponent<BoxCollider2D>().enabled = true;
-           
-            ventFour.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
+            ventFour.GetComponent<SpriteRenderer>().sprite = spriteOpen;
         }
     }
-
- 
-
 }
