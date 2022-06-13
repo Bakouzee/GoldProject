@@ -16,7 +16,10 @@ public class StageBase : TutorialStage {
     public override void OnStageUpdate() {
 
         if (isFinish)
-           OnStageFinish();
+        {
+            OnStageFinish();
+            Debug.Log("go to finish");
+        }
         
    }
     public override void OnStageFinish() {

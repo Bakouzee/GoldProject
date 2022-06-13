@@ -8,9 +8,9 @@ using GoldProject;
 
 public class MovementStage : StageBase {
 
-    private GameObject tileTarget;
+    protected GameObject tileTarget;
     private Player player;
-    private Vector2Int tileTargetPos;
+    protected Vector2Int tileTargetPos;
 
     public MovementStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,string stateDesc, TutorialStage nextStage) : base(stateText,stateDesc,nextStage) {
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
@@ -29,6 +29,9 @@ public class MovementStage : StageBase {
         Vector2Int playerPos = GridManager.Instance.GetGridPosition(player.transform.position);
 
         isFinish = playerPos == tileTargetPos;
+
+        if (isFinish)
+            Debug.Log("finish movement");
     }
 
     public override void OnStageFinish() {

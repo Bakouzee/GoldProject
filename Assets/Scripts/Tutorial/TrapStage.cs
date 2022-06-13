@@ -20,6 +20,18 @@ public class TrapStage : StageBase {
 
     public override void OnStageUpdate() {
         base.OnStageUpdate();
+
+        if (PlayerManager.mapSeen) {
+            stateText.text = "Appuyez sur un piège pour l'activer";
+            foreach(NoiseEvent noiseEvent in GameObject.FindObjectsOfType<NoiseEvent>()) {
+                if(noiseEvent.IsTriggered) {
+                    PlayerManager.Instance.ShowMap();
+                    isFinish = true;
+                    break;
+                }
+            }
+
+        }
     }
 
     public override void OnStageFinish() {
