@@ -2,18 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class StageBase : TutorialStage {
 
-    public StageBase(Text stateText,string stateDesc, TutorialStage nextStage) : base(stateText,stateDesc, nextStage) {}
+    public StageBase(TextMeshProUGUI stateText,string stateDesc, TutorialStage nextStage) : base(stateText,stateDesc, nextStage) {}
 
-    protected override void OnStageBegin() {
+    public override void OnStageBegin() {
         stateText.text = stateDesc;
     }
 
 
-    protected override void OnStageUpdate() { }
-    protected override void OnStageFinish() {
+    public override void OnStageUpdate() {
+
+        if (isFinish)
+           OnStageFinish();
+        
+   }
+    public override void OnStageFinish() {
         stateText.text = "";
+
+        nextStage?.OnStageBegin();
+
+        if (nextStage != null)
+            TutorialManager.Instance.currentStage = nextStage;
     }
 }

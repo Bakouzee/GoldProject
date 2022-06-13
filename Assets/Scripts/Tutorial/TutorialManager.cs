@@ -2,56 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public enum TutorialState
-{
-    NONE,
-    MOVEMENT,
-    TRAPS,
-    CURTAIN,
-    VENT,
-    TRANSFORMATION,
-}
-
-public class TutorialManager : CoroutineSystem {
+public class TutorialManager : SingletonBase<TutorialManager> {
 
     [SerializeField]
-    private TutorialState actualState;
-    [SerializeField]
-    private Text stateText;
-    [SerializeField]
-    private Vector2Int tileMovement;
+    private TextMeshProUGUI stateText;
 
-    private TutorialState lastState;
+    private List<StageBase> stages = new List<StageBase>();
+    public TutorialStage currentStage;
+
+    [Header("Movement Stage")]
+    [SerializeField]
+    private Vector2Int movementTile;
 
     private void Start() {
-        SwitchState(TutorialState.MOVEMENT);
-        lastState = actualState;
+        InitStages();
+
+
+        currentStage = stages[0];
+        stages[0].OnStageBegin();
     }
 
-    private void Update() {
+    private void InitStages() {
+        MovementStage movementStage = new MovementStage(movementTile,stateText,"Déplacez-vous vers la case qui clignote",null);
 
-        if (actualState != lastState)
-            SwitchState(actualState);
+        stages.Add(movementStage);
 
-        lastState = actualState;
     }
-
-    private void SwitchState(TutorialState newState) {
-        actualState = newState;
-        Debug.Log("newState: " + newState);
-        switch(newState) {
-            case TutorialState.TRAPS:
-                TrapsState();
-                break;
-        }
-
-       
-    }
-
-    private void TrapsState() {
-        RunDelayed(2f, () => {
-            
-         });
-    }
+    public void Update() => currentStage?.OnStageUpdate();
+    
+ 
 }
