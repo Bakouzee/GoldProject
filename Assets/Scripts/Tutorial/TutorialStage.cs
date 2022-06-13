@@ -6,7 +6,7 @@ using TMPro;
 
 public abstract class TutorialStage {
 
-    protected TutorialStage nextStage;
+    public TutorialStage nextStage;
     protected string stateDesc;
     protected TextMeshProUGUI stateText;
     protected bool isFinish;
