@@ -182,7 +182,7 @@ public class GameManager : SingletonBase<GameManager>
         }
 
         // Knight too
-        foreach (var knight in EnemyManager.knights)
+        foreach (var knight in EnemyManager.knights.ToArray())
         {
             knight.MoveKnight();
         }

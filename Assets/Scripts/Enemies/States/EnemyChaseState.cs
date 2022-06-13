@@ -30,6 +30,7 @@ namespace Enemies.States {
         }
         private int turnSinceSightLost;
         private readonly int TURNS_TO_STOP_POS_UPDATE = 3;
+        private readonly int MANHATTAN_DISTANCE_MAX = 15;
 
         public EnemyChaseState(EnemyBase enemy,Entity chaseEntity, EnemyBaseState onChaseFinished) : base(enemy, onChaseFinished) {
             this.chaseEntity = chaseEntity;
@@ -44,13 +45,16 @@ namespace Enemies.States {
             yield return null;
         }
 
-        public override void DoAction() 
+        public override void DoAction()
         {
+            int manhattanDistanceFromPlayer =
+                gridManager.GetManhattanDistance(chaseEntity.gridController.gridPosition, gridPos);
+            
             // If has sight on the entity chased
             if (HasSight)
             {
                 // Attack entity if in range
-                if (gridManager.GetManhattanDistance(chaseEntity.gridController.gridPosition, gridPos) <= 1)
+                if (manhattanDistanceFromPlayer <= 1)
                 {
                     // this is hardcoded, not very good. It doesn't depends on the current chased entity -> bad
                     PlayerManager.Instance.PlayerHealth.Death();
@@ -80,22 +84,27 @@ namespace Enemies.States {
                 // Increment the number of turn without having the entity in sight
                 else
                 {
-                    turnSinceSightLost++;
-                    // Update chased entity last pos only
-                    // if we lost sight not too long ago
-                    if (turnSinceSightLost <= TURNS_TO_STOP_POS_UPDATE)
+                    // If player is really too far (vent for example), stop registering its last pos
+                    if (manhattanDistanceFromPlayer > MANHATTAN_DISTANCE_MAX)
+                        turnSinceSightLost = TURNS_TO_STOP_POS_UPDATE;
+                    else
                     {
-                        LastTargetGridPos = chaseEntity.gridController.gridPosition;
+                        turnSinceSightLost++;
+                        // Update chased entity last pos only
+                        // if we lost sight not too long ago
+                        if (turnSinceSightLost <= TURNS_TO_STOP_POS_UPDATE)
+                        {
+                            LastTargetGridPos = chaseEntity.gridController.gridPosition;
+                        }
                     }
                 }
             }
 
-            // Move
-            if (directions.Count > 0)
-                gridController.Move(directions.Dequeue(), animator);
-            // If already arrived at last entity grid pos
-            // (we know that the enemy is not next)
-            else
+
+            // If enemy is really too far or we alredy arrived at last entity grid pos
+            // (we know that the enemy is not next), check line of sight to continue chase
+            // or go to look state 
+            if ((!HasSight && manhattanDistanceFromPlayer > MANHATTAN_DISTANCE_MAX) || directions.Count == 0)
             {
                 // If enemy is in sight now that we arrived at last know entity grid pos
                 if (enemy.HasLineOfSight(chaseEntity.transform.position))
@@ -109,14 +118,17 @@ namespace Enemies.States {
                 else
                 {
                     enemy.SetState(new EnemyLookState(
-                        enemy: enemy,
-                        maxTurnDuration: 3,
-                        playerFoundState: this,
-                        playerNotFoundState:nextState
+                            enemy: enemy,
+                            maxTurnDuration: 3,
+                            playerFoundState: this,
+                            playerNotFoundState:nextState
                         )
                     );
                 }
             }
+            // Else if we are not arrived to the last known entity pos, move
+            else if (directions.Count > 0)
+                gridController.Move(directions.Dequeue(), animator);
         }
 
         public override IEnumerator OnStateExit()
@@ -131,7 +143,7 @@ namespace Enemies.States {
             {
                 if (otherEnemy.Chasing)
                     continue;
-                otherEnemy.SetState(new EnemyChaseState(otherEnemy, chaseEntity, otherEnemy.CurrentState));
+                otherEnemy.StartChase(chaseEntity);
             }
         }
 

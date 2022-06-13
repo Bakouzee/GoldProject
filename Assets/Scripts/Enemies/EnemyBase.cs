@@ -168,7 +168,7 @@ namespace Enemies
                 if (IsObjectInSight(playerPos))
                 {
                     // Start chase
-                    SetState(new EnemyChaseState(this, PlayerManager.Instance.Player, currentState));
+                    StartChase(PlayerManager.Instance.Player);
                     return;
                 }
                 
@@ -272,7 +272,7 @@ namespace Enemies
             if (!canBeAfraid)
                 return;
             // Don't frigthen if already frightened
-            if (currentState is EnemyAfraidState)
+            if (Afraid)
                 return;
 
             // Increment the count
@@ -310,6 +310,9 @@ namespace Enemies
         {
             if (!canBeAttracted)
                 return;
+            // Don't attract if already attracted
+            if (Attracted)
+                return;
             
             SetState(new EnemyAttractedState(
                 enemy: this, 
@@ -318,6 +321,14 @@ namespace Enemies
                 nextState: new ExplorationStateBase(this)
                 )
             );
+        }
+
+        public void StartChase(Entity chasedEntity)
+        {
+            if (Chasing || Afraid || Attracted || Leaving)
+                return;
+            
+            SetState(new EnemyChaseState(this, chasedEntity, currentState));
         }
         
         
@@ -331,7 +342,9 @@ namespace Enemies
             {
                 // If died -> call OnEnemyKilled event
                 ParticuleManager.Instance.OnEnemyDeath();
-                EnemyManager.OnEnemyKilled?.Invoke(this);
+                
+                // Leaving count as enemy disappearing, we don't want to make the same enemy disappears twice
+                if(!Leaving) EnemyManager.OnEnemyKilled?.Invoke(this);
             }
             return true;
         }

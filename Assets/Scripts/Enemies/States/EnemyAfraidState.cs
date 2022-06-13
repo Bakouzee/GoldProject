@@ -44,13 +44,12 @@ namespace Enemies.States
 
         public override void DoAction()
         {
-            Vector2 runningDir = transform.position - frighteningSource.position;
+            if (frighteningSource) frighteningSourceLastPos = frighteningSource.position;
+            Vector2 runningDir = (Vector2)transform.position - frighteningSourceLastPos;
             Direction runDirection = Direction.FromVector2(runningDir);
 
             var bestRunningDirections = GetBestRunningDirections();
 
-            Debug.Log("runSize: " + bestRunningDirections.Length);
-            
             foreach (var runningDirection in bestRunningDirections)
             {
                 if (gridController.Move(runningDirection, animator))
@@ -78,7 +77,7 @@ namespace Enemies.States
             Vector2Int[] allDirections = new Vector2Int[] {Vector2Int.up, Vector2Int.left, Vector2Int.down, Vector2Int.right};
 
             // Get current frigthening source grid pos
-            var frighteningSourcePosition = frighteningSource.position;
+            Vector2 frighteningSourcePosition = frighteningSource != null ? frighteningSource.position : frighteningSourceLastPos;
             Tile tile = gridManager.GetTileAtPosition(frighteningSourcePosition);
             if (!tile) tile = gridManager.FindClosestTile(frighteningSourcePosition);
             Vector2Int currentFrighteningSourceGridPos = tile.GridPos;
