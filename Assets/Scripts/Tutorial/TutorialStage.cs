@@ -15,7 +15,7 @@ public abstract class TutorialStage {
         this.stateDesc = stateDesc;
         this.nextStage = nextStage;
     }
-    protected abstract void OnStageBegin();
-    protected abstract void OnStageUpdate();
-    protected abstract void OnStageFinish();
+    protected virtual void OnStageBegin() {}
+    protected virtual void OnStageUpdate() {}
+    protected virtual void OnStageFinish() {}
 }
