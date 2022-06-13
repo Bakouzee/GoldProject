@@ -190,7 +190,7 @@ namespace GoldProject
                                     tile.GridPos);
                             if (manhattanDistance <= RemainingActions)
                             {
-                                if (gridController.SetPosition(tile.GridPos))
+                                if (gridController.SetPosition(tile.GridPos, animator))
                                 {
                                     RemainingActions -= manhattanDistance;
                                     break;
@@ -215,6 +215,10 @@ namespace GoldProject
 
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
 
+            // Changer current animation layer
+            animator.SetLayerWeight(0, 0);
+            animator.SetLayerWeight(1, 1);
+            
             // Frighten enemies in the room
             foreach (var enemy in currentRoom.enemies)
                 enemy.GetAfraid(source: transform);
@@ -227,6 +231,9 @@ namespace GoldProject
             if (!transformed)
                 return;
             transformed = false;
+
+            animator.SetLayerWeight(0, 1);
+            animator.SetLayerWeight(1, 0);
 
             RemainingActions = defaultActionsPerTurn;
         }
