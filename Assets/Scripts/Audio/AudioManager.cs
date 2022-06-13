@@ -167,8 +167,6 @@ namespace AudioController
 
         public void PlayMenuSound(MenuAudioTracks audioToPlay)
         {
-            sourceFoliage.pitch = RandomPitch();
-
             for (int i = 0; i < menuSounds.Length; i++)
             {
                 if (menuSounds[i].menuTracks == audioToPlay)
@@ -226,8 +224,6 @@ namespace AudioController
 
         public void PlayVentSound(VentAudioTracks audioToPlay)
         {
-            sourceFoliage.pitch = RandomPitch();
-
             for (int i = 0; i < ventSounds.Length; i++)
             {
                 if (ventSounds[i].ventTracks == audioToPlay)
@@ -345,8 +341,6 @@ namespace AudioController
 
         public void PlayMapSound(MapAudioTracks audioToPlay)
         {
-            sourceFoliage.pitch = RandomPitch();
-
             for (int i = 0; i < mapSounds.Length; i++)
             {
                 if (mapSounds[i].mapTracks == audioToPlay)
@@ -384,7 +378,7 @@ namespace AudioController
 
         private float RandomPitch()
         {
-            return rPicth = UnityEngine.Random.Range(-3f, 3f);
+            return rPicth = UnityEngine.Random.Range(-1f, 1f);
         }
     }
 }
