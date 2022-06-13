@@ -148,15 +148,8 @@ public class PlayerHealth : Health
     {
 
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
-        yield return new WaitForSeconds(0.7f);
-        Time.timeScale = 0;
-        
-        
+        yield return new WaitForSeconds(0.8f);
+        Time.timeScale = 0;        
         deathUI.SetActive(true);
-        yield return new WaitForSeconds(1f);
-        AudioManager.Instance.StopEverySound();
-        
-        AudioManager.Instance.PlayMenuSound(MenuAudioTracks.S_Defeat);
-
     }
 }
