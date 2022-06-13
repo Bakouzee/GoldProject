@@ -99,6 +99,7 @@ public class GameManager : SingletonBase<GameManager>
             AudioManager.Instance.PlayMusic(MusicAudioTracks.M_NIGHT);
         };
         
+        EnemyManager.Reset();
         Achievements.Unlock(Achievements.BOO);
     }
 
