@@ -164,14 +164,14 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d1d1ed4787942654d83c03ec4c1df6f5, type: 3}
   - enemyTracks: 6
     enemyClipList:
-    - {fileID: 8300000, guid: 609361d6adf8ede49bfd43871f80ef1c, type: 3}
+    - {fileID: 8300000, guid: 6f06bc7b7c1f3ed4c85e9b894122bc86, type: 3}
   musics:
   - musicTracks: 0
     soundtrackClipList:
     - {fileID: 8300000, guid: 59b6e8b00adaf3b4fbac32dd34387b10, type: 3}
   - musicTracks: 2
     soundtrackClipList:
-    - {fileID: 8300000, guid: 30044fa6ccc410a43808e2dbbc80f766, type: 3}
+    - {fileID: 8300000, guid: 4eb10600e89b0564395569248b140863, type: 3}
   - musicTracks: 3
     soundtrackClipList:
     - {fileID: 8300000, guid: 17bb4125fdfa065448284d921fbc6c8e, type: 3}
