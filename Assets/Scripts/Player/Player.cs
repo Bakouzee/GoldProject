@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 using AudioController;
+using SplashArt;
 
 namespace GoldProject
 {
@@ -213,6 +214,7 @@ namespace GoldProject
             canTransform = false;
             transformed = true;
 
+            SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
 
             // Changer current animation layer
