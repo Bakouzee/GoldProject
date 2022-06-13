@@ -45,10 +45,6 @@ public class GameManager : SingletonBase<GameManager>
     public GameObject undoButton;
 
     [Header("Waves and enemy spawns")]
-    // Waves
-    [SerializeField]
-    private TypeAndPrefabs<Enemies.EnemyChiefType> enemiesChiefDef;
-
     [SerializeField] private TypeAndPrefabs<Enemies.EnemyType> enemiesDef;
     [SerializeField] private Wave[] waves;
 
@@ -80,7 +76,6 @@ public class GameManager : SingletonBase<GameManager>
 
         // Initialize dictionnaries <EnemyType, EnemyBase>
         enemiesDef.Init();
-        enemiesChiefDef.Init();
 
         // Init days
         currentDay = 0;
@@ -249,7 +244,7 @@ public class GameManager : SingletonBase<GameManager>
             if (enemySpawned == CurrentWave.chief.spawnOrder - 1)
             {
                 // Spawn chief and return
-                EnemyBase chiefPrefab = enemiesChiefDef.dict[CurrentWave.chief.chiefType];
+                EnemyBase chiefPrefab = enemiesDef.dict[CurrentWave.chief.chiefType];
                 Instantiate(chiefPrefab, enemySpawnPoint.position, Quaternion.identity);
                 chiefSpawned = true;
                 return;
@@ -314,7 +309,7 @@ public class GameManager : SingletonBase<GameManager>
     [System.Serializable]
     public struct ChiefOrder
     {
-        public Enemies.EnemyChiefType chiefType;
+        public Enemies.EnemyType chiefType;
         [Range(1, 50)] public int spawnOrder;
     }
 

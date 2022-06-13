@@ -93537,35 +93537,35 @@ MonoBehaviour:
   actionCount: 0
   dayNightTurnCooldown: {x: 2, y: 4}
   undoButton: {fileID: 1099195713}
-  enemiesChiefDef:
-    typeAndPrefabs:
-    - type: 0
-      prefab: {fileID: 6111354782983334853, guid: ae862bbb27210004f9535b966b0910b8, type: 3}
-    - type: 1
-      prefab: {fileID: 6111354782983334853, guid: ae862bbb27210004f9535b966b0910b8, type: 3}
   enemiesDef:
     typeAndPrefabs:
     - type: 0
       prefab: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
     - type: 1
-      prefab: {fileID: 3852210745330209509, guid: 0bf2a1a630b1fcc419ba6b51eafc625f, type: 3}
+      prefab: {fileID: 6111354782983334853, guid: ae862bbb27210004f9535b966b0910b8, type: 3}
     - type: 2
+      prefab: {fileID: 8047533996420772681, guid: 523c22684f6927549a27aa310e1ee6ba, type: 3}
+    - type: 3
       prefab: {fileID: 559875899386926124, guid: cdc20811152770c4d9409e57dbb1ce17, type: 3}
+    - type: 4
+      prefab: {fileID: 5546452364188906274, guid: f7550821e154f3947bbf5c331d12671f, type: 3}
+    - type: 5
+      prefab: {fileID: 3852210745330209509, guid: 0bf2a1a630b1fcc419ba6b51eafc625f, type: 3}
   waves:
   - chief:
-      chiefType: 0
+      chiefType: 1
       spawnOrder: 1
     enemies: []
   - chief:
-      chiefType: 0
-      spawnOrder: 0
+      chiefType: 3
+      spawnOrder: 1
     enemies:
     - enemyType: 0
       count: 2
     - enemyType: 0
       count: 2
   - chief:
-      chiefType: 0
+      chiefType: 4
       spawnOrder: 1
     enemies:
     - enemyType: 0

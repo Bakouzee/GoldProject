@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1913055165454600303
+--- !u!1001 &8279595423797964554
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,11 @@ PrefabInstance:
     - target: {fileID: 1351950458, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 922d7a0c622c3e74690ca607f3a6f0dd, type: 3}
-    - target: {fileID: 1351950458, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 1
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 0327f61c33878c646ba6963a62dd85bf, type: 3}
     - target: {fileID: 1351950459, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: 45f28a3b7e9980a47a7b5dca0b82c770, type: 2}
+      objectReference: {fileID: 22100000, guid: 3cc8edeae19e83a4ea15bc9d506f8df8, type: 2}
     - target: {fileID: 2110391225984441409, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -65,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2110391225984441420, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Name
-      value: Priestess
+      value: Villager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
