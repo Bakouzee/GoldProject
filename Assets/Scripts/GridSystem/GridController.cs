@@ -20,18 +20,21 @@ namespace GridSystem
             SetPosition(gridPosition);
         }
 
-        public bool SetPosition(Vector3 worldPosition) => SetPosition(gridManager.GetGridPosition(worldPosition));
-        public bool SetPosition(Vector2Int newGridPos)
+        public bool SetPosition(Vector3 worldPosition, Animator animator = null) => SetPosition(gridManager.GetGridPosition(worldPosition));
+        public bool SetPosition(Vector2Int newGridPos, Animator animator = null)
         {
             if (!gridManager.HasTile(newGridPos))
                 return false;
             
             // Calculate direction
             Direction direction = Direction.FromVector2(newGridPos - gridPosition);
-            
+
             gridPosition = newGridPos;
             transform.position = (Vector2)gridManager.GetTileAtPosition(gridPosition).transform.position;
             
+            // Play animation in direction
+            if(animator) animator.SetTrigger(direction.ToString());
+
             OnMoved?.Invoke(direction);
             return true;
         }
@@ -42,13 +45,8 @@ namespace GridSystem
             Move(Direction.ToVector2Int(direction), animator);
         public bool Move(Vector2Int dir, Animator animator = null)
         {
-            if (SetPosition(gridPosition + dir))
+            if (SetPosition(gridPosition + dir, animator))
             {
-                // Play animation in direction
-                if(animator) animator.SetTrigger(Direction.FromVector2Int(dir).ToString());
-                
-                //transform.eulerAngles = new Vector3(0, 0, angle);
-                
                 // It is a success
                 return true;
             }
