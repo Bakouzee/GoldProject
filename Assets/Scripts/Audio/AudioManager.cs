@@ -91,8 +91,10 @@ namespace AudioController
         [Header("!!! DO NOT TOUCH !!!")]
         [SerializeField] private AudioMixerGroup mixerSFX;
         [SerializeField] private AudioMixerGroup mixerMusic;
-
+        
         private float rPicth;
+        public float minPitch;
+        public float maxPitch;
 
         private void Start()
         {
@@ -378,7 +380,7 @@ namespace AudioController
 
         private float RandomPitch()
         {
-            return rPicth = UnityEngine.Random.Range(-1f, 1f);
+            return rPicth = UnityEngine.Random.Range(minPitch, maxPitch);
         }
     }
 }
