@@ -9,7 +9,11 @@ namespace GoldProject.UI
     {
         // Day counter
         [SerializeField] private TMP_Text dayCounter;
+        [SerializeField] private TMP_Text dayCounterForMenu;
+
         public void SetDay(int day) => dayCounter.text = day.ToString();
+        public void SetDayForMenu(int day) => dayCounterForMenu.text = day.ToString();
+
 
         // Action counter
         [SerializeField] private TMP_Text actionCounter;
@@ -38,6 +42,13 @@ namespace GoldProject.UI
             {
                 SetDay(gameManager.CurrentDay);
                 gameManager.OnDayChanged += SetDay;
+            }
+
+            // DayForMenu counter
+            if (dayCounterForMenu != null)
+            {
+                SetDayForMenu(gameManager.CurrentDay);
+                gameManager.OnDayChanged += SetDayForMenu;
             }
 
             // Action counter
