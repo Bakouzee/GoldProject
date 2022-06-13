@@ -374,9 +374,10 @@ namespace AudioController
 
         public void StopEverySound()
         {
-            sourceFoliage.ignoreListenerPause = true;
-           /* sourceFoliage.Stop();
-            sourceMusic.Stop();*/
+            sourceFoliage.Stop();
+            sourceMusic.Stop();
+            sourceFoliage.clip = mapSounds[1].mapClipList[0];
+            sourceFoliage.Play();
         }
 
         #endregion
