@@ -44,7 +44,14 @@ namespace GoldProject.UI
         [Header("Clock"), Tooltip("Image of the clock that is going to be rotated"), SerializeField] 
         private Transform clock;
         private float clockStartOffset;
-        
+
+        public GameObject DeathUI;
+        public void LauchGameOverMenu()
+        {
+            DeathUI.SetActive(true);
+            SetEnemyKilled(Enemies.EnemyManager.enemyKilled);
+            SetEnemyScared(Enemies.EnemyManager.enemyAfraid);
+        }
         private void Start()
         {
             GameManager gameManager = GameManager.Instance;
@@ -62,16 +69,7 @@ namespace GoldProject.UI
                 SetDayForMenu(gameManager.CurrentDay);
                 gameManager.OnDayChanged += SetDayForMenu;
             }
-            if (enemyKilled != null)
-            {
-                SetEnemyKilled(Enemies.EnemyManager.enemyKilled);
-                //Enemies.EnemyManager.OnEnemyKilled += SetEnemyKilled;
-            }
-            if (enemyScared != null)
-            {
-                SetEnemyScared(Enemies.EnemyManager.enemyAfraid);
-                //Enemies.EnemyManager.OnEnemyStartLeaving += SetEnemyScared;
-            }
+            
 
             // Action counter
             if (actionCounter != null)

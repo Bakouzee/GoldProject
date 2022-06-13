@@ -37898,7 +37898,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1173261840
 RectTransform:
   m_ObjectHideFlags: 0
@@ -74314,6 +74314,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2740115944687631326, guid: f87533469e6722948b03afd2f774a281, type: 3}
+      propertyPath: DeathUI
+      value: 
+      objectReference: {fileID: 1173261839}
+    - target: {fileID: 2740115944687631326, guid: f87533469e6722948b03afd2f774a281, type: 3}
+      propertyPath: enemyKilled
+      value: 
+      objectReference: {fileID: 513481200}
+    - target: {fileID: 2740115944687631326, guid: f87533469e6722948b03afd2f774a281, type: 3}
+      propertyPath: enemyScared
+      value: 
+      objectReference: {fileID: 447193344}
     - target: {fileID: 2740115944687631326, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: dayCounterForMenu
       value: 

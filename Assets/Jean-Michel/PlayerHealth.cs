@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AudioController;
+using GoldProject.UI;
 
 public class PlayerHealth : Health
 {
@@ -16,7 +17,7 @@ public class PlayerHealth : Health
     [HideInInspector]
     public bool IsInvincible = false;
 
-    public GameObject deathUI;
+   
 
     /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
     /// <params>newHealth, healthMax </params>
@@ -150,6 +151,6 @@ public class PlayerHealth : Health
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
         yield return new WaitForSeconds(0.8f);
         Time.timeScale = 0;        
-        deathUI.SetActive(true);
+        UiManager.Instance.LauchGameOverMenu();
     }
 }
