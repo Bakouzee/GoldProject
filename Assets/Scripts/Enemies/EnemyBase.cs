@@ -77,6 +77,7 @@ namespace Enemies
 
         [Header("Others")]
         public Animator animator;
+        public SpriteRenderer spriteRenderer;
 
         private Vector2Int lastMoveDirection;
         public bool Chasing { get; set; }
@@ -338,12 +339,19 @@ namespace Enemies
             
             SetState(new EnemyChaseState(this, chasedEntity, currentState));
         }
-        
+
+        #region Light methods
         public void SetLightColor(bool chase)
         {
             if (detectionSpotlight)
                 detectionSpotlight.color = chase ? chaseLightColor : defaultLightColor;
         }
+        public void SetActiveLight(bool active)
+        {
+            if(detectionSpotlight)
+                detectionSpotlight.gameObject.SetActive(active);
+        }
+        #endregion
         
         
         // IInteractable implementation

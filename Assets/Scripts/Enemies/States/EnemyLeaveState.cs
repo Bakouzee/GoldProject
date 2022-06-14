@@ -19,6 +19,8 @@ namespace Enemies.States
         public override IEnumerator OnStateEnter()
         {
             enemy.Leaving = true;
+            enemy.SetActiveLight(false);
+            enemy.spriteRenderer.color = Color.blue;
             EnemyManager.OnEnemyStartLeaving?.Invoke(enemy);
             yield return base.OnStateEnter();
         }

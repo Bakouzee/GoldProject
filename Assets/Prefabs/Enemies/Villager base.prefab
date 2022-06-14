@@ -206,6 +206,7 @@ MonoBehaviour:
   defaultLightColor: {r: 1, g: 0.827451, b: 0, a: 1}
   chaseLightColor: {r: 1, g: 0, b: 0, a: 1}
   animator: {fileID: 1351950459}
+  spriteRenderer: {fileID: 1351950458}
 --- !u!114 &1260435834159056000
 MonoBehaviour:
   m_ObjectHideFlags: 0

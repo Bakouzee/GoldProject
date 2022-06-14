@@ -26,7 +26,7 @@ namespace Enemies.States
         {
             this.frighteningSource = frighteningSource;
             this.frighteningSourceLastPos = this.frighteningSource.position;
-        
+
             this.numberOfTurn = numberOfTurn;
             this.turnCounter = 0;
         }
@@ -39,6 +39,8 @@ namespace Enemies.States
         public override IEnumerator OnStateEnter()
         {
             enemy.Afraid = true;
+            enemy.SetActiveLight(false);
+            enemy.spriteRenderer.color = Color.blue;
             yield return null;
         }
 
@@ -67,6 +69,8 @@ namespace Enemies.States
         public override IEnumerator OnStateExit()
         {
             enemy.Afraid = false;
+            enemy.SetActiveLight(true);
+            enemy.spriteRenderer.color = Color.white;
             endAction?.Invoke();
             // Debug.Log("do end action");
             yield return null;
