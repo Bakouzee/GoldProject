@@ -295,13 +295,15 @@ namespace AudioController
                     {
                         int randomSound = UnityEngine.Random.Range(0, musics[i].soundtrackClipList.Count);
                         AudioClip clipToPlay = musics[i].soundtrackClipList[randomSound];
-                        sourceMusic.PlayOneShot(clipToPlay);
+                        sourceMusic.clip = clipToPlay;
+                        sourceMusic.Play();
                         return;
                     }
                     else
                     {
                         AudioClip clipToPlay = musics[i].soundtrackClipList[0];
-                        sourceMusic.PlayOneShot(clipToPlay);
+                        sourceMusic.clip = clipToPlay;
+                        sourceMusic.Play();
                         return;
                     }
                 }
@@ -370,7 +372,7 @@ namespace AudioController
 
         public void StopEverySound()
         {
-            sourceFoliage.Stop();
+            sourceFoliage.enabled = false; // won't stop because foliage is using PlayOneShot();
             sourceMusic.Stop();
         }
 
