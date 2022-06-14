@@ -210,7 +210,18 @@ namespace GoldProject
         #region Transformation
 
         public static bool transformed;
+
         private bool canTransform;
+        private bool CanTransform
+        {
+            get => canTransform;
+            set
+            {
+                canTransform = value;
+                OnCanTransformChanged?.Invoke(canTransform);
+            }
+        }
+        public System.Action<bool> OnCanTransformChanged;
 
         public void Transform()
         {
