@@ -150,6 +150,7 @@ public class PlayerHealth : Health
     public IEnumerator SoundDeath()
     {
 
+        AudioManager.Instance.StopEverySound();
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
         yield return new WaitForSeconds(0.8f);
         Time.timeScale = 0;        
