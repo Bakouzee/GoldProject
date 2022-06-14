@@ -92641,6 +92641,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SplashArtManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3408502318186212472, guid: 0e1c6c01d8b45ab47bb2e4f405d9bc8c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3408502318186212473, guid: 0e1c6c01d8b45ab47bb2e4f405d9bc8c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

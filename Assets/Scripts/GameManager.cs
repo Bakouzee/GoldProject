@@ -95,7 +95,7 @@ public class GameManager : SingletonBase<GameManager>
         };
         
         EnemyManager.Reset();
-        Achievements.Unlock(Achievements.BOO);
+        GooglePlayAchievements.Unlock(GooglePlayAchievements.achievement_first_step);
     }
 
     private void Update()
