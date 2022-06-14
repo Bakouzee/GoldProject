@@ -60,7 +60,7 @@ namespace GoldProject.Rooms
             AudioManager.Instance.PlayWindowSound(WindowAudioTracks.W_Open);
 
             animator.SetTrigger("open");
-            light2D.gameObject.SetActive(GameManager.dayState == GameManager.DayState.DAY && opened);
+            light2D.gameObject.SetActive(true);
 
             onStateChanged?.Invoke();
         }
@@ -80,15 +80,6 @@ namespace GoldProject.Rooms
         }
 
         #endregion
-
-        public static void SetDay(bool day)
-        {
-            foreach (var curtain in curtains)
-            {
-                curtain.animator.SetBool("day", day);
-                curtain.light2D.gameObject.SetActive(day && curtain.opened);
-            }
-        }
 
         public bool IsInsideLight(Vector2 worldPosition)
         {

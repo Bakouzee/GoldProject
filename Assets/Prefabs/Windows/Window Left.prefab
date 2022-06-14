@@ -121,8 +121,6 @@ GameObject:
   - component: {fileID: 5928846784230785550}
   - component: {fileID: 5928846784230785551}
   - component: {fileID: 839145452}
-  - component: {fileID: 7735044516827871932}
-  - component: {fileID: 6790829180464749083}
   - component: {fileID: 5271983472356796420}
   m_Layer: 0
   m_Name: Window Left
@@ -188,50 +186,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3921087, y: 2.0292854}
   m_EdgeRadius: 0
---- !u!114 &7735044516827871932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5928846784230785548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lights:
-  - {fileID: 5928846783471239001}
-  dayLight:
-    color: {r: 1, g: 0.5411765, b: 0, a: 1}
-    intensity: 1
-  dayObjects: []
-  nightLight:
-    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
-    intensity: 0.7
-  nightObjects: []
---- !u!114 &6790829180464749083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5928846784230785548}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lights:
-  - {fileID: 5928846783471239001}
-  dayLight:
-    color: {r: 1, g: 0.5411765, b: 0, a: 1}
-    intensity: 1
-  dayObjects: []
-  nightLight:
-    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
-    intensity: 0.7
-  nightObjects: []
 --- !u!114 &5271983472356796420
 MonoBehaviour:
   m_ObjectHideFlags: 0
