@@ -96,7 +96,7 @@ namespace AudioController
         public float minPitch;
         public float maxPitch;
 
-        private void Start()
+        private void Awake()
         {
             sourceMusic = GetComponent<AudioSource>();
             sourceMusic.loop = true;
