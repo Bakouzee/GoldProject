@@ -100,6 +100,10 @@ namespace GoldProject
             // When killing an enemy
             EnemyManager.OnEnemyKilled += enemy =>
             {
+                // Art when the enemy killed is the chief
+                if (enemy.chief)
+                    SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation_First_Kill);
+
                 // Heal when killing an enemy
                 PlayerManager.PlayerHealth.HealPlayer(lifeStealOnKill);
 
@@ -215,7 +219,7 @@ namespace GoldProject
             canTransform = false;
             transformed = true;
 
-            //SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
+            SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
 
             // Changer current animation layer

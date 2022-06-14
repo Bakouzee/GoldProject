@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace SplashArt
 {
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Image))]
     [System.Serializable]
     public class SplashArtManager : SingletonBase<SplashArtManager>
     {
@@ -20,6 +20,7 @@ namespace SplashArt
         private void Start()
         {
             img = GetComponent<Image>();
+            img.enabled = false;
 
             anim = GetComponent<Animator>();
         }
@@ -31,19 +32,20 @@ namespace SplashArt
                 case SplashArtType.Transformation:
                     img.sprite = sprites[0];
                     break;
-                case SplashArtType.Untransformation:
+                case SplashArtType.Transformation_First_Kill:
                     img.sprite = sprites[1];
                     break;
-                case SplashArtType.Transformation_First_Kill:
+                case SplashArtType.Untransformation:
                     img.sprite = sprites[2];
                     break;
                 case SplashArtType.Death:
                     img.sprite = sprites[3];
                     break;
                 default:
-                    img.sprite = sprites[0];
-                    break;
+                    Debug.LogWarning("There aren't sprites in the inspector corresponding to the SplashArtType!");
+                    return;
             }
+            img.enabled = true;
             Time.timeScale = 0;
             StartCoroutine(PlayAnim());
         }
@@ -51,8 +53,9 @@ namespace SplashArt
         private IEnumerator PlayAnim()
         {
             anim.SetTrigger(animTrigger);
-            yield return new WaitForSeconds(2f);
+            yield return new WaitForSecondsRealtime(2f);
             Time.timeScale = 1;
+            img.enabled = false;
         }
     }
 }
