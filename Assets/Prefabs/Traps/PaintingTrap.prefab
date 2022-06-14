@@ -147,6 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToBeScared: 6
+  anim: {fileID: 4517130674992843253}
+  sr: {fileID: 4517130674992843251}
+  srMap:
+  - {fileID: 4517130675821918862}
   animationTrigger: Painting
   canBeSeen: 1
 --- !u!1 &4517130675821918850

@@ -147,6 +147,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceToBeScared: 6
+  anim: {fileID: 7978168558433006390}
+  sr: {fileID: 709663598045166297}
+  srMap:
+  - {fileID: 7978168558617445043}
   animationTrigger: Puppet
   canBeSeen: 0
 --- !u!1 &7978168558617445041

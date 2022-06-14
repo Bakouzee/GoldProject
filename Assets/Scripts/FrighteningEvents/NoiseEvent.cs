@@ -9,8 +9,12 @@ using Enemies;
 
 public class NoiseEvent : FrighteningEventBase
 {
+    [SerializeField]
     private Animator anim;
+    [SerializeField]
     private SpriteRenderer sr;
+    
+    [SerializeField]
     private SpriteRenderer[] srMap;
 
     public string animationTrigger;
@@ -19,12 +23,13 @@ public class NoiseEvent : FrighteningEventBase
 
     private void Start()
     {
-        anim = transform.GetComponent<Animator>();
+        if(!anim) anim = transform.GetComponent<Animator>();
 
-        sr = GetComponent<SpriteRenderer>();
+        if(!sr) sr = GetComponent<SpriteRenderer>();
         sr.enabled = canBeSeen;
 
-        srMap = GetComponentsInChildren<SpriteRenderer>();
+        if(srMap == null)
+            srMap = GetComponentsInChildren<SpriteRenderer>();
 
         PlayerManager.Instance.onShowMap += () => needToBeInRange = PlayerManager.mapSeen;
     }
@@ -63,7 +68,9 @@ public class NoiseEvent : FrighteningEventBase
         if (CurrentRoom.enemies.Count == 0)
         {
             // show the trap didn't work
-            srMap[1].color = Color.red;
+            foreach (var spriteRenderer in srMap)
+                spriteRenderer.color = Color.red;
+            // srMap[1].color = Color.red;
             anim.SetBool(animationTrigger, true);
             sr.enabled = true;
             yield break;
@@ -81,7 +88,8 @@ public class NoiseEvent : FrighteningEventBase
         }
 
         //Launch animation
-        srMap[1].color = Color.green;
+        foreach (var spriteRenderer in srMap) spriteRenderer.color = Color.green;
+        // srMap[1].color = Color.green;
         sr.enabled = true;
         anim.SetBool(animationTrigger, true);
 
@@ -91,7 +99,9 @@ public class NoiseEvent : FrighteningEventBase
     protected override IEnumerator UndoActionCoroutine()
     {
         Color32 readyColor = new Color32(166, 79, 0, 255);
-        srMap[1].color = readyColor;
+        foreach (var spriteRenderer in srMap)
+            spriteRenderer.color = readyColor;
+        // srMap[1].color = readyColor;
         // Reset animation
         anim.SetBool(animationTrigger, false);
         yield return new WaitForSeconds(1f);
