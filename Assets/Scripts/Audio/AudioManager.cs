@@ -372,8 +372,6 @@ namespace AudioController
         {
             sourceFoliage.Stop();
             sourceMusic.Stop();
-            sourceMusic.clip = mapSounds[1].mapClipList[0];
-            sourceMusic.Play();
         }
 
         #endregion
