@@ -68,6 +68,13 @@ public class GameManager : SingletonBase<GameManager>
     private Enemies.EnemyType[] enemiesToSpawn;
     private int enemySpawned = 0;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        ResetStaticVars();
+    }
+
     private void Start()
     {
         // Set turn cooldown
@@ -88,8 +95,6 @@ public class GameManager : SingletonBase<GameManager>
             AudioManager.Instance.PlayAmbianceSound(AmbianceAudioTracks.Thunder);
             AudioManager.Instance.PlayMusic(MusicAudioTracks.M_NIGHT);
         };
-        
-        ResetStaticVars();
         
         // Init days
         currentDay = 0;

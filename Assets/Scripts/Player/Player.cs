@@ -92,6 +92,7 @@ namespace GoldProject
             // Get the ability to transform if a chief leave or die
             EnemyManager.OnEnemyDisappeared += enemy =>
             {
+                Debug.Log("Enemy disappear");
                 if (enemy.chief)
                     canTransform = true;
             };

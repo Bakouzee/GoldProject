@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace Enemies
 {
@@ -49,7 +50,7 @@ namespace Enemies
                 enemyAfraid++;
             };
 
-            OnEnemyDisappeared = null;
+            OnEnemyDisappeared = enemy => {Debug.Log("OnEnemyDisappeared");};
         }
     }
 }
