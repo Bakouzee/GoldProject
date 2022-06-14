@@ -4519,6 +4519,8 @@ GameObject:
   m_Component:
   - component: {fileID: 344316403}
   - component: {fileID: 344316404}
+  - component: {fileID: 344316406}
+  - component: {fileID: 344316405}
   m_Layer: 0
   m_Name: Bedroom Light
   m_TagString: Untagged
@@ -4724,6 +4726,49 @@ MonoBehaviour:
   - {x: 14.299221, y: -3.3161676, z: 0}
   - {x: 14.19628, y: 5.961094, z: 0}
   - {x: -5.0692034, y: 5.9927406, z: 0}
+--- !u!114 &344316405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344316402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights: []
+  dayLight:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    intensity: 0
+  dayObjects: []
+  nightLight:
+    color: {r: 0, g: 0, b: 0, a: 0}
+    intensity: 0
+  nightObjects: []
+--- !u!114 &344316406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 344316402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 344316404}
+  dayLight:
+    color: {r: 1, g: 0.5411765, b: 0, a: 1}
+    intensity: 1
+  dayObjects: []
+  nightLight:
+    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
+    intensity: 0.5
+  nightObjects: []
 --- !u!213 &352184873
 Sprite:
   m_ObjectHideFlags: 0
@@ -36365,6 +36410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800514582}
   - component: {fileID: 800514581}
+  - component: {fileID: 800514583}
   m_Layer: 0
   m_Name: Weapon Room Light
   m_TagString: Untagged
@@ -36570,6 +36616,28 @@ Transform:
   m_Father: {fileID: 4683056608433982141}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &800514583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800514580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 800514581}
+  dayLight:
+    color: {r: 1, g: 0.5411765, b: 0, a: 1}
+    intensity: 1
+  dayObjects: []
+  nightLight:
+    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
+    intensity: 0.5
+  nightObjects: []
 --- !u!1001 &839145450
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38375,6 +38443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1395650234}
   - component: {fileID: 1395650235}
+  - component: {fileID: 1395650236}
   m_Layer: 0
   m_Name: Livingroom Light
   m_TagString: Untagged
@@ -38580,6 +38649,28 @@ MonoBehaviour:
   - {x: 14.299221, y: -3.3161676, z: 0}
   - {x: 14.19628, y: 5.961094, z: 0}
   - {x: -5.0692034, y: 5.9927406, z: 0}
+--- !u!114 &1395650236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1395650233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 1395650235}
+  dayLight:
+    color: {r: 1, g: 0.5411765, b: 0, a: 1}
+    intensity: 1
+  dayObjects: []
+  nightLight:
+    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
+    intensity: 0.5
+  nightObjects: []
 --- !u!213 &1446974116
 Sprite:
   m_ObjectHideFlags: 0
@@ -44496,6 +44587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1634612674}
   - component: {fileID: 1634612675}
+  - component: {fileID: 1634612676}
   m_Layer: 0
   m_Name: Library Light
   m_TagString: Untagged
@@ -44701,6 +44793,28 @@ MonoBehaviour:
   - {x: 14.299221, y: -3.3161676, z: 0}
   - {x: 14.19628, y: 5.961094, z: 0}
   - {x: -5.0692034, y: 5.9927406, z: 0}
+--- !u!114 &1634612676
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1634612673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8b0f380e0214cecab54055ddd4c5365, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lights:
+  - {fileID: 1634612675}
+  dayLight:
+    color: {r: 1, g: 0.5411765, b: 0, a: 1}
+    intensity: 1
+  dayObjects: []
+  nightLight:
+    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
+    intensity: 0.5
+  nightObjects: []
 --- !u!1 &1644721867 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 16082993, guid: 7cd440abec624ad45b05389071c5353d, type: 3}
@@ -93571,7 +93685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2fd56eff4144d29b28728254a544388, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lerpTurnDuration: 12
+  lerpTurnDuration: 3
 --- !u!4 &7449267421817897806 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 709663598045166311, guid: 32ae83c33e59c3646b32f5ea4ccdbd78, type: 3}
