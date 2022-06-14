@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using AudioController;
+using GoldProject.FrighteningEvent;
 using PlayStoreScripts;
 
 public class GameManager : SingletonBase<GameManager>
@@ -69,17 +70,11 @@ public class GameManager : SingletonBase<GameManager>
 
     private void Start()
     {
-        eventSystem = FindObjectOfType<EventSystem>();
-
         // Set turn cooldown
         turnCooldown = new Cooldown(dayNightTurnCooldown.x);
 
         // Initialize dictionnaries <EnemyType, EnemyBase>
         enemiesDef.Init();
-
-        // Init days
-        currentDay = 0;
-        StartDay();
 
         OnDayStart += () =>
         {
@@ -94,8 +89,25 @@ public class GameManager : SingletonBase<GameManager>
             AudioManager.Instance.PlayMusic(MusicAudioTracks.M_NIGHT);
         };
         
+        ResetStaticVars();
+        
+        // Init days
+        currentDay = 0;
+        StartDay();
+    }
+
+    private void ResetStaticVars()
+    {
+        dayState = DayState.DAY;
+        eventSystem = FindObjectOfType<EventSystem>();
+        
         EnemyManager.Reset();
-        GooglePlayAchievements.Unlock(GooglePlayAchievements.achievement_first_step);
+        
+        // Frigthening event reset
+        FrighteningEventBase.OnFrighteningEventRearmed = null;
+        FrighteningEventBase.OnFrighteningEventTriggered = null;
+        
+        GooglePlayAchievements.Init();
     }
 
     private void Update()
