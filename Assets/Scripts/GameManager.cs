@@ -143,8 +143,6 @@ public class GameManager : SingletonBase<GameManager>
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
 
-        Curtain.SetDay(true);
-
         OnDayStart?.Invoke();
     }
 
@@ -156,8 +154,6 @@ public class GameManager : SingletonBase<GameManager>
 
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.y;
-
-        Curtain.SetDay(false);
 
         OnNightStart?.Invoke();
     }
