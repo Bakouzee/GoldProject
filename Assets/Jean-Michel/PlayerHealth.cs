@@ -34,6 +34,8 @@ public class PlayerHealth : Health
     }
     public void HealPlayer(int healAmount)
     {
+        Debug.Log("HealPlayer");
+        ParticuleManager.Instance.OnPlayerHeal();
         if((currentHealth + healAmount) > healthMax)
         {
             currentHealth = healthMax;

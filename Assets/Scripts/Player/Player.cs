@@ -215,7 +215,7 @@ namespace GoldProject
             canTransform = false;
             transformed = true;
 
-            SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
+            //SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
 
             // Changer current animation layer
