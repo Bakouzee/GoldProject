@@ -344,7 +344,7 @@ namespace Enemies
                 ParticuleManager.Instance.OnEnemyDeath();
                 
                 // Leaving count as enemy disappearing, we don't want to make the same enemy disappears twice
-                if(!Leaving) EnemyManager.OnEnemyKilled?.Invoke(this);
+                EnemyManager.OnEnemyKilled?.Invoke(this);
             }
             return true;
         }
