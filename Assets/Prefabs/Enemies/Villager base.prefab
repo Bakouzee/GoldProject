@@ -202,8 +202,10 @@ MonoBehaviour:
   isInSight: 0
   canSightPlayer: 1
   lastPlayerPos: {x: 0, y: 0}
-  animator: {fileID: 1351950459}
   detectionSpotlight: {fileID: 1787739101863628153}
+  defaultLightColor: {r: 1, g: 0.827451, b: 0, a: 1}
+  chaseLightColor: {r: 1, g: 0, b: 0, a: 1}
+  animator: {fileID: 1351950459}
 --- !u!114 &1260435834159056000
 MonoBehaviour:
   m_ObjectHideFlags: 0

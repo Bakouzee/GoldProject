@@ -42,6 +42,8 @@ namespace Enemies
         // States
         protected EnemyBaseState currentState;
         public EnemyBaseState CurrentState => currentState;
+        /// <summary>This variable is just used so we can see the current state
+        /// in the inspector while in debug mode</summary>
         private string currentStateName;
         protected EnemyBaseState lastState;
 
@@ -68,8 +70,13 @@ namespace Enemies
         public bool canSightPlayer;
         public Vector2Int lastPlayerPos;
 
+        [Header("Detection Light")]
+        [SerializeField] private Light2D detectionSpotlight;
+        [SerializeField] private Color defaultLightColor;
+        [SerializeField] private Color chaseLightColor;
+
+        [Header("Others")]
         public Animator animator;
-        public Light2D detectionSpotlight;
 
         private Vector2Int lastMoveDirection;
         public bool Chasing { get; set; }
@@ -123,6 +130,7 @@ namespace Enemies
                 detectionSpotlight.pointLightOuterRadius = sightRange;
                 detectionSpotlight.pointLightInnerAngle = sightAngle;
                 detectionSpotlight.pointLightOuterAngle = sightAngle;
+                SetLightColor(chase:false);
             }
 
             sightRef = transform.GetChild(0).gameObject;
@@ -329,6 +337,12 @@ namespace Enemies
                 return;
             
             SetState(new EnemyChaseState(this, chasedEntity, currentState));
+        }
+        
+        public void SetLightColor(bool chase)
+        {
+            if (detectionSpotlight)
+                detectionSpotlight.color = chase ? chaseLightColor : defaultLightColor;
         }
         
         
