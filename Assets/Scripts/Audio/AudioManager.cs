@@ -3,12 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 namespace AudioController
 {
     [RequireComponent(typeof(AudioSource))]
     public class AudioManager : SingletonBase<AudioManager>
     {
+
+        public Sprite soundOFF;
+        public Sprite soundON;
+        public GameObject soundMusic;
+        public GameObject soundSFX;
+
+
+
        [System.Serializable]
         public struct PlayerSounds
         {
@@ -95,6 +104,9 @@ namespace AudioController
         private float rPicth;
         public float minPitch;
         public float maxPitch;
+
+        private bool isActiveSFX = true;
+        private bool isActiveMusic = true;
 
         private void Awake()
         {
@@ -374,6 +386,42 @@ namespace AudioController
         {
             sourceFoliage.enabled = false; // won't stop because foliage is using PlayOneShot();
             sourceMusic.Stop();
+        }
+
+        public void StopSFX()
+        {
+
+            if (isActiveSFX == true)
+            {
+                sourceFoliage.enabled = false;
+                soundSFX.GetComponent<Image>().sprite = soundOFF;
+                
+            } else
+            {
+                sourceFoliage.enabled = true;
+                soundSFX.GetComponent<Image>().sprite = soundON;
+
+            }
+            isActiveSFX = !isActiveSFX;
+        }
+
+        public void StopMusic()
+        {
+
+            if (isActiveMusic == true)
+            {
+                sourceMusic.enabled = false;
+                soundMusic.GetComponent<Image>().sprite = soundOFF;
+
+            }
+            else
+            {
+                sourceMusic.enabled = true;
+                soundMusic.GetComponent<Image>().sprite = soundON;
+
+            }
+
+            isActiveMusic = !isActiveMusic;
         }
 
         #endregion
