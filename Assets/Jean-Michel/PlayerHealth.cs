@@ -18,8 +18,6 @@ public class PlayerHealth : Health
     [HideInInspector]
     public bool IsInvincible = false;
 
-    private bool dead;
-
     /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
     /// <params>newHealth, healthMax </params>
     public System.Action<int, int> OnHealthUpdated;
