@@ -37,6 +37,7 @@ namespace Enemies
         public Garlic garlicPrefab;
         public bool HasPlacedGarlic { get; set; }
         
+        [SerializeField]
         protected Health health;
         
         // States

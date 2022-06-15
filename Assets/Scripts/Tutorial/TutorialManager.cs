@@ -32,6 +32,8 @@ public class TutorialManager : SingletonBase<TutorialManager> {
     [SerializeField]
     private Vector2Int ventTile;
 
+    [Header("Transformation Stage")] 
+    public GameObject enemyPrefab;
     // 11;27
     private void Start()
     {
