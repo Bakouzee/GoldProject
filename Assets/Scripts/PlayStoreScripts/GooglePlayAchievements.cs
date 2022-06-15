@@ -59,8 +59,9 @@ namespace PlayStoreScripts
         public const int never_give_up_death_needed = 5; // TODO: change this to 20
         #endregion
 
-        public static void Unlock(string achievementId)
+        public static void Unlock(string achievementId, string achievementName)
         {
+            Debug.Log($"<color=green>Achievement named '{achievementName}' got trigerred</color>");
             if (!PlayServices.usePlayServices)
                 return;
 
@@ -68,7 +69,6 @@ namespace PlayStoreScripts
             {
                 // Handle success or not
             });
-            
         }
 
         public static void Init()
@@ -77,13 +77,13 @@ namespace PlayStoreScripts
             EnemyManager.OnEnemyDisappeared += enemy =>
             {
                 if (enemy.chief)
-                    Unlock(achievement_first_step);
+                    Unlock(achievement_first_step, "First step");
             };
 
             // Terror achievement
             EnemyManager.OnEnemyStartLeaving += enemy =>
             {
-                Unlock(achievement_terror);
+                Unlock(achievement_terror, "Terror");
             };
             
             // Trap Master
@@ -102,14 +102,14 @@ namespace PlayStoreScripts
                             return;
                     }
                 }
-                Unlock(achievement_trap_master);
+                Unlock(achievement_trap_master, "Trap master");
             };
 
             // Serial killer
             EnemyManager.OnEnemyKilled += enemy =>
             {
-                if(EnemyManager.enemiesCount == 0)
-                    Unlock(achievement_serial_killer);
+                if(EnemyManager.enemiesCount == 1)
+                    Unlock(achievement_serial_killer, "Serial killer");
             };
             
             // Friendly vampire
@@ -117,9 +117,9 @@ namespace PlayStoreScripts
                                                               // and unlock achievement if needed
             {
                 friendly_vampire_day_counter++;
-                if (friendly_vampire_days_needed <= friendly_vampire_day_counter)
+                if (friendly_vampire_days_needed < friendly_vampire_day_counter)
                 {
-                    Unlock(achievement_friendly_vampire);
+                    Unlock(achievement_friendly_vampire, "Friendly vampire");
                 }
             };
             EnemyManager.OnEnemyKilled += enemy => friendly_vampire_day_counter = 0; // Reset counter when killing an enemy
@@ -127,7 +127,7 @@ namespace PlayStoreScripts
             // Survivor
             GameManager.Instance.OnDayChanged += currentDay =>
             {
-                if (currentDay > survivor_day_needed) Unlock(achievement_survivor);
+                if (currentDay > survivor_day_needed) Unlock(achievement_survivor, "Survivor");
             };
             
             // Never give up 
@@ -138,8 +138,10 @@ namespace PlayStoreScripts
                     int newDeathCount = PlayerPrefs.GetInt("DeathCount", 0) + 1;
                     PlayerPrefs.SetInt("DeathCount", newDeathCount);
                     
+                    Debug.Log($"Death Count: {newDeathCount}");
+                    
                     if(newDeathCount >= never_give_up_death_needed)
-                        Unlock(achievement_never_give_up);
+                        Unlock(achievement_never_give_up, "Never give up");
                 }
             };
         }

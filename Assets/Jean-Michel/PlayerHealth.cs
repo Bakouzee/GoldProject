@@ -18,7 +18,7 @@ public class PlayerHealth : Health
     [HideInInspector]
     public bool IsInvincible = false;
 
-   
+    private bool dead;
 
     /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
     /// <params>newHealth, healthMax </params>
@@ -51,7 +51,13 @@ public class PlayerHealth : Health
 
     public void Death()
     {
+        if(dead)
+            return;
+        dead = true;
+        
         // Temporary just for apk
+        currentHealth = 0;
+        OnHealthUpdated?.Invoke(currentHealth, healthMax);
 
         //ParticuleManager.Instance.OnPlayerDeathParticule();
 
