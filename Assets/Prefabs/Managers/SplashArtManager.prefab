@@ -111,8 +111,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprites:
-  - {fileID: 21300000, guid: a97942da44b47f344b6da0478645450b, type: 3}
-  - {fileID: 21300000, guid: a97942da44b47f344b6da0478645450b, type: 3}
+  - {fileID: 21300000, guid: 9b666b088ea6a494ca583559a09178b9, type: 3}
   - {fileID: 21300000, guid: a97942da44b47f344b6da0478645450b, type: 3}
   - {fileID: 21300000, guid: a97942da44b47f344b6da0478645450b, type: 3}
   animTrigger: Transition

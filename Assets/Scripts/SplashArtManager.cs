@@ -1,3 +1,4 @@
+using GoldProject;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,11 +39,8 @@ namespace SplashArt
                 case SplashArtType.Untransformation:
                     img.sprite = sprites[2];
                     break;
-                case SplashArtType.Death:
-                    img.sprite = sprites[3];
-                    break;
                 default:
-                    Debug.LogWarning("There aren't sprites in the inspector corresponding to the SplashArtType!");
+                    Debug.LogError("There aren't sprites in the inspector corresponding to the SplashArtType!");
                     return;
             }
             img.enabled = true;

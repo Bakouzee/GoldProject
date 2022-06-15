@@ -250,6 +250,8 @@ namespace GoldProject
                 return;
             transformed = false;
 
+            SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Untransformation);
+
             animator.SetLayerWeight(0, 1);
             animator.SetLayerWeight(1, 0);
 

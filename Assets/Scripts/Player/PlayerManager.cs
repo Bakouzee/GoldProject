@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using GoldProject;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using Enemies;
 using AudioController;
 
@@ -14,7 +13,6 @@ public class PlayerManager : SingletonBase<PlayerManager>
     public PlayerHealth PlayerHealth { get; private set; } 
     public PlayerBonuses Bonuses { get; private set; }
 
-    public TextMeshProUGUI textEnemyTrap;
     public GameObject arrowToMovePlayer;
     public GameObject miniMap;
     public GameObject mainCam;
@@ -53,7 +51,6 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 }
                 miniMap.SetActive(true);
                 arrowToMovePlayer.SetActive(false);
-                textEnemyTrap.text = "Show Enemies";
                 //mainCam.SetActive(false);
                 mainCam.GetComponent<AudioListener>().enabled = false;
                 onShowMap?.Invoke();
@@ -67,7 +64,6 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 mainCam.GetComponent<AudioListener>().enabled = true;
                 //mainCam.SetActive(true);
                 arrowToMovePlayer.SetActive(true);
-                textEnemyTrap.text = "Show Traps";
                 miniMap.SetActive(false);
                 onShowMap?.Invoke();
             }

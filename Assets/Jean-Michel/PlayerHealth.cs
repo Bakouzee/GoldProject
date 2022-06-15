@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using AudioController;
 using GoldProject.UI;
+using SplashArt;
 
 public class PlayerHealth : Health
 {
@@ -58,8 +59,6 @@ public class PlayerHealth : Health
         //    .buildIndex);
         
         StartCoroutine(SoundDeath());
-        
-
         
         // Time.timeScale = 0;
     }
@@ -149,11 +148,12 @@ public class PlayerHealth : Health
 
     public IEnumerator SoundDeath()
     {
-
         AudioManager.Instance.StopEverySound();
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
+
         yield return new WaitForSeconds(0.8f);
-        Time.timeScale = 0;        
+
+        Time.timeScale = 0;
         UiManager.Instance.LauchGameOverMenu();
     }
 }
