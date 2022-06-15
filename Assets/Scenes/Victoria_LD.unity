@@ -65825,6 +65825,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 87572852, guid: f87533469e6722948b03afd2f774a281, type: 3}
+      propertyPath: sprites.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: a931ae75ca8230244b3f1b6466217ee0, type: 3}
     - target: {fileID: 110101160, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
