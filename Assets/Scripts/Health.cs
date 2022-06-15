@@ -5,7 +5,7 @@ public class Health : MonoBehaviour
 {
     public int healthMax = 100;
     
-    protected int currentHealth;
+    public int currentHealth;
     public int CurrentHealth => currentHealth;
 
     protected bool dead;

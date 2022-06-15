@@ -22,7 +22,9 @@ public class PlayerManager : SingletonBase<PlayerManager>
     {
         base.Awake();
         Player = GetComponent<Player>();
-        Player.PlayerManager = this;
+        
+        if(Player != null)
+            Player.PlayerManager = this;
         
         PlayerHealth = GetComponent<PlayerHealth>();
         PlayerHealth.PlayerManager = this;
@@ -51,6 +53,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 }
                 miniMap.SetActive(true);
                 arrowToMovePlayer.SetActive(false);
+                //textEnemyTrap.text = "Show Enemies";
                 //mainCam.SetActive(false);
                 mainCam.GetComponent<AudioListener>().enabled = false;
                 onShowMap?.Invoke();
@@ -64,6 +67,7 @@ public class PlayerManager : SingletonBase<PlayerManager>
                 mainCam.GetComponent<AudioListener>().enabled = true;
                 //mainCam.SetActive(true);
                 arrowToMovePlayer.SetActive(true);
+              //  textEnemyTrap.text = "Show Traps";
                 miniMap.SetActive(false);
                 onShowMap?.Invoke();
             }

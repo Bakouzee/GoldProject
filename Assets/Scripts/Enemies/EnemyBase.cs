@@ -37,7 +37,8 @@ namespace Enemies
         public Garlic garlicPrefab;
         public bool HasPlacedGarlic { get; set; }
         
-        protected Health health;
+        [SerializeField]
+        public Health health;
         
         // States
         protected EnemyBaseState currentState;
@@ -115,7 +116,8 @@ namespace Enemies
                 exclamationPoint.SetActive(false);
             }
             
-            health = GetComponent<Health>();
+            if(!health) health = GetComponent<Health>();
+            
             // Call EnemyManager.OnEnemyDeath when dead
             health.OnDeath += () =>
             {

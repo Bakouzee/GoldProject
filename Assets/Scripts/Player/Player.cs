@@ -217,7 +217,7 @@ namespace GoldProject
         public static bool transformed;
 
         private bool canTransform;
-        private bool CanTransform
+        public bool CanTransform
         {
             get => canTransform;
             set
