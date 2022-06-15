@@ -156,7 +156,7 @@ namespace GoldProject
                     if (hits.Length == 0)
                         return;
 
-                    // Look for IInteractable or Tile or... and break if found
+                    // Look for IInteractable and return if found
                     foreach (var hit in hits)
                     {
                         // Interactable objects
@@ -170,7 +170,7 @@ namespace GoldProject
                                     if (interactable.TryInteract())
                                     {
                                         GameManager.Instance.LaunchTurn();
-                                        break;
+                                        return;
                                     }
                                 }
                             }
@@ -179,27 +179,32 @@ namespace GoldProject
                                 if (interactable.TryInteract())
                                 {
                                     GameManager.Instance.LaunchTurn();
-                                    break;
+                                    return;
                                 }
                             }
                         }
+                    }
 
-                        // Tiles and if map = cantmove
-                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen &&
-                                 !NewVentManager.choosingVent)
+                    // Look for Tiles and return if found 
+                    if (!PlayerManager.mapSeen && !NewVentManager.choosingVent)
+                    {
+                        foreach (var hit in hits)
                         {
-                            if (gridController.gridPosition == tile.GridPos)
-                                continue;
-
-                            int manhattanDistance =
-                                gridController.gridManager.GetManhattanDistance(gridController.gridPosition,
-                                    tile.GridPos);
-                            if (manhattanDistance <= RemainingActions)
+                            if (hit.transform.TryGetComponent(out Tile tile))
                             {
-                                if (gridController.SetPosition(tile.GridPos, animator))
+                                if (gridController.gridPosition == tile.GridPos)
+                                    continue;
+
+                                int manhattanDistance =
+                                    gridController.gridManager.GetManhattanDistance(gridController.gridPosition,
+                                        tile.GridPos);
+                                if (manhattanDistance <= RemainingActions)
                                 {
-                                    RemainingActions -= manhattanDistance;
-                                    break;
+                                    if (gridController.SetPosition(tile.GridPos, animator))
+                                    {
+                                        RemainingActions -= manhattanDistance;
+                                        return;
+                                    }
                                 }
                             }
                         }
