@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using Enemies;
-using GoldProject.Rooms;
-using GridSystem;
-using Unity.Notifications.Android;
-using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Rendering.Universal;
 using AudioController;
+using Enemies;
+using GridSystem;
+using UnityEngine;
+using GoldProject;
+using GoldProject.Rooms;
 using SplashArt;
 
-namespace GoldProject
+namespace Tuto
 {
-    public class Player : Entity
+        public class Player : Entity
     {
         public PlayerManager PlayerManager { private get; set; }
         private CameraController cameraController;
@@ -30,8 +26,7 @@ namespace GoldProject
             {
                 if (value <= 0)
                 {
-                    // OnLaunchedTurn reset remainingAction
-                    GameManager.Instance.LaunchTurn();
+                    ResetRemainingAction();
                     return;
                 }
 
@@ -67,32 +62,16 @@ namespace GoldProject
             gridController.OnMoved += OnMoved;
 
             RemainingActions = defaultActionsPerTurn;
-            SetGameHandlerEvents(gameManager);
             SetEnemyManagerEvents();
         }
 
         #region Set Events
-        private void SetGameHandlerEvents(GameManager gameManager)
-        {
-            // Transform or Untransform on day or night start
-            gameManager.OnDayStart += UnTransform;
-            gameManager.OnNightStart += Transform;
-
-            // When a turn is launched -> reset the number of remaining action
-            gameManager.OnLaunchedTurn += (phaseActionCount, actionPerPhase) =>
-            {
-                LookForGarlicDamage();
-                LookForLightDamage();
-                ResetRemainingAction();
-            };
-        }
-
         private void SetEnemyManagerEvents()
         {
             // Get the ability to transform if a chief leave or die
             EnemyManager.OnEnemyDisappeared += enemy =>
             {
-                Debug.Log("Enemy disappear");
+                // Debug.Log("Enemy disappear");
                 if (enemy.chief)
                     canTransform = true;
             };
@@ -156,7 +135,7 @@ namespace GoldProject
                     if (hits.Length == 0)
                         return;
 
-                    // Look for IInteractable and return if found
+                    // Look for IInteractable or Tile or... and break if found
                     foreach (var hit in hits)
                     {
                         // Interactable objects
@@ -169,8 +148,8 @@ namespace GoldProject
                                 {
                                     if (interactable.TryInteract())
                                     {
-                                        GameManager.Instance.LaunchTurn();
-                                        return;
+                                        // GameManager.Instance.LaunchTurn();
+                                        break;
                                     }
                                 }
                             }
@@ -178,33 +157,28 @@ namespace GoldProject
                             {
                                 if (interactable.TryInteract())
                                 {
-                                    GameManager.Instance.LaunchTurn();
-                                    return;
+                                    // GameManager.Instance.LaunchTurn();
+                                    break;
                                 }
                             }
                         }
-                    }
 
-                    // Look for Tiles and return if found 
-                    if (!PlayerManager.mapSeen && !NewVentManager.choosingVent)
-                    {
-                        foreach (var hit in hits)
+                        // Tiles and if map = cantmove
+                        else if (hit.transform.TryGetComponent(out Tile tile) && !PlayerManager.mapSeen &&
+                                 !NewVentManager.choosingVent)
                         {
-                            if (hit.transform.TryGetComponent(out Tile tile))
-                            {
-                                if (gridController.gridPosition == tile.GridPos)
-                                    continue;
+                            if (gridController.gridPosition == tile.GridPos)
+                                continue;
 
-                                int manhattanDistance =
-                                    gridController.gridManager.GetManhattanDistance(gridController.gridPosition,
-                                        tile.GridPos);
-                                if (manhattanDistance <= RemainingActions)
+                            int manhattanDistance =
+                                gridController.gridManager.GetManhattanDistance(gridController.gridPosition,
+                                    tile.GridPos);
+                            if (manhattanDistance <= RemainingActions)
+                            {
+                                if (gridController.SetPosition(tile.GridPos, animator))
                                 {
-                                    if (gridController.SetPosition(tile.GridPos, animator))
-                                    {
-                                        RemainingActions -= manhattanDistance;
-                                        return;
-                                    }
+                                    RemainingActions -= manhattanDistance;
+                                    break;
                                 }
                             }
                         }
@@ -269,6 +243,10 @@ namespace GoldProject
         {
             if (!currentRoom.IsInside(transform.position))
                 UpdateCurrentRoom();
+            
+            LookForGarlicDamage();
+            LookForLightDamage();
+            // RemainingActions--;
         }
 
         private void LookForGarlicDamage()
@@ -321,8 +299,5 @@ namespace GoldProject
         }
 
         #endregion
-
-        public ColorCurves cruves;
-        public Gradient gradient;
     }
 }
