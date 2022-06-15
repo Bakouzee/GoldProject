@@ -84731,7 +84731,7 @@ MonoBehaviour:
   - {fileID: 1644721869}
   - {fileID: 1843747632}
   actionCountForVent: 0
-  actionPerPhase: 60
+  actionPerPhase: {x: 60, y: 30}
   actionCount: 0
   dayNightTurnCooldown: {x: 2, y: 4}
   undoButton: {fileID: 0}

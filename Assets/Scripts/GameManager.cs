@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Enemies;
 using GoldProject;
@@ -26,7 +27,7 @@ public class GameManager : SingletonBase<GameManager>
     public static DayState dayState = DayState.DAY;
     public static EventSystem eventSystem;
 
-    [Header("Turns")] public int actionPerPhase;
+    [Header("Turns")] public Vector2Int actionPerPhase;
     public int actionCount;
     private int currentDay;
     public System.Action<int> OnDayChanged;
@@ -216,7 +217,7 @@ public class GameManager : SingletonBase<GameManager>
 
         // Count 
         actionCount++;
-        if (actionCount >= actionPerPhase)
+        if (actionCount >= actionPerPhase[(int)dayState])
         {
             if (dayState == DayState.DAY)
                 StartNight();
@@ -235,7 +236,7 @@ public class GameManager : SingletonBase<GameManager>
         // Cooldown of turn
         turnCooldown.SetCooldown();
 
-        OnLaunchedTurn?.Invoke(actionCount, actionPerPhase);
+        OnLaunchedTurn?.Invoke(actionCount, actionPerPhase[(int)dayState]);
     }
 
     private void StartSpawningWave()
