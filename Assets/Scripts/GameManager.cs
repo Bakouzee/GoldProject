@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using AudioController;
+using GoldProject.FrighteningEvent;
 using PlayStoreScripts;
 
 public class GameManager : SingletonBase<GameManager>
@@ -45,10 +46,6 @@ public class GameManager : SingletonBase<GameManager>
     public GameObject undoButton;
 
     [Header("Waves and enemy spawns")]
-    // Waves
-    [SerializeField]
-    private TypeAndPrefabs<Enemies.EnemyChiefType> enemiesChiefDef;
-
     [SerializeField] private TypeAndPrefabs<Enemies.EnemyType> enemiesDef;
     [SerializeField] private Wave[] waves;
 
@@ -71,20 +68,20 @@ public class GameManager : SingletonBase<GameManager>
     private Enemies.EnemyType[] enemiesToSpawn;
     private int enemySpawned = 0;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        
+        ResetStaticVars();
+    }
+
     private void Start()
     {
-        eventSystem = FindObjectOfType<EventSystem>();
-
         // Set turn cooldown
         turnCooldown = new Cooldown(dayNightTurnCooldown.x);
 
         // Initialize dictionnaries <EnemyType, EnemyBase>
         enemiesDef.Init();
-        enemiesChiefDef.Init();
-
-        // Init days
-        currentDay = 0;
-        StartDay();
 
         OnDayStart += () =>
         {
@@ -99,8 +96,23 @@ public class GameManager : SingletonBase<GameManager>
             AudioManager.Instance.PlayMusic(MusicAudioTracks.M_NIGHT);
         };
         
+        // Init days
+        currentDay = 0;
+        StartDay();
+    }
+
+    private void ResetStaticVars()
+    {
+        dayState = DayState.DAY;
+        eventSystem = FindObjectOfType<EventSystem>();
+        
         EnemyManager.Reset();
-        Achievements.Unlock(Achievements.BOO);
+        
+        // Frigthening event reset
+        FrighteningEventBase.OnFrighteningEventRearmed = null;
+        FrighteningEventBase.OnFrighteningEventTriggered = null;
+        
+        GooglePlayAchievements.Init();
     }
 
     private void Update()
@@ -136,8 +148,6 @@ public class GameManager : SingletonBase<GameManager>
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.x;
 
-        Curtain.SetDay(true);
-
         OnDayStart?.Invoke();
     }
 
@@ -149,8 +159,6 @@ public class GameManager : SingletonBase<GameManager>
 
         // Set turn cooldown
         turnCooldown.cooldownDuration = dayNightTurnCooldown.y;
-
-        Curtain.SetDay(false);
 
         OnNightStart?.Invoke();
     }
@@ -249,7 +257,7 @@ public class GameManager : SingletonBase<GameManager>
             if (enemySpawned == CurrentWave.chief.spawnOrder - 1)
             {
                 // Spawn chief and return
-                EnemyBase chiefPrefab = enemiesChiefDef.dict[CurrentWave.chief.chiefType];
+                EnemyBase chiefPrefab = enemiesDef.dict[CurrentWave.chief.chiefType];
                 Instantiate(chiefPrefab, enemySpawnPoint.position, Quaternion.identity);
                 chiefSpawned = true;
                 return;
@@ -314,7 +322,7 @@ public class GameManager : SingletonBase<GameManager>
     [System.Serializable]
     public struct ChiefOrder
     {
-        public Enemies.EnemyChiefType chiefType;
+        public Enemies.EnemyType chiefType;
         [Range(1, 50)] public int spawnOrder;
     }
 

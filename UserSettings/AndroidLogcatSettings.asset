@@ -2,8 +2,8 @@
     "m_SelectedDeviceId": "ce0418243938e8fd0c",
     "m_SelectedPackage": {
         "deviceId": "ce0418243938e8fd0c",
-        "name": "com.DefaultCompany.com.unity.template.mobile2D",
-        "processId": 14638,
+        "name": "com.Gold7_2022.DontMessWithVampires",
+        "processId": 16738,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -36,6 +36,30 @@
             "deviceId": "ce0418243938e8fd0c",
             "name": "com.DefaultCompany.com.unity.template.mobile2D",
             "processId": 14638,
+            "exited": false
+        },
+        {
+            "deviceId": "ce0418243938e8fd0c",
+            "name": "com.Gold7_2022.DontMessWithVampires",
+            "processId": 10014,
+            "exited": false
+        },
+        {
+            "deviceId": "ce0418243938e8fd0c",
+            "name": "com.Gold7_2022.DontMessWithVampires",
+            "processId": 11346,
+            "exited": false
+        },
+        {
+            "deviceId": "ce0418243938e8fd0c",
+            "name": "com.Gold7_2022.DontMessWithVampires",
+            "processId": 15471,
+            "exited": false
+        },
+        {
+            "deviceId": "ce0418243938e8fd0c",
+            "name": "com.Gold7_2022.DontMessWithVampires",
+            "processId": 16738,
             "exited": false
         }
     ],

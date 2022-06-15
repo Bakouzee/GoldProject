@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Rendering.Universal;
 using AudioController;
+using SplashArt;
 
 namespace GoldProject
 {
@@ -91,6 +92,7 @@ namespace GoldProject
             // Get the ability to transform if a chief leave or die
             EnemyManager.OnEnemyDisappeared += enemy =>
             {
+                Debug.Log("Enemy disappear");
                 if (enemy.chief)
                     canTransform = true;
             };
@@ -98,6 +100,10 @@ namespace GoldProject
             // When killing an enemy
             EnemyManager.OnEnemyKilled += enemy =>
             {
+                // Art when the enemy killed is the chief
+                if (enemy.chief)
+                    SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation_First_Kill);
+
                 // Heal when killing an enemy
                 PlayerManager.PlayerHealth.HealPlayer(lifeStealOnKill);
 
@@ -204,7 +210,18 @@ namespace GoldProject
         #region Transformation
 
         public static bool transformed;
+
         private bool canTransform;
+        private bool CanTransform
+        {
+            get => canTransform;
+            set
+            {
+                canTransform = value;
+                OnCanTransformChanged?.Invoke(canTransform);
+            }
+        }
+        public System.Action<bool> OnCanTransformChanged;
 
         public void Transform()
         {
@@ -213,6 +230,7 @@ namespace GoldProject
             canTransform = false;
             transformed = true;
 
+            SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
 
             // Changer current animation layer
@@ -231,6 +249,8 @@ namespace GoldProject
             if (!transformed)
                 return;
             transformed = false;
+
+            SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Untransformation);
 
             animator.SetLayerWeight(0, 1);
             animator.SetLayerWeight(1, 0);

@@ -11,8 +11,18 @@ namespace GoldProject.UI
         [SerializeField] private TMP_Text dayCounter;
         [SerializeField] private TMP_Text dayCounterForMenu;
 
+        [SerializeField] private TMP_Text enemyKilled;
+
+        [SerializeField] private TMP_Text enemyScared;
+        
+
         public void SetDay(int day) => dayCounter.text = day.ToString();
         public void SetDayForMenu(int day) => dayCounterForMenu.text = day.ToString();
+
+        public void SetEnemyKilled(int day) => enemyKilled.text = day.ToString();
+
+        public void SetEnemyScared(int day) => enemyScared.text = day.ToString();
+
 
 
         // Action counter
@@ -32,7 +42,17 @@ namespace GoldProject.UI
         [Header("Clock"), Tooltip("Image of the clock that is going to be rotated"), SerializeField] 
         private Transform clock;
         private float clockStartOffset;
-        
+
+        [Header("Transformation Indicator"), SerializeField]
+        private TransformationIndicator transformationIndicator;
+
+        public GameObject DeathUI;
+        public void LauchGameOverMenu()
+        {
+            DeathUI.SetActive(true);
+            SetEnemyKilled(Enemies.EnemyManager.enemyKilled);
+            SetEnemyScared(Enemies.EnemyManager.enemyAfraid);
+        }
         private void Start()
         {
             GameManager gameManager = GameManager.Instance;
@@ -50,6 +70,7 @@ namespace GoldProject.UI
                 SetDayForMenu(gameManager.CurrentDay);
                 gameManager.OnDayChanged += SetDayForMenu;
             }
+            
 
             // Action counter
             if (actionCounter != null)
@@ -81,6 +102,14 @@ namespace GoldProject.UI
                         z += 180f;
                     clock.eulerAngles = Vector3.forward * (z + clockStartOffset);
                 };
+            }
+            
+            // Transformation indicator
+            if (transformationIndicator)
+            {
+                transformationIndicator.SetIndicator(false);
+                PlayerManager.Instance.Player.OnCanTransformChanged +=
+                    canTransform => transformationIndicator.SetIndicator(canTransform);
             }
         }
 

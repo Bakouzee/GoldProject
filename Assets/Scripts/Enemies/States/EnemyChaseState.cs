@@ -32,7 +32,7 @@ namespace Enemies.States {
         private readonly int TURNS_TO_STOP_POS_UPDATE = 3;
         private readonly int MANHATTAN_DISTANCE_MAX = 15;
 
-        public EnemyChaseState(EnemyBase enemy,Entity chaseEntity, EnemyBaseState onChaseFinished) : base(enemy, onChaseFinished) {
+        public EnemyChaseState(EnemyBase enemy, Entity chaseEntity, EnemyBaseState onChaseFinished) : base(enemy, onChaseFinished) {
             this.chaseEntity = chaseEntity;
             this.LastTargetGridPos = chaseEntity.gridController.gridPosition;
         }
@@ -41,6 +41,7 @@ namespace Enemies.States {
         {
             enemy.Chasing = true;
             this.HasSight = true;
+            enemy.SetLightColor(chase:true);
             AlertOtherEnemies();
             yield return null;
         }
@@ -134,6 +135,7 @@ namespace Enemies.States {
         public override IEnumerator OnStateExit()
         {
             enemy.Chasing = false;
+            enemy.SetLightColor(chase:false);
             yield return null;
         }
 

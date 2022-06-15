@@ -159,9 +159,8 @@ MonoBehaviour:
   - enemyTracks: 1
     enemyClipList:
     - {fileID: 8300000, guid: e773ffdddac6d434488b5fce56d0169a, type: 3}
-    - {fileID: 8300000, guid: 06b73caa06bdd864a8389362ef1e3a3f, type: 3}
-    - {fileID: 8300000, guid: 6982402ebf03f1d489351f75d8c7b79e, type: 3}
     - {fileID: 8300000, guid: d1d1ed4787942654d83c03ec4c1df6f5, type: 3}
+    - {fileID: 8300000, guid: 38db23fb51f601b488e23bf5e1e5ddee, type: 3}
   - enemyTracks: 6
     enemyClipList:
     - {fileID: 8300000, guid: 6f06bc7b7c1f3ed4c85e9b894122bc86, type: 3}

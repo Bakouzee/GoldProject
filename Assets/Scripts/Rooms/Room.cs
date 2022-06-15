@@ -46,7 +46,7 @@ namespace GoldProject.Rooms
             {
                 lighten = value;
                 if (fullRoomLight)
-                    fullRoomLight.gameObject.SetActive(lighten && GameManager.dayState == GameManager.DayState.DAY);
+                    fullRoomLight.gameObject.SetActive(lighten);
             }
         }
         
@@ -122,20 +122,7 @@ namespace GoldProject.Rooms
 
             // Full room light
             if (fullRoomLight)
-            {
                 fullRoomLight.gameObject.SetActive(false);
-                GameManager.Instance.OnDayStart += () =>
-                {
-                    if (IsLighten)
-                        fullRoomLight.gameObject.SetActive(true);
-                };
-
-                GameManager.Instance.OnNightStart += () =>
-                {
-                    if (fullRoomLight.gameObject.activeSelf)
-                        fullRoomLight.gameObject.SetActive(false);
-                };
-            }
         }
 
         private void UpdateLightState()

@@ -42,6 +42,8 @@ namespace Enemies
         // States
         protected EnemyBaseState currentState;
         public EnemyBaseState CurrentState => currentState;
+        /// <summary>This variable is just used so we can see the current state
+        /// in the inspector while in debug mode</summary>
         private string currentStateName;
         protected EnemyBaseState lastState;
 
@@ -68,8 +70,14 @@ namespace Enemies
         public bool canSightPlayer;
         public Vector2Int lastPlayerPos;
 
+        [Header("Detection Light")]
+        [SerializeField] private Light2D detectionSpotlight;
+        [SerializeField] private Color defaultLightColor;
+        [SerializeField] private Color chaseLightColor;
+
+        [Header("Others")]
         public Animator animator;
-        public Light2D detectionSpotlight;
+        public SpriteRenderer spriteRenderer;
 
         private Vector2Int lastMoveDirection;
         public bool Chasing { get; set; }
@@ -123,6 +131,7 @@ namespace Enemies
                 detectionSpotlight.pointLightOuterRadius = sightRange;
                 detectionSpotlight.pointLightInnerAngle = sightAngle;
                 detectionSpotlight.pointLightOuterAngle = sightAngle;
+                SetLightColor(chase:false);
             }
 
             sightRef = transform.GetChild(0).gameObject;
@@ -330,6 +339,19 @@ namespace Enemies
             
             SetState(new EnemyChaseState(this, chasedEntity, currentState));
         }
+
+        #region Light methods
+        public void SetLightColor(bool chase)
+        {
+            if (detectionSpotlight)
+                detectionSpotlight.color = chase ? chaseLightColor : defaultLightColor;
+        }
+        public void SetActiveLight(bool active)
+        {
+            if(detectionSpotlight)
+                detectionSpotlight.gameObject.SetActive(active);
+        }
+        #endregion
         
         
         // IInteractable implementation
@@ -344,7 +366,7 @@ namespace Enemies
                 ParticuleManager.Instance.OnEnemyDeath();
                 
                 // Leaving count as enemy disappearing, we don't want to make the same enemy disappears twice
-                if(!Leaving) EnemyManager.OnEnemyKilled?.Invoke(this);
+                EnemyManager.OnEnemyKilled?.Invoke(this);
             }
             return true;
         }

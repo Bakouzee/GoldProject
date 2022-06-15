@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 1351950458, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 731ff94258db5ce4386218045340164b, type: 3}
+      objectReference: {fileID: 21300000, guid: 922d7a0c622c3e74690ca607f3a6f0dd, type: 3}
     - target: {fileID: 1351950458, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -18,7 +18,7 @@ PrefabInstance:
     - target: {fileID: 1351950459, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 22100000, guid: 2172dd3376048364f8220e17760c7236, type: 2}
+      objectReference: {fileID: 22100000, guid: 45f28a3b7e9980a47a7b5dca0b82c770, type: 2}
     - target: {fileID: 2110391225984441409, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -62,6 +62,10 @@ PrefabInstance:
     - target: {fileID: 2110391225984441409, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
+      propertyPath: chief
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2110391225984441420, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Name

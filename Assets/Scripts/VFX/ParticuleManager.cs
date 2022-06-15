@@ -8,6 +8,7 @@ public class ParticuleManager : SingletonBase<ParticuleManager>
     public enum ParticuleType
     {
         P_Death,
+        P_Heal,
         E_Scared,
         E_Terrified,
         E_Death
@@ -18,18 +19,43 @@ public class ParticuleManager : SingletonBase<ParticuleManager>
     {
         // For GDs
         public ParticuleType Type;
-        public ParticleSystem Particle;
+        public Animator Particle;
+        public string animTrigger;
     }
     [SerializeField] public Particule[] particules;
 
+    private void Start()
+    {
+        for(int i = 0; i < particules.Length; i++)
+        {
+            particules[i].Particle.gameObject.SetActive(false);
+        }
+    }
 
-    public void OnPlayerDeathParticule()
+    public void OnPlayerDeath()
     {
         for(int i = 0; i < particules.Length; i++)
         {
             if(particules[i].Type == ParticuleType.P_Death)
             {
-                particules[i].Particle.Play();
+                particules[i].Particle.gameObject.SetActive(true);
+                particules[i].Particle.SetTrigger(particules[i].animTrigger);
+                return;
+            }
+
+        }
+    }
+
+    public void OnPlayerHeal()
+    {
+        Debug.Log("Particule!");
+        for (int i = 0; i < particules.Length; i++)
+        {
+            if (particules[i].Type == ParticuleType.P_Heal)
+            {
+                particules[i].Particle.gameObject.SetActive(true);
+
+                particules[i].Particle.SetTrigger(particules[i].animTrigger);
                 return;
             }
 
@@ -42,7 +68,9 @@ public class ParticuleManager : SingletonBase<ParticuleManager>
         {
             if (particules[i].Type == ParticuleType.E_Scared)
             {
-                particules[i].Particle.Play();
+                particules[i].Particle.gameObject.SetActive(true);
+
+                particules[i].Particle.SetTrigger(particules[i].animTrigger);
                 return;
             }
 
@@ -55,7 +83,9 @@ public class ParticuleManager : SingletonBase<ParticuleManager>
         {
             if (particules[i].Type == ParticuleType.E_Terrified)
             {
-                particules[i].Particle.Play();
+                particules[i].Particle.gameObject.SetActive(true);
+
+                particules[i].Particle.SetTrigger(particules[i].animTrigger);
                 return;
             }
 
@@ -68,7 +98,9 @@ public class ParticuleManager : SingletonBase<ParticuleManager>
         {
             if (particules[i].Type == ParticuleType.E_Death)
             {
-                particules[i].Particle.Play();
+                particules[i].Particle.gameObject.SetActive(true);
+
+                particules[i].Particle.SetTrigger(particules[i].animTrigger);
                 return;
             }
 

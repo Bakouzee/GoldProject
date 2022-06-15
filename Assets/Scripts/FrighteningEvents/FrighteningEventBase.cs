@@ -32,6 +32,9 @@ namespace GoldProject.FrighteningEvent
         private bool inProgress = false;
         public bool IsInProgress => inProgress;
 
+        public static System.Action<FrighteningEventBase> OnFrighteningEventTriggered;
+        public static System.Action<FrighteningEventBase> OnFrighteningEventRearmed;
+
         private void Start()
         {
             gridController = new GridController(transform);
@@ -52,10 +55,11 @@ namespace GoldProject.FrighteningEvent
         // Helpers of Do()
         private IEnumerator DoCouroutine()
         {
+            isTriggered = true;
             inProgress = true;
+            OnFrighteningEventTriggered?.Invoke(this);
             yield return DoActionCoroutine();
             inProgress = false;
-            isTriggered = true;
         }
         #endregion
 
@@ -74,10 +78,11 @@ namespace GoldProject.FrighteningEvent
         // Helper of Undo()
         private IEnumerator UndoCoroutine()
         {
+            isTriggered = false;
             inProgress = true;
+            OnFrighteningEventRearmed?.Invoke(this);
             yield return UndoActionCoroutine();
             inProgress = false;
-            isTriggered = false;
         }
         #endregion
 

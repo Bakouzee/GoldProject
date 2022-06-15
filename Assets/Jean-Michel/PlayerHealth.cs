@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AudioController;
+using GoldProject.UI;
+using SplashArt;
 
 public class PlayerHealth : Health
 {
@@ -15,8 +17,6 @@ public class PlayerHealth : Health
     public float invincibilityFlash = 0.2f;
     [HideInInspector]
     public bool IsInvincible = false;
-
-    public GameObject deathUI;
 
     /// <summary>Event called when the health is updated. Gives the new health amount and health max</summary>
     /// <params>newHealth, healthMax </params>
@@ -33,6 +33,8 @@ public class PlayerHealth : Health
     }
     public void HealPlayer(int healAmount)
     {
+        Debug.Log("HealPlayer");
+        ParticuleManager.Instance.OnPlayerHeal();
         if((currentHealth + healAmount) > healthMax)
         {
             currentHealth = healthMax;
@@ -47,7 +49,13 @@ public class PlayerHealth : Health
 
     public void Death()
     {
+        if(dead)
+            return;
+        dead = true;
+        
         // Temporary just for apk
+        currentHealth = 0;
+        OnHealthUpdated?.Invoke(currentHealth, healthMax);
 
         //ParticuleManager.Instance.OnPlayerDeathParticule();
 
@@ -55,8 +63,6 @@ public class PlayerHealth : Health
         //    .buildIndex);
         
         StartCoroutine(SoundDeath());
-        
-
         
         // Time.timeScale = 0;
     }
@@ -146,10 +152,12 @@ public class PlayerHealth : Health
 
     public IEnumerator SoundDeath()
     {
-
+        AudioManager.Instance.StopEverySound();
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
+
         yield return new WaitForSeconds(0.8f);
-        Time.timeScale = 0;        
-        deathUI.SetActive(true);
+
+        Time.timeScale = 0;
+        UiManager.Instance.LauchGameOverMenu();
     }
 }

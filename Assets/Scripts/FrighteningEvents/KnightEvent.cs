@@ -10,7 +10,9 @@ public class KnightEvent : FrighteningEventBase
 {
     private EnemyBase enemyToScare;
     private List<EnemyBase> afraidEnemies = new List<EnemyBase>();
+    [SerializeField]
     private SpriteRenderer[] srMap;
+    [SerializeField]
     private Animator animKnight;
 
     public List<Direction> directionKnight = new List<Direction>();
@@ -25,13 +27,15 @@ public class KnightEvent : FrighteningEventBase
     {
         // srMap[1] -> child srMap[0] -> this
         // need to be in range quand la map est désactivé
-        srMap = GetComponentsInChildren<SpriteRenderer>();
+        if(srMap == null)
+            srMap = GetComponentsInChildren<SpriteRenderer>();
 
         gridController = new GridController(transform);
 
         knightPos = GridManager.Instance.GetGridPosition(transform.position);
 
-        animKnight = GetComponent<Animator>();
+        if(!animKnight)
+            animKnight = GetComponentInChildren<Animator>();
 
         isReseting = false;
 
@@ -63,7 +67,9 @@ public class KnightEvent : FrighteningEventBase
         if (CurrentRoom.enemies.Count == 0)
         {
             // Show the trap didn't work
-            srMap[1].color = Color.red;
+            foreach (var spriteRenderer in srMap)
+                spriteRenderer.color = Color.red;
+            // srMap[1].color = Color.red;
             isReseting = false;
             yield break;
         }
@@ -74,7 +80,9 @@ public class KnightEvent : FrighteningEventBase
         // THE SAME TIME OF THE ENEMIES
 
         // The trap worked
-        srMap[1].color = Color.green;
+        foreach (var spriteRenderer in srMap)
+            spriteRenderer.color = Color.green;
+        // srMap[1].color = Color.green;
 
         enemyToScare = CurrentRoom.GetClosestEnemy(transform.position);
         afraidEnemies.Clear();
@@ -113,7 +121,9 @@ public class KnightEvent : FrighteningEventBase
         yield return new WaitForSeconds(1f);
 
         Color32 readyColor = new Color32(166, 79, 0, 255);
-        srMap[1].color = readyColor;
+        foreach (var spriteRenderer in srMap)
+            spriteRenderer.color = readyColor;
+        // srMap[1].color = readyColor;
     }
 
     public void MoveKnight()

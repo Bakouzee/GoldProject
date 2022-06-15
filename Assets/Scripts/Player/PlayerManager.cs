@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using GoldProject;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using Enemies;
 using AudioController;
 
@@ -14,7 +13,6 @@ public class PlayerManager : SingletonBase<PlayerManager>
     public PlayerHealth PlayerHealth { get; private set; } 
     public PlayerBonuses Bonuses { get; private set; }
 
-    public TextMeshProUGUI textEnemyTrap;
     public GameObject arrowToMovePlayer;
     public GameObject miniMap;
     public GameObject mainCam;
