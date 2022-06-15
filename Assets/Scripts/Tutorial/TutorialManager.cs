@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using GoldProject.Rooms;
+using UnityEngine.SceneManagement;
 
 public class TutorialManager : SingletonBase<TutorialManager> {
 
@@ -12,6 +13,8 @@ public class TutorialManager : SingletonBase<TutorialManager> {
 
     private List<StageBase> stages = new List<StageBase>();
     public TutorialStage currentStage;
+
+    public GameObject endMenu;
 
 
     [Header("Movement Stage")]
@@ -70,6 +73,10 @@ public class TutorialManager : SingletonBase<TutorialManager> {
         stages.Add(transformationStage);
     }
     public void Update() => currentStage?.OnStageUpdate();
+
+    public void MenuButton() => SceneManager.LoadScene("Menu");
+    public void FinishButton() => SceneManager.LoadScene("Victoria_LD");
     
- 
+    
+
 }

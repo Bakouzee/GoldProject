@@ -29,7 +29,7 @@ public class StageBase : TutorialStage {
             TutorialManager.Instance.currentStage = nextStage;
         else {
             TutorialManager.Instance.currentStage = null;
-            Debug.Log("end of tuto");
+            TutorialManager.Instance.endMenu.SetActive(true);
         }
     }
 }

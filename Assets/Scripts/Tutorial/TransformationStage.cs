@@ -4,11 +4,15 @@ using UnityEngine;
 using TMPro;
 using GoldProject;
 using Enemies;
+using Unity.VisualScripting;
 
 public class TransformationStage : StageBase {
 
     private Player player;
+    private GameObject enemy;
 
+    private float timer;
+    
     public TransformationStage(TextMeshProUGUI stateText, string stateDesc) : base(stateText,stateDesc) {
 
     }
@@ -24,16 +28,22 @@ public class TransformationStage : StageBase {
         Vector3 enemyPos = player.CurrentRoom.roomTransform.GetChild(player.CurrentRoom.roomTransform.childCount - 1).position;
         
         
-        GameObject enemy = TutorialManager.Instantiate(TutorialManager.Instance.enemyPrefab, enemyPos, Quaternion.identity);
+        enemy = TutorialManager.Instantiate(TutorialManager.Instance.enemyPrefab, enemyPos, Quaternion.identity);
         enemy.GetComponent<EnemyBase>().enabled = false;
         enemy.transform.GetChild(3).gameObject.SetActive(false); // Disable enmy light 
+        
+        
     }
 
     public override void OnStageUpdate() {
         base.OnStageUpdate();
+        
+       isFinish = enemy.GetComponent<EnemyBase>().health.currentHealth <= 0;
     }
 
-    public override void OnStageFinish() => base.OnStageFinish();
-    
+    public override void OnStageFinish() {
+        base.OnStageFinish();
+    }
+
 
 }

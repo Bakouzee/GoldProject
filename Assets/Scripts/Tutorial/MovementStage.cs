@@ -22,6 +22,8 @@ public class MovementStage : StageBase {
 
         player = PlayerManager.Instance.Player;
         tileTarget.transform.GetChild(2).gameObject.SetActive(true);
+        
+        
     }
 
     public override void OnStageUpdate() {
@@ -30,8 +32,6 @@ public class MovementStage : StageBase {
 
         isFinish = playerPos == tileTargetPos;
 
-        if (isFinish)
-            Debug.Log("finish movement");
     }
 
     public override void OnStageFinish() {
