@@ -15,6 +15,9 @@ namespace Enemies.States
         public override void DoAction()
         {
             // Look for player
+            if(!enemy.interrogationPoint.activeInHierarchy)
+                enemy.interrogationPoint.SetActive(true);
+
             var objectWorldPos = PlayerManager.Instance.transform.position;
             if (enemy.IsObjectInSight(objectWorldPos))
             {
@@ -25,6 +28,9 @@ namespace Enemies.States
             turnDuration--;
             if (turnDuration <= 0)
             {
+                if (enemy.interrogationPoint.activeInHierarchy)
+                    enemy.interrogationPoint.SetActive(false);
+
                 GoToNextState();
             }
         }

@@ -151,7 +151,15 @@ MonoBehaviour:
     - {fileID: 8300000, guid: e51afcf2e4c171f4cb9acccaf1984615, type: 3}
   - playerTracks: 5
     playerClipList:
-    - {fileID: 8300000, guid: 0df6ccb900849ee4cb5ef15408b4bccc, type: 3}
+    - {fileID: 8300000, guid: 73d2a2b170f65d24fa7bbaf345765ab5, type: 3}
+  - playerTracks: 6
+    playerClipList:
+    - {fileID: 8300000, guid: 7c22cce0f60713245a586117c3aa5cc1, type: 3}
+  - playerTracks: 7
+    playerClipList:
+    - {fileID: 8300000, guid: 8b4f3b7f8f5f3a547b7cdf5216f90e29, type: 3}
+    - {fileID: 8300000, guid: 573e22c5bfbf8a340aaa781aca0dfb31, type: 3}
+    - {fileID: 8300000, guid: 234b32cd5c4ca7041800369b8c40ce7e, type: 3}
   enemySounds:
   - enemyTracks: 0
     enemyClipList:

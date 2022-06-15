@@ -39,6 +39,9 @@ namespace Enemies.States {
 
         public override IEnumerator OnStateEnter()
         {
+            if (!enemy.exclamationPoint.activeInHierarchy)
+                enemy.exclamationPoint.SetActive(true);
+
             enemy.Chasing = true;
             this.HasSight = true;
             enemy.SetLightColor(chase:true);
@@ -134,6 +137,9 @@ namespace Enemies.States {
 
         public override IEnumerator OnStateExit()
         {
+            if (enemy.exclamationPoint.activeInHierarchy)
+                enemy.exclamationPoint.SetActive(false);
+
             enemy.Chasing = false;
             enemy.SetLightColor(chase:false);
             yield return null;
