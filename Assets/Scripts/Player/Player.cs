@@ -256,6 +256,7 @@ namespace GoldProject
             transformed = false;
 
             SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Untransformation);
+            AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Detransformation);
 
             animator.SetLayerWeight(0, 1);
             animator.SetLayerWeight(1, 0);

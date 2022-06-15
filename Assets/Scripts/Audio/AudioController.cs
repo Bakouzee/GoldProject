@@ -18,6 +18,8 @@ namespace AudioController
         P_Death,
         P_Kill,
         P_Transformation,
+        P_Detransformation,
+        P_Hurt,
         P_Damaged
     }
 

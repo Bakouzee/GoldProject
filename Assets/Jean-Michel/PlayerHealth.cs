@@ -72,6 +72,7 @@ public class PlayerHealth : Health
         if (!IsInvincible)
         {
             currentHealth -= damage;
+            AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Hurt);
             OnHealthUpdated?.Invoke(currentHealth, healthMax);
             IsInvincible = true;
             StartCoroutine(BurningFlash());
@@ -85,6 +86,7 @@ public class PlayerHealth : Health
         if (!IsInvincible)
         {
             currentHealth -= damage;
+            AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Hurt);
             OnHealthUpdated?.Invoke(currentHealth, healthMax);
             IsInvincible = true;
             StartCoroutine(StinkFlash());
@@ -100,6 +102,7 @@ public class PlayerHealth : Health
         if (!IsInvincible)
         {
             currentHealth -= damage;
+            AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Hurt);
             OnHealthUpdated?.Invoke(currentHealth, healthMax);
             IsInvincible = true;
             StartCoroutine(InvincibillityFlash());
