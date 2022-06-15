@@ -94,7 +94,7 @@ namespace GoldProject
             {
                 Debug.Log("Enemy disappear");
                 if (enemy.chief)
-                    canTransform = true;
+                    CanTransform = true;
             };
 
             // When killing an enemy
@@ -129,7 +129,7 @@ namespace GoldProject
 
             if (Input.GetKeyDown(KeyCode.P))
             {
-                canTransform = true;
+                CanTransform = true;
                 Transform();
             }
 
@@ -230,9 +230,9 @@ namespace GoldProject
 
         public void Transform()
         {
-            if (transformed || !canTransform)
+            if (transformed || !CanTransform)
                 return;
-            canTransform = false;
+            CanTransform = false;
             transformed = true;
 
             SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
