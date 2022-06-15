@@ -5017,6 +5017,7 @@ MonoBehaviour:
   detectionRangeForGarlic: 2
   garlicProba: 0.5
   garlicPrefab: {fileID: 1313222802256865829, guid: ad3f17827c2be3c4e93df67824a6d7f4, type: 3}
+  health: {fileID: 1260435834159056000}
   tearsParticules: {fileID: 2008435233738041879}
   bravery: 1
   sightAngle: 120
@@ -5047,6 +5048,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthMax: 1
+  currentHealth: 0
 --- !u!61 &5176150284605153231
 BoxCollider2D:
   m_ObjectHideFlags: 0
