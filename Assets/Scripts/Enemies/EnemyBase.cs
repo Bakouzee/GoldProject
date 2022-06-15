@@ -57,6 +57,8 @@ namespace Enemies
         public int sightAngle = 90;
         [Range(0,10)]
         public int sightRange;
+        public GameObject exclamationPoint;
+        public GameObject interrogationPoint;
 
         [Header("Open Curtains var")]
         public int curtainRange;
@@ -88,13 +90,12 @@ namespace Enemies
 
 
         private GameObject sightRef;
-        
-        
 
         // Add and remove self automatically from the static enemies list
         protected virtual void Awake() => EnemyManager.enemies.Add(this);
         private void OnDestroy()
         {
+
             // remove self from room enemies list
             if (currentRoom != null)
                 currentRoom.enemies.Remove(this);
@@ -107,6 +108,13 @@ namespace Enemies
         {
             base.Start();
 
+            // Hide detection points
+            if(exclamationPoint && interrogationPoint)
+            {
+                interrogationPoint.SetActive(false);
+                exclamationPoint.SetActive(false);
+            }
+            
             health = GetComponent<Health>();
             // Call EnemyManager.OnEnemyDeath when dead
             health.OnDeath += () =>

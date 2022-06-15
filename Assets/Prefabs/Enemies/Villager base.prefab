@@ -5021,6 +5021,8 @@ MonoBehaviour:
   bravery: 1
   sightAngle: 120
   sightRange: 5
+  exclamationPoint: {fileID: 3879030915210914042}
+  interrogationPoint: {fileID: 8494902261399030054}
   curtainRange: 50
   curtainProbability: 0
   isAlerted: 0
