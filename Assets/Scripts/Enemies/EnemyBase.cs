@@ -377,6 +377,7 @@ namespace Enemies
             {
                 // If died -> call OnEnemyKilled event
                 ParticuleManager.Instance.OnEnemyDeath();
+                AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Attack);
                 
                 // Leaving count as enemy disappearing, we don't want to make the same enemy disappears twice
                 EnemyManager.OnEnemyKilled?.Invoke(this);
