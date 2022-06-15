@@ -12,7 +12,7 @@ public class VentStage : MovementStage {
 
     private bool lastIsFinish;
 
-    public VentStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText, string stateDesc, TutorialStage nextStage) : base(tileTargetPos,stateText, stateDesc, nextStage) {
+    public VentStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText, string stateDesc) : base(tileTargetPos,stateText, stateDesc) {
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
         this.tileTargetPos = tileTargetPos;
     }

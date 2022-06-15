@@ -11,11 +11,10 @@ public abstract class TutorialStage {
     protected TextMeshProUGUI stateText;
     protected bool isFinish;
 
-    public TutorialStage(TextMeshProUGUI stateText,string stateDesc, TutorialStage nextStage)
+    public TutorialStage(TextMeshProUGUI stateText,string stateDesc)
     {
         this.stateText = stateText;
         this.stateDesc = stateDesc;
-        this.nextStage = nextStage;
     }
     public virtual void OnStageBegin() {}
     public virtual void OnStageUpdate() {}

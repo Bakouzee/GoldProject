@@ -7,7 +7,7 @@ public class TrapStage : StageBase {
 
     private GameObject trapsUI;
 
-    public TrapStage(GameObject trapsUI,TextMeshProUGUI stateText, string stateDesc, TutorialStage nextStage) : base(stateText, stateDesc, nextStage) {
+    public TrapStage(GameObject trapsUI,TextMeshProUGUI stateText, string stateDesc) : base(stateText, stateDesc) {
         this.trapsUI = trapsUI;
     }
 

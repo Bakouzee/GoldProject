@@ -6,7 +6,7 @@ using TMPro;
 
 public class StageBase : TutorialStage {
 
-    public StageBase(TextMeshProUGUI stateText,string stateDesc, TutorialStage nextStage) : base(stateText,stateDesc, nextStage) {}
+    public StageBase(TextMeshProUGUI stateText,string stateDesc) : base(stateText,stateDesc) {}
 
     public override void OnStageBegin() {
         stateText.text = stateDesc;

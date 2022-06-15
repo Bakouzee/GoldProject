@@ -12,7 +12,7 @@ public class MovementStage : StageBase {
     private Player player;
     protected Vector2Int tileTargetPos;
 
-    public MovementStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,string stateDesc, TutorialStage nextStage) : base(stateText,stateDesc,nextStage) {
+    public MovementStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,string stateDesc) : base(stateText,stateDesc) {
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
         this.tileTargetPos = tileTargetPos;
     }

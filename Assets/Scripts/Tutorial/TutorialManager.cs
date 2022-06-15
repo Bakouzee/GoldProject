@@ -44,10 +44,10 @@ public class TutorialManager : SingletonBase<TutorialManager> {
     }
 
     private void InitStages() {
-        MovementStage movementStage = new MovementStage(movementTile,stateText,"Déplacez-vous vers la case qui clignote",null);
-        TrapStage trapStage = new TrapStage(trapsButton, stateText, "Ouvrez le menu pour activer les pièges", null);
-        CurtainStage curtainStage = new CurtainStage(curtain.GetComponent<Curtain>(),curtainTile, stateText, "Déplacez vous vers la fenêtre", null);
-        VentStage ventStage = new VentStage(ventTile, stateText, "Déplacez-vous vers la vent", null);
+        MovementStage movementStage = new MovementStage(movementTile,stateText,"Déplacez-vous vers la case qui clignote");
+        TrapStage trapStage = new TrapStage(trapsButton, stateText, "Ouvrez le menu pour activer les pièges");
+        CurtainStage curtainStage = new CurtainStage(curtain.GetComponent<Curtain>(),curtainTile, stateText, "Déplacez vous vers la fenêtre");
+        VentStage ventStage = new VentStage(ventTile, stateText, "Déplacez-vous vers la vent");
 
         movementStage.nextStage = trapStage;
         trapStage.nextStage = curtainStage;
