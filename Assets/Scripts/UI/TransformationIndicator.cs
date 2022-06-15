@@ -8,8 +8,7 @@ namespace GoldProject.UI
         [Header("Animations")]
         [SerializeField] private bool hasAnimator;
         [SerializeField] private Animator animator;
-        [SerializeField] private string animationTriggerName;
-        [SerializeField] private string animationResetName;
+        [SerializeField] private string animationBoolName;
 
         private void Start()
         {
@@ -29,7 +28,7 @@ namespace GoldProject.UI
                 if (!animator)
                     return;
                 
-                animator.SetTrigger(canTransform ? animationTriggerName : animationResetName);
+                animator.SetBool(animationBoolName, canTransform);
             }
         }
     }

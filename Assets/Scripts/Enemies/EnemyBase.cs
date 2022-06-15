@@ -48,6 +48,7 @@ namespace Enemies
         protected EnemyBaseState lastState;
 
         [Header("Afraid vars")]
+        public ParticleSystem tearsParticules;
         public int bravery = 1;
         private int afraidCount;
 
@@ -311,7 +312,10 @@ namespace Enemies
                 )
             );
 
-            ParticuleManager.Instance.OnEnemyScared();
+            if(tearsParticules)
+                tearsParticules.Play();
+
+            //ParticuleManager.Instance.OnEnemyScared();
             AudioManager.Instance.PlayEnemySound(EnemyAudioTracks.E_Fear);
         }
 
