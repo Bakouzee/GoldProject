@@ -22,7 +22,9 @@ public class PlayerManager : SingletonBase<PlayerManager>
     {
         base.Awake();
         Player = GetComponent<Player>();
-        Player.PlayerManager = this;
+        
+        if(Player != null)
+            Player.PlayerManager = this;
         
         PlayerHealth = GetComponent<PlayerHealth>();
         PlayerHealth.PlayerManager = this;
