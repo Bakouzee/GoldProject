@@ -33,7 +33,13 @@ public class TutorialManager : SingletonBase<TutorialManager> {
     private Vector2Int ventTile;
 
     // 11;27
-    private void Start() {
+    private void Start()
+    {
+
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null && !gameManager.enabled)
+            gameManager.enabled = true;
+        
         InitStages();
 
 
@@ -48,15 +54,18 @@ public class TutorialManager : SingletonBase<TutorialManager> {
         TrapStage trapStage = new TrapStage(trapsButton, stateText, "Ouvrez le menu pour activer les pièges");
         CurtainStage curtainStage = new CurtainStage(curtain.GetComponent<Curtain>(),curtainTile, stateText, "Déplacez vous vers la fenêtre");
         VentStage ventStage = new VentStage(ventTile, stateText, "Déplacez-vous vers la vent");
-
+        TransformationStage transformationStage = new TransformationStage(stateText, "Tuez l'ennemi devant vous");
+        
         movementStage.nextStage = trapStage;
         trapStage.nextStage = curtainStage;
         curtainStage.nextStage = ventStage;
-
+        ventStage.nextStage = transformationStage;
+        
         stages.Add(movementStage);
         stages.Add(trapStage);
         stages.Add(curtainStage);
         stages.Add(ventStage);
+        stages.Add(transformationStage);
     }
     public void Update() => currentStage?.OnStageUpdate();
     

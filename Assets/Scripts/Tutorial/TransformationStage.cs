@@ -15,7 +15,7 @@ public class TransformationStage : StageBase {
         base.OnStageBegin();
 
         player = PlayerManager.Instance.Player;
-
+        Debug.Log("transformation begin");
         player.Transform();
     }
 

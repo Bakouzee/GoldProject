@@ -53,8 +53,9 @@ public class GameManager : SingletonBase<GameManager>
     {
         get
         {
+            
             int index = CurrentDay - 1;
-            if (index >= waves.Length)
+            if (index >= waves.Length) // >=
                 return waves[^1];
             return waves[index];
         }
@@ -78,7 +79,12 @@ public class GameManager : SingletonBase<GameManager>
     private void Start()
     {
         // Set turn cooldown
+
+       
+        Debug.Log("enter start");
         turnCooldown = new Cooldown(dayNightTurnCooldown.x);
+        
+        Debug.Log("new turnCooldown " + turnCooldown);
 
         // Initialize dictionnaries <EnemyType, EnemyBase>
         enemiesDef.Init();
@@ -233,6 +239,8 @@ public class GameManager : SingletonBase<GameManager>
 #endif
 
         // Cooldown of turn
+
+        Debug.Log("my cooldown " + turnCooldown);
         turnCooldown.SetCooldown();
 
         OnLaunchedTurn?.Invoke(actionCount, actionPerPhase);

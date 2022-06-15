@@ -225,8 +225,10 @@ namespace GoldProject
 
         public void Transform()
         {
+            Debug.Log("transform state " + canTransform );
             if (transformed || !canTransform)
                 return;
+            
             canTransform = false;
             transformed = true;
 
