@@ -25360,12 +25360,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806611, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_Cameras.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806611, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9146962521025806611, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
+      propertyPath: m_Cameras.Array.data[0]
+      value: 
+      objectReference: {fileID: 1628996407}
     - target: {fileID: 9146962521025806613, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: orthographic size
       value: 16.5
@@ -27048,7 +27052,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5125da90ae8cd9e418cc2cc2a0efafae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 5641e154f3eaebd47a47a74f47399ddc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -54138,6 +54142,11 @@ GameObject:
 --- !u!4 &1628996406 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4483776097637877500, guid: d68493c129306254092e017613b6eed4, type: 3}
+  m_PrefabInstance: {fileID: 1921814950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1628996407 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
   m_PrefabInstance: {fileID: 1921814950}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1665141238
