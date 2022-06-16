@@ -26,7 +26,7 @@ public class Health : MonoBehaviour
 
         currentHealth -= amount;
         if (currentHealth <= 0)
-        {
+        {            
             Die();
             return true;
         }

@@ -42,6 +42,8 @@ public class PlayerManager : SingletonBase<PlayerManager>
     public System.Action onShowMap;
     public void ShowMap()
     {
+        if (PlayerHealth.Dead) return;
+
         if (miniMap != null)
         {
             if (!mapSeen)

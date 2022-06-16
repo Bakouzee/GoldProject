@@ -61,7 +61,12 @@ public class PlayerHealth : Health
 
         //UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene()
         //    .buildIndex);
-        
+
+        // Reset Cam
+        PlayerManager.Instance.miniMap.SetActive(false);
+        PlayerManager.mapSeen = !PlayerManager.mapSeen;
+        Camera.main.GetComponent<AudioListener>().enabled = true;
+
         StartCoroutine(SoundDeath());
         
         // Time.timeScale = 0;
