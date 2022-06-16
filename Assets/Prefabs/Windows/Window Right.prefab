@@ -7,6 +7,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: dayLight.color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: dayLight.color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: dayLight.color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: nightLight.color.b
+      value: 0.8396226
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: nightLight.color.g
+      value: 0.36268067
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: nightLight.color.r
+      value: 0.17030083
+      objectReference: {fileID: 0}
+    - target: {fileID: 5271983472356796420, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: nightLight.intensity
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 5928846784230785548, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
       propertyPath: m_Name
       value: Window Right

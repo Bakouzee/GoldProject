@@ -201,12 +201,12 @@ MonoBehaviour:
   lights:
   - {fileID: 5928846783471239001}
   dayLight:
-    color: {r: 1, g: 0.5411765, b: 0, a: 1}
+    color: {r: 1, g: 1, b: 1, a: 1}
     intensity: 1
   dayObjects: []
   nightLight:
-    color: {r: 0.5882353, g: 0.8666667, b: 1, a: 1}
-    intensity: 0.7
+    color: {r: 0.18623178, g: 0.34884965, b: 0.8773585, a: 1}
+    intensity: 0.8
   nightObjects: []
 --- !u!1 &5928846784619010218
 GameObject:
