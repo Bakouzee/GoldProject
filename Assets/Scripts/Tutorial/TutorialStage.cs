@@ -7,15 +7,20 @@ using TMPro;
 public abstract class TutorialStage {
 
     public TutorialStage nextStage;
-    protected string stateDesc;
+    public List<string> stageDescs;
+    public string subDesc;
     protected TextMeshProUGUI stateText;
     protected bool isFinish;
+    public int id;
 
-    public TutorialStage(TextMeshProUGUI stateText,string stateDesc)
+    public TutorialStage(TextMeshProUGUI stateText,List<string> stageDescs,string subDesc,int id)
     {
         this.stateText = stateText;
-        this.stateDesc = stateDesc;
+        this.stageDescs = stageDescs;
+        this.subDesc = subDesc;
+        this.id = id;
     }
+    
     public virtual void OnStageBegin() {}
     public virtual void OnStageUpdate() {}
     public virtual void OnStageFinish() {}

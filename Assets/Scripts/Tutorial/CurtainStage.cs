@@ -9,7 +9,7 @@ public class CurtainStage : MovementStage
 {
     private Curtain curtain;
 
-    public CurtainStage(Curtain curtain,Vector2Int tileTargetPos, TextMeshProUGUI stateText, string stateDesc) : base(tileTargetPos,stateText, stateDesc)
+    public CurtainStage(Curtain curtain,Vector2Int tileTargetPos, TextMeshProUGUI stateText,List<string> stageDescs,string subStage,int id) : base(tileTargetPos,stateText,stageDescs, subStage,id)
     {
         this.curtain = curtain;
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
