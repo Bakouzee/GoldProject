@@ -96,8 +96,9 @@ namespace GoldProject
             EnemyManager.OnEnemyDisappeared += enemy =>
             {
                 Debug.Log("Enemy disappear");
-                if (enemy.chief)
-                    CanTransform = true;
+                if (!enemy.chief || enemy.Leaving)
+                    return;
+                CanTransform = true;
             };
 
             // When killing an enemy
