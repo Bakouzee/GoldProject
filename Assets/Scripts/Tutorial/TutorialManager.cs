@@ -13,7 +13,7 @@ public class TutorialManager : SingletonBase<TutorialManager> {
     /**
      *
      * Faire un systeme de sub text ou ya plusieurs textes en mm temps 
-     * Faire les Zooms de caméra sur les élements pour les expliquer 
+     * Faire les Zooms de camÃ©ra sur les Ã©lements pour les expliquer 
      * 
      */
     
@@ -139,12 +139,15 @@ public class TutorialManager : SingletonBase<TutorialManager> {
 
     public IEnumerator ShowStageText(int index)
     {
+        if(index >= currentStage.stageDescs.Count)
+            yield break;
+        
         for(int i = 0;i<currentStage.stageDescs[index].Length;i++) {
             yield return new WaitForSeconds(0.03f);
-            stateText.text = currentStage.stageDescs[index].Substring(0,i);
+            stateText.text = currentStage.stageDescs[index][..i];
         }
 
-        if (currentStage.stageDescs.Count > index) {
+        if (index + 1 < currentStage.stageDescs.Count) {
             yield return new WaitForSeconds(2f);
             StartCoroutine(ShowStageText(index + 1));
         }

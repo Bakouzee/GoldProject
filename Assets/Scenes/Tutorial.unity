@@ -21652,11 +21652,11 @@ RectTransform:
   m_Father: {fileID: 2740115945108645356}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -102, y: -286}
-  m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 167}
+  m_SizeDelta: {x: 900.9, y: 200}
+  m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &316246174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21740,7 +21740,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -327.33688, y: -29.691994, z: -570.81213, w: -102.74275}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -25359,6 +25359,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806611, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
+      propertyPath: m_Cameras.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9146962521025806611, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_RenderPostProcessing
       value: 1
       objectReference: {fileID: 0}
@@ -27396,6 +27400,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
+  mixerVolumeMinMax: {x: 0, y: 0}
+  volumeSliders: []
+  onSprite: {fileID: 0}
+  offSprite: {fileID: 0}
 --- !u!1 &936475072
 GameObject:
   m_ObjectHideFlags: 0
@@ -90755,23 +90763,25 @@ MonoBehaviour:
   displaySubDialog: 0
   movementTileWithArrow: {x: 17, y: 17}
   movementArrowStageDescs:
-  - 'A l''aide des fleches directionnelles, deplacez vous vers la case qui clignote '
+  - 'Using arrows, move to the green flashing place '
   movementTile: {x: 11, y: 22}
   movementStageDescs:
-  - Deplacez vous desormais avec les cases bleues
+  - 'Now, try moving using the blue squares next to your character '
   trapsButton: {fileID: 2979044234900707983}
   trapsStageDescs:
-  - Cliquez sur le bouton pour ouvrir la map
-  trapsSubText: Appuyez sur un piege pour l'activer
+  - 'Click on the eye to see the map '
+  trapsSubText: 'Then click on a trap to trigger it '
   curtainTile: {x: 11, y: 31}
   curtain: {fileID: 212450522}
   curtainStageDescs:
-  - Vous venez d'effrayez le chef, vous pourrez vous transformer a la prochaine nuit
-  - "Deplacez-vous desormais vers la fen\xEAtre"
+  - 'Good job! You just frigthened the chief of the villagers. And so you will transform
+    next night '
+  - 'Now move to the window '
   ventTile: {x: 11, y: 27}
   ventStageDescs: []
-  ventSubText: 'Appuyez sur la vent pour vous teleporter '
-  transStageDescs: []
+  ventSubText: 'Click on a trapdoor to teleport yourself '
+  transStageDescs:
+  - 'Well done! You also just transformed, try killing the enemy in the room '
 --- !u!4 &1960786583 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
@@ -92741,6 +92751,7 @@ MonoBehaviour:
   rightArrowButton: {fileID: 2141352651}
   clock: {fileID: 4195191204264450395}
   transformationIndicator: {fileID: 6972264308974841940}
+  transformationParticles: {fileID: 0}
   DeathUI: {fileID: 2080788529}
 --- !u!114 &2740115945108645345
 MonoBehaviour:
