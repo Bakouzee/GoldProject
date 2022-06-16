@@ -23,6 +23,8 @@ namespace GoldProject
         [SerializeField] private int transformedActionsPerTurn = 3;
         private int remainingActions;
 
+        public ParticleSystem bloodParticule;
+
         private int RemainingActions
         {
             get => remainingActions;
@@ -100,6 +102,8 @@ namespace GoldProject
             // When killing an enemy
             EnemyManager.OnEnemyKilled += enemy =>
             {
+
+                bloodParticule.Play();
                 // Art when the enemy killed is the chief
                 if (enemy.chief)
                     SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation_First_Kill);
