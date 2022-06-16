@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using GoldProject;
 using Enemies;
+using GoldProject.UI;
 using Unity.VisualScripting;
 
 public class TransformationStage : StageBase {
@@ -13,7 +14,7 @@ public class TransformationStage : StageBase {
 
     private float timer;
     
-    public TransformationStage(TextMeshProUGUI stateText, string stateDesc) : base(stateText,stateDesc) {
+    public TransformationStage(TextMeshProUGUI stateText,List<string> stageDescs,string subDesc,int id) : base(stateText,stageDescs,subDesc,id) {
 
     }
 
@@ -21,9 +22,9 @@ public class TransformationStage : StageBase {
         base.OnStageBegin();
 
         player = PlayerManager.Instance.Player;
-        Debug.Log("transformation begin");
         player.CanTransform = true;
         player.Transform();
+        GameObject.FindObjectOfType<TransformationIndicator>().SetIndicator(true);
 
         Vector3 enemyPos = player.CurrentRoom.roomTransform.GetChild(player.CurrentRoom.roomTransform.childCount - 1).position;
         
@@ -43,6 +44,8 @@ public class TransformationStage : StageBase {
 
     public override void OnStageFinish() {
         base.OnStageFinish();
+        
+        GameObject.FindObjectOfType<TransformationIndicator>().SetIndicator(false);
     }
 
 

@@ -241,7 +241,6 @@ public class GameManager : SingletonBase<GameManager>
 
         // Cooldown of turn
 
-        Debug.Log("my cooldown " + turnCooldown);
         turnCooldown.SetCooldown();
 
         OnLaunchedTurn?.Invoke(actionCount, actionPerPhase[(int)dayState]);
