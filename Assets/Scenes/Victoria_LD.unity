@@ -30471,34 +30471,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1964482146}
     m_Modifications:
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.424116
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.531229
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -10
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
     - target: {fileID: 1939746958732601552, guid: 91ec236cd4966e34ea356eb98399173b, type: 3}
       propertyPath: m_Name
       value: TESTANIM
@@ -30546,6 +30518,34 @@ PrefabInstance:
     - target: {fileID: 1939746958732601557, guid: 91ec236cd4966e34ea356eb98399173b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -10.424116
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.531229
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5928846784230785550, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5868583ac0bfc8c46905ed293a4087b4, type: 3}
@@ -79100,19 +79100,7 @@ MonoBehaviour:
     - enemyType: 0
       count: 3
   - chief:
-      chiefType: 5
-      spawnOrder: 1
-    enemies:
-    - enemyType: 0
-      count: 3
-  - chief:
-      chiefType: 2
-      spawnOrder: 1
-    enemies:
-    - enemyType: 0
-      count: 3
-  - chief:
-      chiefType: 4
+      chiefType: 3
       spawnOrder: 1
     enemies:
     - enemyType: 0
@@ -79123,6 +79111,378 @@ MonoBehaviour:
     enemies:
     - enemyType: 0
       count: 3
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 3
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 3
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 4
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 4
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 4
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 4
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 4
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 5
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 5
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 5
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 5
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 5
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 6
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 6
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 6
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 6
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 6
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 7
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 7
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 7
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 7
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 7
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 8
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 8
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 8
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 8
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 8
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 9
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 9
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 9
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 9
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 9
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 10
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 10
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 10
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 10
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 10
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 11
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 11
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 11
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 11
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 11
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 12
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 12
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 12
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 12
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 12
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 13
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 13
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 13
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 13
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 13
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 14
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 14
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 14
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 14
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 14
+  - chief:
+      chiefType: 1
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 15
+  - chief:
+      chiefType: 5
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 15
+  - chief:
+      chiefType: 2
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 15
+  - chief:
+      chiefType: 4
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 15
+  - chief:
+      chiefType: 3
+      spawnOrder: 1
+    enemies:
+    - enemyType: 0
+      count: 15
   enemySpawnPoint: {fileID: 553665481}
 --- !u!114 &6814087094109489144
 MonoBehaviour:
