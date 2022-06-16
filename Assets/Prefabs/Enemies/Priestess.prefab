@@ -67,6 +67,10 @@ PrefabInstance:
       propertyPath: chief
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
+      propertyPath: bravery
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2110391225984441420, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Name
       value: Priestess

@@ -116,7 +116,8 @@ namespace Enemies
                 exclamationPoint.SetActive(false);
             }
             
-            health = GetComponent<Health>();
+            if(!health) health = GetComponent<Health>();
+            
             // Call EnemyManager.OnEnemyDeath when dead
             health.OnDeath += () =>
             {

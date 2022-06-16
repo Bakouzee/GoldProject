@@ -44921,7 +44921,7 @@ MonoBehaviour:
   - {fileID: 616309977}
   - {fileID: 1092961386}
   actionCountForVent: 0
-  actionPerPhase: 10000
+  actionPerPhase: {x: 2147483647, y: 2147483647}
   actionCount: 0
   dayNightTurnCooldown: {x: 2, y: 4}
   undoButton: {fileID: 0}
