@@ -10,15 +10,12 @@ namespace AudioController
     [RequireComponent(typeof(AudioSource))]
     public class AudioManager : SingletonBase<AudioManager>
     {
-
         public Sprite soundOFF;
         public Sprite soundON;
         public GameObject soundMusic;
         public GameObject soundSFX;
 
-
-
-       [System.Serializable]
+        [System.Serializable]
         public struct PlayerSounds
         {
             public PlayerAudioTracks playerTracks;
@@ -109,8 +106,10 @@ namespace AudioController
         private bool isActiveSFX = true;
         private bool isActiveMusic = true;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             sourceMusic = GetComponent<AudioSource>();
             sourceMusic.loop = true;
             //Add audio mixer music
