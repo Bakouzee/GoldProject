@@ -30,6 +30,8 @@ public class VentManager : MonoBehaviour, IInteractable
 
     public Sprite spriteOpen;
 
+    //public Animator possibleToVent;
+
     private void Start()
     {
         // Snap position to grid
@@ -72,42 +74,88 @@ public class VentManager : MonoBehaviour, IInteractable
 
             ventOne.GetComponent<SpriteRenderer>().sprite = spriteClosed;
 
+            ventOne.GetComponent<SpriteRenderer>().color = Color.red;
+
+            ventOne.GetComponent<Animator>().enabled = false;
+
+
 
             ventTwo.GetComponent<BoxCollider2D>().enabled = false;
 
             ventTwo.GetComponent<SpriteRenderer>().sprite = spriteClosed;
+
+            ventTwo.GetComponent<SpriteRenderer>().color = Color.red;
+
+            ventTwo.GetComponent<Animator>().enabled = false;
+
+
 
 
             ventThree.GetComponent<BoxCollider2D>().enabled = false;
 
             ventThree.GetComponent<SpriteRenderer>().sprite = spriteClosed;
 
+            ventThree.GetComponent<SpriteRenderer>().color = Color.red;
+
+            ventThree.GetComponent<Animator>().enabled = false;
+
+
+
 
             ventFour.GetComponent<BoxCollider2D>().enabled = false;
 
             ventFour.GetComponent<SpriteRenderer>().sprite = spriteClosed;
+
+            ventFour.GetComponent<SpriteRenderer>().color = Color.red;
+
+            ventFour.GetComponent<Animator>().enabled = false;
         }
         else
         {
             waitForVent = false;
             FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
+
             ventOne.GetComponent<BoxCollider2D>().enabled = true;
 
             ventOne.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
+            ventOne.GetComponent<SpriteRenderer>().color = Color.white;
+
+            ventOne.GetComponent<Animator>().enabled = true;
+
+
+
             ventTwo.GetComponent<BoxCollider2D>().enabled = true;
 
             ventTwo.GetComponent<SpriteRenderer>().sprite = spriteOpen;
+
+            ventTwo.GetComponent<SpriteRenderer>().color = Color.white;
+
+            ventTwo.GetComponent<Animator>().enabled = true;
+
+
 
 
             ventThree.GetComponent<BoxCollider2D>().enabled = true;
 
             ventThree.GetComponent<SpriteRenderer>().sprite = spriteOpen;
 
+            ventThree.GetComponent<SpriteRenderer>().color = Color.white;
+
+            ventThree.GetComponent<Animator>().enabled = true;
+
+
+
 
             ventFour.GetComponent<BoxCollider2D>().enabled = true;
 
             ventFour.GetComponent<SpriteRenderer>().sprite = spriteOpen;
+
+            ventFour.GetComponent<SpriteRenderer>().color = Color.white;
+
+            ventFour.GetComponent<Animator>().enabled = true;
+
+
         }
     }
 }
