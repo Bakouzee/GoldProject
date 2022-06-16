@@ -130,10 +130,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1302066828}
     m_Modifications:
-    - target: {fileID: 9146962521025806608, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
-      propertyPath: dezoomCam
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806610, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -179,13 +175,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9146962521025806611, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
-      propertyPath: m_RenderPostProcessing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9146962521025806613, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
-      propertyPath: orthographic size
-      value: 16.5
-      objectReference: {fileID: 0}
+      propertyPath: m_Cameras.Array.data[0]
+      value: 
+      objectReference: {fileID: 1009652494}
     - target: {fileID: 9146962521025806615, guid: 3ae243f20f2728b4182bb0d6d027e777, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -30734,17 +30726,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1302066828}
     m_Modifications:
-    - target: {fileID: 915475674591319970, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_Color.a
-      value: 0.53333336
-      objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877496, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: m_Name
       value: CamMinimap
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877496, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4483776097637877500, guid: d68493c129306254092e017613b6eed4, type: 3}
       propertyPath: m_RootOrder
@@ -30790,38 +30774,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_ClearFlags
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: orthographic size
-      value: 22
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_OcclusionCulling
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_BackGroundColor.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.21960786
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.21960786
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.21960786
-      objectReference: {fileID: 0}
-    - target: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d68493c129306254092e017613b6eed4, type: 3}
 --- !u!4 &1009652490 stripped
@@ -30832,6 +30784,11 @@ Transform:
 --- !u!1 &1009652491 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4483776097637877496, guid: d68493c129306254092e017613b6eed4, type: 3}
+  m_PrefabInstance: {fileID: 1009652489}
+  m_PrefabAsset: {fileID: 0}
+--- !u!20 &1009652494 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 4483776097637877501, guid: d68493c129306254092e017613b6eed4, type: 3}
   m_PrefabInstance: {fileID: 1009652489}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1027594032
