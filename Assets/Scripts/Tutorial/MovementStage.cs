@@ -11,6 +11,9 @@ public class MovementStage : StageBase {
     protected GameObject tileTarget;
     private Player player;
     protected Vector2Int tileTargetPos;
+    
+    private List<Direction> pathDirections;
+    private Direction lastDirection;
 
     public MovementStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,string stateDesc) : base(stateText,stateDesc) {
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
@@ -29,9 +32,17 @@ public class MovementStage : StageBase {
     public override void OnStageUpdate() {
         base.OnStageUpdate();
         Vector2Int playerPos = GridManager.Instance.GetGridPosition(player.transform.position);
+        Debug.Log("update");
+        pathDirections = GridManager.Instance.GetPath(GridManager.Instance.GetGridPosition(player.transform.position),tileTargetPos);
+        
+        if (pathDirections.Count > 0) {
+            SwitchArrowState(true, pathDirections[0]);
+            SwitchArrowState(!(lastDirection != null && lastDirection.Value != pathDirections[0].Value), lastDirection);
+        }
 
         isFinish = playerPos == tileTargetPos;
 
+        lastDirection = pathDirections.Count > 0 ? pathDirections[0] : null;
     }
 
     public override void OnStageFinish() {
@@ -40,5 +51,14 @@ public class MovementStage : StageBase {
         tileTarget.transform.GetChild(2).gameObject.SetActive(false); 
     }
 
+    private void SwitchArrowState(bool state,Direction dir) {
+        if (dir == null)
+            return;
+        
+        TutorialManager.Instance.FindArrowByDirections(dir).GetComponent<Animator>().enabled = state;
+        TutorialManager.Instance.FindArrowByDirections(dir).transform.GetChild(0).gameObject.SetActive(state);
+    }
+    
+    
 
 }

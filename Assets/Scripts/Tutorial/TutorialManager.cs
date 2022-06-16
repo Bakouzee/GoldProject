@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using GoldProject.Rooms;
+using GridSystem;
 using UnityEngine.SceneManagement;
 
 public class TutorialManager : SingletonBase<TutorialManager> {
@@ -16,10 +17,14 @@ public class TutorialManager : SingletonBase<TutorialManager> {
 
     public GameObject endMenu;
 
+    public GameObject[] directionalArrows = new GameObject[4];
+
 
     [Header("Movement Stage")]
     [SerializeField]
-    private Vector2Int movementTile;
+    private Vector2Int movementTileWithArrow;
+
+    [SerializeField] private Vector2Int movementTile;
 
     [Header("Traps Stage")]
     [SerializeField]
@@ -55,17 +60,20 @@ public class TutorialManager : SingletonBase<TutorialManager> {
     }
 
     private void InitStages() {
-        MovementStage movementStage = new MovementStage(movementTile,stateText,"Déplacez-vous vers la case qui clignote");
+        MovementStage movementArrowStage = new MovementStage(movementTileWithArrow,stateText,"A l'aide des fleches directionnelles, deplacez vous vers la case qui clignote");
+        MovementStage movementStage = new MovementStage(movementTile,stateText,"Dirige toi desormais avec les cases bleues");
         TrapStage trapStage = new TrapStage(trapsButton, stateText, "Ouvrez le menu pour activer les pièges");
         CurtainStage curtainStage = new CurtainStage(curtain.GetComponent<Curtain>(),curtainTile, stateText, "Déplacez vous vers la fenêtre");
         VentStage ventStage = new VentStage(ventTile, stateText, "Déplacez-vous vers la vent");
         TransformationStage transformationStage = new TransformationStage(stateText, "Tuez l'ennemi devant vous");
         
+        movementArrowStage.nextStage = movementStage;
         movementStage.nextStage = trapStage;
         trapStage.nextStage = curtainStage;
         curtainStage.nextStage = ventStage;
         ventStage.nextStage = transformationStage;
         
+        stages.Add(movementArrowStage);
         stages.Add(movementStage);
         stages.Add(trapStage);
         stages.Add(curtainStage);
@@ -76,7 +84,24 @@ public class TutorialManager : SingletonBase<TutorialManager> {
 
     public void MenuButton() => SceneManager.LoadScene("Menu");
     public void FinishButton() => SceneManager.LoadScene("Victoria_LD");
-    
-    
+
+
+    public GameObject FindArrowByDirections(Direction dir) {
+        switch (dir.ToString()) {
+            case "Up":
+                return directionalArrows[0];
+            
+            case "Down":
+                return directionalArrows[1];
+            
+            case "Left":
+                return directionalArrows[2];
+            
+            case "Right":
+                return directionalArrows[3];
+        }
+
+        return null;
+    }
 
 }
