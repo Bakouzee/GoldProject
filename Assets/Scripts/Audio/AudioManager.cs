@@ -96,6 +96,7 @@ namespace AudioController
 
         private AudioSource sourceMusic;
         private AudioSource sourceFoliage;
+        private AudioSource sourcePauseMusic;
 
         [Header("!!! DO NOT TOUCH !!!")]
         [SerializeField] private AudioMixerGroup mixerSFX;
@@ -118,6 +119,10 @@ namespace AudioController
             sourceFoliage = gameObject.AddComponent<AudioSource>();
             //Add audio mixer sfx
             sourceFoliage.outputAudioMixerGroup = mixerSFX;
+
+            sourcePauseMusic = gameObject.AddComponent<AudioSource>();
+            sourcePauseMusic.outputAudioMixerGroup = mixerMusic;
+            sourcePauseMusic.clip = musics[0].soundtrackClipList[0];
         }
 
         #region Player Methods
@@ -436,14 +441,15 @@ namespace AudioController
         public void PauseMusic()
         {
             sourceMusic.Pause();
-            sourceFoliage.clip = musics[0].soundtrackClipList[0];
-            sourceFoliage.Play();
+            sourceFoliage.enabled = false;
+            sourcePauseMusic.Play();
         }
 
         public void ResumeMusic()
         {
             sourceMusic.Play();
-            sourceFoliage.Stop();
+            sourceFoliage.enabled = true;
+            sourcePauseMusic.Stop();
         }
 
 
