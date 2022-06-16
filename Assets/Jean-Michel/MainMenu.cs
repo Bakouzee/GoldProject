@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using AudioController;
+using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
+
+    public TMP_Text versionText;
     private void Start()
     {
         AudioManager.Instance.PlayMusic(MusicAudioTracks.M_Menu);
+
+
+        versionText.text = "Version : " + Application.version;
+        
     }
     public void PlayGame()
     {
@@ -23,4 +30,6 @@ public class MainMenu : MonoBehaviour
     {
         SceneManager.LoadScene("Tutorial");
     }
+
+   
 }
