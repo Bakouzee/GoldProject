@@ -14,7 +14,7 @@ public class TransformationStage : StageBase {
 
     private float timer;
     
-    public TransformationStage(TextMeshProUGUI stateText, string stateDesc) : base(stateText,stateDesc) {
+    public TransformationStage(TextMeshProUGUI stateText,List<string> stageDescs,string subDesc,int id) : base(stateText,stageDescs,subDesc,id) {
 
     }
 

@@ -15,7 +15,7 @@ public class MovementStage : StageBase {
     private List<Direction> pathDirections;
     private Direction lastDirection;
 
-    public MovementStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,string stateDesc) : base(stateText,stateDesc) {
+    public MovementStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,List<string> stageDescs,string subDesc,int id) : base(stateText,stageDescs,subDesc,id) {
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
         this.tileTargetPos = tileTargetPos;
     }

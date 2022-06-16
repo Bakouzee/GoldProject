@@ -9,39 +9,71 @@ using UnityEngine.SceneManagement;
 
 public class TutorialManager : SingletonBase<TutorialManager> {
 
+    
+    /**
+     *
+     * Faire un systeme de sub text ou ya plusieurs textes en mm temps 
+     * Faire les Zooms de caméra sur les élements pour les expliquer 
+     * 
+     */
+    
     [SerializeField]
     private TextMeshProUGUI stateText;
 
     private List<StageBase> stages = new List<StageBase>();
     public TutorialStage currentStage;
 
+    public GameObject enemyPrefab;
+
     public GameObject endMenu;
 
     public GameObject[] directionalArrows = new GameObject[4];
 
+    public bool displaySubDialog;
 
-    [Header("Movement Stage")]
+
+    [Header("Movement Arrow Stage")]
     [SerializeField]
     private Vector2Int movementTileWithArrow;
-
-    [SerializeField] private Vector2Int movementTile;
+    [SerializeField] 
+    private List<string> movementArrowStageDescs;
+    
+    
+    [Header("Movement Stage")]
+    [SerializeField]
+    private Vector2Int movementTile;
+    [SerializeField] 
+    private List<string> movementStageDescs;
+    
 
     [Header("Traps Stage")]
     [SerializeField]
     private GameObject trapsButton;
+    [SerializeField] 
+    private List<string> trapsStageDescs;
+    [SerializeField] 
+    private string trapsSubText;
 
     [Header("Curtain Stage")]
     [SerializeField]
     private Vector2Int curtainTile;
     [SerializeField]
     private GameObject curtain;
+    [SerializeField] 
+    private List<string> curtainStageDescs;
 
     [Header("Vent Stage")]
     [SerializeField]
     private Vector2Int ventTile;
+    
+    [SerializeField] 
+    private List<string> ventStageDescs;
+    [SerializeField] 
+    private string ventSubText;
 
-    [Header("Transformation Stage")] 
-    public GameObject enemyPrefab;
+    [Header("Transformation Stage")]
+    [SerializeField] 
+    private List<string> transStageDescs;
     // 11;27
     private void Start()
     {
@@ -57,15 +89,16 @@ public class TutorialManager : SingletonBase<TutorialManager> {
         stages[0].OnStageBegin();
 
         curtain.GetComponent<Curtain>().SetOpened(true);
+        StartCoroutine(ShowStageText(0));
     }
 
     private void InitStages() {
-        MovementStage movementArrowStage = new MovementStage(movementTileWithArrow,stateText,"A l'aide des fleches directionnelles, deplacez vous vers la case qui clignote");
-        MovementStage movementStage = new MovementStage(movementTile,stateText,"Dirige toi desormais avec les cases bleues");
-        TrapStage trapStage = new TrapStage(trapsButton, stateText, "Ouvrez le menu pour activer les pièges");
-        CurtainStage curtainStage = new CurtainStage(curtain.GetComponent<Curtain>(),curtainTile, stateText, "Déplacez vous vers la fenêtre");
-        VentStage ventStage = new VentStage(ventTile, stateText, "Déplacez-vous vers la vent");
-        TransformationStage transformationStage = new TransformationStage(stateText, "Tuez l'ennemi devant vous");
+        MovementStage movementArrowStage = new MovementStage(movementTileWithArrow,stateText,movementArrowStageDescs,"",0);
+        MovementStage movementStage = new MovementStage(movementTile,stateText,movementStageDescs,"",1);
+        TrapStage trapStage = new TrapStage(trapsButton, stateText, trapsStageDescs,trapsSubText,2);
+        CurtainStage curtainStage = new CurtainStage(curtain.GetComponent<Curtain>(),curtainTile, stateText, curtainStageDescs,"",3);
+        VentStage ventStage = new VentStage(ventTile, stateText, ventStageDescs,ventSubText,4);
+        TransformationStage transformationStage = new TransformationStage(stateText, transStageDescs,"",5);
         
         movementArrowStage.nextStage = movementStage;
         movementStage.nextStage = trapStage;
@@ -102,6 +135,30 @@ public class TutorialManager : SingletonBase<TutorialManager> {
         }
 
         return null;
+    }
+
+    public IEnumerator ShowStageText(int index)
+    {
+        for(int i = 0;i<currentStage.stageDescs[index].Length;i++) {
+            yield return new WaitForSeconds(0.03f);
+            stateText.text = currentStage.stageDescs[index].Substring(0,i);
+        }
+
+        if (currentStage.stageDescs.Count > index) {
+            yield return new WaitForSeconds(2f);
+            StartCoroutine(ShowStageText(index + 1));
+        }
+
+    }
+    
+    public IEnumerator ShowSubText()
+    {
+        for(int i = 0;i<currentStage.subDesc.Length;i++) {
+            yield return new WaitForSeconds(0.03f);
+            stateText.text = currentStage.subDesc.Substring(0,i);
+        }
+
+
     }
 
 }

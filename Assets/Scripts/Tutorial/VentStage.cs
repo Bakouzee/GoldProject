@@ -12,7 +12,7 @@ public class VentStage : MovementStage {
 
     private bool lastIsFinish;
 
-    public VentStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText, string stateDesc) : base(tileTargetPos,stateText, stateDesc) {
+    public VentStage(Vector2Int tileTargetPos, TextMeshProUGUI stateText,List<string> stageDescs,string subDesc,int id) : base(tileTargetPos,stateText, stageDescs,subDesc,id) {
         this.tileTarget = GridManager.Instance.GetTileAtPosition(tileTargetPos).gameObject;
         this.tileTargetPos = tileTargetPos;
     }
@@ -28,6 +28,13 @@ public class VentStage : MovementStage {
         
         if(isFinish) {
             isFinish = false;
+
+            if (!TutorialManager.Instance.displaySubDialog) {
+                TutorialManager.Instance.displaySubDialog = true;
+                TutorialManager.Instance.StartCoroutine(TutorialManager.Instance.ShowSubText());
+            }
+            
+
             lastIsFinish = true;
         }
 

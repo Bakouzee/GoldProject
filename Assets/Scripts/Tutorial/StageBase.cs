@@ -6,11 +6,10 @@ using TMPro;
 
 public class StageBase : TutorialStage {
 
-    public StageBase(TextMeshProUGUI stateText,string stateDesc) : base(stateText,stateDesc) {}
+    public StageBase(TextMeshProUGUI stateText,List<string> stageDescs,string subDesc,int id) : base(stateText,stageDescs,subDesc,id) {}
 
-    public override void OnStageBegin() {
-        stateText.text = stateDesc;
-    }
+    public override void OnStageBegin() => TutorialManager.Instance.StartCoroutine(TutorialManager.Instance.ShowStageText(0));
+    
 
 
     public override void OnStageUpdate() {
@@ -22,7 +21,9 @@ public class StageBase : TutorialStage {
    }
     public override void OnStageFinish() {
         stateText.text = "";
-
+        
+        TutorialManager.Instance.displaySubDialog = false;
+        
         nextStage?.OnStageBegin();
 
         if (nextStage != null)
