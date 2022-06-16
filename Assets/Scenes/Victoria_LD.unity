@@ -60572,6 +60572,10 @@ PrefabInstance:
       propertyPath: volumeSliders.Array.data[3].defaultValue
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 954838971344321431, guid: f87533469e6722948b03afd2f774a281, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 954838971474728621, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -60714,7 +60718,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2979044234482828464, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 37.099976
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2979044234482828467, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -60742,6 +60746,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4071311416861086109, guid: f87533469e6722948b03afd2f774a281, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871368193186866390, guid: f87533469e6722948b03afd2f774a281, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7804536240381404148, guid: f87533469e6722948b03afd2f774a281, type: 3}

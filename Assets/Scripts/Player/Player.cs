@@ -272,6 +272,12 @@ namespace GoldProject
                 return;
             transformed = false;
 
+            // Stop particles when untransformation
+            if (UiManager.Instance.transformationParticles)
+            {
+                UiManager.Instance.transformationParticles.gameObject.SetActive(false);
+            }
+
             SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Untransformation);
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Detransformation);
 

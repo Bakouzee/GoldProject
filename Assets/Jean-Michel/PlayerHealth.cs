@@ -64,7 +64,9 @@ public class PlayerHealth : Health
 
         // Reset Cam
         PlayerManager.Instance.miniMap.SetActive(false);
-        PlayerManager.mapSeen = !PlayerManager.mapSeen;
+        if(PlayerManager.mapSeen == true)
+            PlayerManager.mapSeen = !PlayerManager.mapSeen;
+
         Camera.main.GetComponent<AudioListener>().enabled = true;
 
         StartCoroutine(SoundDeath());
