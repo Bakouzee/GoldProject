@@ -1,0 +1,115 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: SettingsMenu
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: 9ba78ff848f0b0841b6015ab27172578, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: audioMixer
+    value: 
+    objectReference: {fileID: 24100000, guid: e97406bfcf072f54590d1b1c1ba9df58, type: 2}
+  - target: {fileID: 0}
+    propertyPath: mixerVolumeMinMax.x
+    value: -20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: mixerVolumeMinMax.y
+    value: 20
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.size
+    value: 4
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[0].name
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[0].slider
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[0].muteImage
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[0].defaultValue
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[1].name
+    value: Master
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[1].slider
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[1].muteImage
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[1].defaultValue
+    value: 0.5
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[2].name
+    value: Music
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[2].slider
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[2].muteImage
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[2].defaultValue
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[3].name
+    value: SFX
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[3].slider
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[3].muteImage
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: volumeSliders.Array.data[3].defaultValue
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: onSprite
+    value: 
+    objectReference: {fileID: 21300000, guid: 3d98b91b4f1fc1045a457b90cea1f9c5, type: 3}
+  - target: {fileID: 0}
+    propertyPath: offSprite
+    value: 
+    objectReference: {fileID: 21300000, guid: f06c64e2524669942bfaf2aaec3f86d1, type: 3}
+  m_ExcludedProperties: []
