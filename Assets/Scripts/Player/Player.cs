@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Enemies;
 using GoldProject.Rooms;
+using GoldProject.UI;
 using GridSystem;
 using Unity.Notifications.Android;
 using UnityEngine;
@@ -239,7 +240,19 @@ namespace GoldProject
             CanTransform = false;
             transformed = true;
 
+            // Play particles when transformation
+            if (UiManager.Instance.transformationParticles)
+            {
+                UiManager.Instance.transformationParticles.gameObject.SetActive(true);
+                UiManager.Instance.transformationParticles.Play();
+            }
+
+
+
+            // Play splash art when turning
             SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
+
+            // Play audio
             AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Transformation);
 
             // Changer current animation layer

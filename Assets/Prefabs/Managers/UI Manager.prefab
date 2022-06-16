@@ -250,7 +250,7 @@ RectTransform:
   - {fileID: 1716725683}
   - {fileID: 1888542174}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1078,7 +1078,7 @@ RectTransform:
   - {fileID: 724990207}
   - {fileID: 382711662}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -2802,7 +2802,7 @@ RectTransform:
   - {fileID: 1681288518}
   - {fileID: 486587135}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5273,7 +5273,7 @@ RectTransform:
   m_Children:
   - {fileID: 3209191672840846845}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -5697,6 +5697,7 @@ RectTransform:
   m_Children:
   - {fileID: 2740115945112993065}
   - {fileID: 2740115945760505773}
+  - {fileID: 7804536240381404148}
   - {fileID: 4071311417737351272}
   - {fileID: 503135774}
   - {fileID: 2979044234482828464}
@@ -5801,6 +5802,7 @@ MonoBehaviour:
   rightArrowButton: {fileID: 1179299061}
   clock: {fileID: 4195191204665509733}
   transformationIndicator: {fileID: 6972264309661150826}
+  transformationParticles: {fileID: 0}
   DeathUI: {fileID: 1173261839}
 --- !u!114 &5922879826335223327
 MonoBehaviour:
@@ -6625,7 +6627,7 @@ RectTransform:
   - {fileID: 6835911436945700685}
   - {fileID: 6898879485248602844}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -6757,7 +6759,7 @@ RectTransform:
   - {fileID: 8882279085970501526}
   - {fileID: 8447845082560100691}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -6938,7 +6940,7 @@ RectTransform:
   m_Children:
   - {fileID: 1138270773011712366}
   m_Father: {fileID: 2740115944687631314}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -7161,17 +7163,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7035215572016614344}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4071311417737351272}
-  m_RootOrder: 3
+  m_Father: {fileID: 2740115944687631314}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 58, y: 0}
+  m_AnchoredPosition: {x: 667.00006, y: 982}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
 --- !u!198 &3860007630322862988
@@ -7190,7 +7192,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -7257,7 +7259,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.2
+      scalar: 0.5
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -7310,7 +7312,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 100
+      scalar: 50
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -7364,7 +7366,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 1, g: 0.089728706, b: 0, a: 1}
+      maxColor: {r: 1, g: 0, b: 0, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -7426,7 +7428,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 7.95
+      scalar: 20
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -7889,7 +7891,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 82.11
+      value: 90
       mode: 0
       spread: 0
       speed:
@@ -8114,7 +8116,7 @@ ParticleSystem:
     m_BurstCount: 0
     m_Bursts: []
   SizeModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -8126,21 +8128,21 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0
-          inSlope: 0
+          inSlope: 1
           outSlope: 1
-          tangentMode: 0
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         - serializedVersion: 3
           time: 1
           value: 1
           inSlope: 1
-          outSlope: 0
-          tangentMode: 0
+          outSlope: 1
+          tangentMode: 34
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -12424,7 +12426,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6372753948118482715, guid: 4a7fa1ba075294746a805bdc7f7f51d4, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6372753948118482715, guid: 4a7fa1ba075294746a805bdc7f7f51d4, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12647,7 +12649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2979044236133789754, guid: 224dbe5fa47194b4a97f5849f39f7147, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2979044236133789754, guid: 224dbe5fa47194b4a97f5849f39f7147, type: 3}
       propertyPath: m_AnchorMax.x
@@ -12881,7 +12883,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2199705805638669397, guid: 54bf8c0e887568043ba7012173e82b1b, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2199705805638669397, guid: 54bf8c0e887568043ba7012173e82b1b, type: 3}
       propertyPath: m_AnchorMax.x
@@ -13053,7 +13055,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3408502318186212473, guid: 0e1c6c01d8b45ab47bb2e4f405d9bc8c, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 3408502318186212473, guid: 0e1c6c01d8b45ab47bb2e4f405d9bc8c, type: 3}
       propertyPath: m_AnchorMax.x

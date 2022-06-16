@@ -45,6 +45,7 @@ namespace GoldProject.UI
 
         [Header("Transformation Indicator"), SerializeField]
         private TransformationIndicator transformationIndicator;
+        public ParticleSystem transformationParticles;
 
         public GameObject DeathUI;
         public void LauchGameOverMenu()
@@ -110,6 +111,12 @@ namespace GoldProject.UI
                 transformationIndicator.SetIndicator(false);
                 PlayerManager.Instance.Player.OnCanTransformChanged +=
                     canTransform => transformationIndicator.SetIndicator(canTransform);
+            }
+
+            // Transformation Particles
+            if (transformationParticles)
+            {
+                transformationParticles.gameObject.SetActive(false);
             }
         }
 
