@@ -430,5 +430,23 @@ namespace AudioController
         {
             return rPicth = UnityEngine.Random.Range(minPitch, maxPitch);
         }
+
+        #region Pause Music
+
+        public void PauseMusic()
+        {
+            sourceMusic.Pause();
+            sourceFoliage.clip = musics[0].soundtrackClipList[0];
+            sourceFoliage.Play();
+        }
+
+        public void ResumeMusic()
+        {
+            sourceMusic.Play();
+            sourceFoliage.Stop();
+        }
+
+
+        #endregion
     }
 }
