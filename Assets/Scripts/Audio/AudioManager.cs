@@ -415,14 +415,16 @@ namespace AudioController
             if (isActiveMusic == true)
             {
                 sourceMusic.enabled = false;
+                sourcePauseMusic.enabled = false;
                 soundMusic.GetComponent<Image>().sprite = soundOFF;
 
             }
             else
             {
                 sourceMusic.enabled = true;
+                sourceMusic.Stop();
+                sourcePauseMusic.enabled = true;
                 soundMusic.GetComponent<Image>().sprite = soundON;
-
             }
 
             isActiveMusic = !isActiveMusic;
