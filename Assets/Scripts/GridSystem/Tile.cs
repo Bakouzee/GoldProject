@@ -60,7 +60,8 @@ namespace GridSystem
                     continue;
                 
                 tile.walkable = false;
-                tile.walkableHighlight.SetActive(false);
+                if(tile.walkableHighlight.activeSelf) tile.walkableHighlight.SetActive(false);
+                if(tile.mouseHighlight.activeSelf) tile.mouseHighlight.SetActive(false);
             }
             walkableTiles = new List<Tile>();
         }
@@ -72,13 +73,8 @@ namespace GridSystem
             // Do nothing if clicking on UI
             if (GameManager.eventSystem.IsPointerOverGameObject())
                 return;
-
+            
             mouseHighlight.SetActive(true);
-
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "{" + gridPos.x + ";" + gridPos.y + "}";
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "G:" +GCost;
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "H:" + HCost;
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "F:" + FCost;
         }
 
         private void OnMouseExit()
@@ -88,12 +84,6 @@ namespace GridSystem
                 return;
 
             mouseHighlight.SetActive(false);
-
-
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(2).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
-            // GameObject.FindObjectOfType<Canvas>().transform.GetChild(3).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "";
         }
         #endregion
     }

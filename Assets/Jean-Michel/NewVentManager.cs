@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GoldProject;
 using AudioController;
+using GridSystem;
 
 
 public class NewVentManager : SingletonBase<NewVentManager>
@@ -24,34 +25,18 @@ public class NewVentManager : SingletonBase<NewVentManager>
         player = PlayerManager.Instance.Player;
     }
 
-    public void FirstRoomVent()
-    {
-        player.gridController.SetPosition(ventOne.transform.position + Vector3.left);
-        gameObject.SetActive(false);
-        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
-        choosingVent = false;
-    }
+    public void FirstRoomVent() => UseVent(ventOne);
+    public void SecondRoomVent() => UseVent(ventTwo);
+    public void ThirdRoomVent() => UseVent(ventThree);
+    public void FourthRoomVent() => UseVent(ventFour);
 
-    public void SecondRoomVent()
+    private void UseVent(GameObject vent)
     {
-        player.gridController.SetPosition(ventTwo.transform.position + Vector3.left);
+        player.gridController.SetPosition(vent.transform.position + Vector3.left);
         gameObject.SetActive(false);
-        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
-        choosingVent = false;
-    }
-    public void ThirdRoomVent()
-    {
-        player.gridController.SetPosition(ventThree.transform.position + Vector3.left);
-        gameObject.SetActive(false);
-        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
-        choosingVent = false;
-    }
-
-    public void FourthRoomVent()
-    {
-        player.gridController.SetPosition(ventFour.transform.position + Vector3.left);
-        gameObject.SetActive(false);
-        PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
+        PlayerManager playerManager = PlayerManager.Instance;
+        playerManager.arrowToMovePlayer.SetActive(true);
+        playerManager.Player.SetNeighborTilesWalkable();
         choosingVent = false;
     }
 }

@@ -356,6 +356,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: PuppetTrap
       objectReference: {fileID: 0}
+    - target: {fileID: 709663598045166310, guid: 32ae83c33e59c3646b32f5ea4ccdbd78, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 709663598045166310, guid: 32ae83c33e59c3646b32f5ea4ccdbd78, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 709663598045166310, guid: 32ae83c33e59c3646b32f5ea4ccdbd78, type: 3}
+      propertyPath: m_Offset.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 709663598045166310, guid: 32ae83c33e59c3646b32f5ea4ccdbd78, type: 3}
+      propertyPath: m_Offset.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 709663598045166311, guid: 32ae83c33e59c3646b32f5ea4ccdbd78, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -30873,6 +30889,27 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9126356793327405867, guid: 9a79f3caaf1b2844287c1dd50f5707ba, type: 3}
   m_PrefabInstance: {fileID: 1337538779}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1355956887 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5504029498884095885, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
+  m_PrefabInstance: {fileID: 1775470519}
+  m_PrefabAsset: {fileID: 0}
+--- !u!58 &1355956890
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355956887}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1.5
 --- !u!4 &1363090270 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8170858042846163414, guid: 1435f471065f39541a5f115ea8822c9a, type: 3}
@@ -50250,6 +50287,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5504029497289882092, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504029497289882093, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504029497289882093, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5504029497289882093, guid: 75dc1e3b67af48f43951cc9b11a3fafb, type: 3}
+      propertyPath: m_EdgeRadius
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

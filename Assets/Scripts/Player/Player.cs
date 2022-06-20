@@ -45,10 +45,14 @@ namespace GoldProject
                 //     LookForLightDamage();
                 // }
                 remainingActions = value;
-
-                Tile.ResetWalkableTiles();
-                gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
+                SetNeighborTilesWalkable();
             }
+        }
+
+        public void SetNeighborTilesWalkable()
+        {
+            Tile.ResetWalkableTiles();
+            gridController.gridManager.SetNeighborTilesWalkable(gridController.currentTile, remainingActions);
         }
 
         private void ResetRemainingAction() =>
@@ -75,6 +79,7 @@ namespace GoldProject
         }
 
         #region Set Events
+
         private void SetGameHandlerEvents(GameManager gameManager)
         {
             // Transform or Untransform on day or night start
@@ -104,7 +109,6 @@ namespace GoldProject
             // When killing an enemy
             EnemyManager.OnEnemyKilled += enemy =>
             {
-
                 bloodParticule.Play();
                 // Art when the enemy killed is the chief
                 if (enemy.chief)
@@ -223,6 +227,7 @@ namespace GoldProject
         public static bool transformed;
 
         private bool canTransform;
+
         public bool CanTransform
         {
             get => canTransform;
@@ -232,6 +237,7 @@ namespace GoldProject
                 OnCanTransformChanged?.Invoke(canTransform);
             }
         }
+
         public System.Action<bool> OnCanTransformChanged;
 
         public void Transform()
@@ -249,7 +255,6 @@ namespace GoldProject
             }
 
 
-
             // Play splash art when turning
             SplashArtManager.Instance.SplashArtToChoose(SplashArtType.Transformation);
 
@@ -259,7 +264,7 @@ namespace GoldProject
             // Changer current animation layer
             animator.SetLayerWeight(0, 0);
             animator.SetLayerWeight(1, 1);
-            
+
             // Frighten enemies in the room
             foreach (var enemy in currentRoom.enemies)
                 enemy.GetAfraid(source: transform);
