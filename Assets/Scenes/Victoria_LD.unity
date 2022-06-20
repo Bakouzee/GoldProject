@@ -30692,76 +30692,6 @@ Transform:
   m_Father: {fileID: 3400857760218494197}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1228527434
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1632318508}
-    m_Modifications:
-    - target: {fileID: 6822041891962724244, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_Name
-      value: Blood
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724244, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724246, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.04
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.17111346
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822041891962724247, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
---- !u!198 &1228527435 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6822041891962724246, guid: b804a537485fdf64aa8fab643e1f459e, type: 3}
-  m_PrefabInstance: {fileID: 1228527434}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1302066827
 GameObject:
   m_ObjectHideFlags: 0
@@ -31371,10 +31301,6 @@ PrefabInstance:
       propertyPath: arrowToMovePlayer
       value: 
       objectReference: {fileID: 1697031399}
-    - target: {fileID: 1519083190786363593, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
-      propertyPath: bloodParticule
-      value: 
-      objectReference: {fileID: 1228527435}
     - target: {fileID: 1519083190786363595, guid: 330fcad5c98abeb4b8b713ecea6aaf46, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -50371,7 +50297,7 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1632318508}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -78805,7 +78731,7 @@ MonoBehaviour:
     - type: 0
       prefab: {fileID: 2110391225984441411, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
     - type: 1
-      prefab: {fileID: 6111354782983334853, guid: ae862bbb27210004f9535b966b0910b8, type: 3}
+      prefab: {fileID: 8116415231335259737, guid: c1921544fbb0b1b42a7ee9287d0a5cf3, type: 3}
     - type: 2
       prefab: {fileID: 8047533996420772681, guid: 523c22684f6927549a27aa310e1ee6ba, type: 3}
     - type: 3

@@ -51,9 +51,6 @@ namespace Enemies
         [Header("Afraid vars")]
         public ParticleSystem tearsParticules;
 
-       
-
-
         public int bravery = 1;
         private int afraidCount;
 

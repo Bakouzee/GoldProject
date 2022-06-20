@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Serialization;
@@ -9,12 +10,14 @@ namespace GridSystem
     public class Tile : MonoBehaviour
     {
         private static List<Tile> walkableTiles = new List<Tile>();
+        private static List<Tile> tutoTiles = new List<Tile>();
 
         // Highlights
         [FormerlySerializedAs("highlight")] [SerializeField]
         private GameObject mouseHighlight;
         [SerializeField] private GameObject walkableHighlight;
         private bool walkable;
+        [SerializeField] private GameObject tutoHighlight;
         
         private Vector2Int gridPos;
         public Vector2Int GridPos => gridPos;
@@ -84,6 +87,29 @@ namespace GridSystem
                 return;
 
             mouseHighlight.SetActive(false);
+        }
+        #endregion
+
+        #region Tuto highlighting
+        public static void ResetTutoTiles()
+        {
+            foreach (var tile in tutoTiles)
+            {
+                if (!tile)
+                    continue;
+                if(tile.tutoHighlight.activeSelf)
+                    tile.tutoHighlight.SetActive(false);
+            }
+            tutoTiles.Clear();
+        }
+
+        public void SetTutoHighlight(bool enable)
+        {
+            if(enable) tutoTiles.Add(this);
+            else if (tutoTiles.Contains(this)) tutoTiles.Remove(this);
+            
+            if(tutoHighlight.activeSelf != enable)
+                tutoHighlight.SetActive(enable);
         }
         #endregion
     }

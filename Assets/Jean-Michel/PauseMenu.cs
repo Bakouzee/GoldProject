@@ -82,11 +82,7 @@ public class PauseMenu : MonoBehaviour
     public void Retry()
     {
         Time.timeScale = 1f;
-        if(GameObject.FindObjectOfType<TutorialManager>() != null)
-            SceneManager.LoadScene("Tutorial");
-        else
-            SceneManager.LoadScene("Victoria_LD");
-        
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void Settings()

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,6 +19,8 @@ public class NewVentManager : SingletonBase<NewVentManager>
     public GameObject ventFour;
 
     public static bool choosingVent;
+
+    public static Action OnVentUsed;
     
 
     private void Start()
@@ -38,5 +41,8 @@ public class NewVentManager : SingletonBase<NewVentManager>
         playerManager.arrowToMovePlayer.SetActive(true);
         playerManager.Player.SetNeighborTilesWalkable();
         choosingVent = false;
+        
+        // ;(
+        OnVentUsed?.Invoke();
     }
 }

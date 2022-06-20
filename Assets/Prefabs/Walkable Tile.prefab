@@ -292,6 +292,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mouseHighlight: {fileID: 5468731981934432064}
   walkableHighlight: {fileID: 1636916919929299542}
+  tutoHighlight: {fileID: 588812280174846096}
   HCost: 0
   previousTile: {fileID: 0}
 --- !u!61 &9213156901143428317

@@ -18,7 +18,6 @@ public class CurtainStage : MovementStage
 
     public override void OnStageBegin() => base.OnStageBegin();
 
-   
     public override void OnStageUpdate() {
         base.OnStageUpdate();
 

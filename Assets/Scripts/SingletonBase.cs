@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using GridSystem;
 using UnityEngine;
 
 public abstract class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour

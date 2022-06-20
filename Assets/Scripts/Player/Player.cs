@@ -76,6 +76,9 @@ namespace GoldProject
             RemainingActions = defaultActionsPerTurn;
             SetGameHandlerEvents(gameManager);
             SetEnemyManagerEvents();
+
+            CanTransform = false;
+            transformed = false;
         }
 
         #region Set Events
