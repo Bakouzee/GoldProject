@@ -69,6 +69,7 @@ public class PlayerHealth : Health
 
         Camera.main.GetComponent<AudioListener>().enabled = true;
 
+        GameManager.SetPause(true);
         StartCoroutine(SoundDeath());
         
         // Time.timeScale = 0;
@@ -165,9 +166,8 @@ public class PlayerHealth : Health
         AudioManager.Instance.StopEverySound();
         AudioManager.Instance.PlayPlayerSound(PlayerAudioTracks.P_Death);
 
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
-        Time.timeScale = 0;
         UiManager.Instance.LauchGameOverMenu();
     }
 }

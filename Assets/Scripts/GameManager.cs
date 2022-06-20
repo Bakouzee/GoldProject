@@ -9,6 +9,7 @@ using UnityEngine.UI;
 using AudioController;
 using GoldProject.FrighteningEvent;
 using PlayStoreScripts;
+using UnityEngine.Android;
 
 public class GameManager : SingletonBase<GameManager>
 {
@@ -19,6 +20,13 @@ public class GameManager : SingletonBase<GameManager>
         DAY,
         NIGHT
     };
+
+    public static bool paused;
+    public static void SetPause(bool newPause)
+    {
+        paused = newPause;
+        Time.timeScale = paused ? 0 : 1f;
+    }
 
 
     public int actionCountForVent = 0;
@@ -75,6 +83,7 @@ public class GameManager : SingletonBase<GameManager>
         base.Awake();
         
         ResetStaticVars();
+        SetPause(false);
     }
 
     private void Start()

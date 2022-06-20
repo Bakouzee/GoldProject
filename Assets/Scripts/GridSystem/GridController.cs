@@ -45,6 +45,9 @@ namespace GridSystem
             Move(Direction.ToVector2Int(direction), animator);
         public bool Move(Vector2Int dir, Animator animator = null)
         {
+            if (GameManager.paused)
+                return false;
+            
             if (SetPosition(gridPosition + dir, animator))
             {
                 // It is a success
