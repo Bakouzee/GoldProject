@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 16082997}
   - component: {fileID: 16082996}
   - component: {fileID: 16082995}
+  - component: {fileID: 1644721873}
   m_Layer: 0
   m_Name: Vent3
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 16082993}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.385, y: -7.5578, z: 0.27948833}
+  m_LocalPosition: {x: -15.55, y: -26.63, z: 0.27948833}
   m_LocalScale: {x: 1.0442, y: 1.0442, z: 1.0442}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -100,8 +101,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d12a5f760fd70dd4abf068f00e3a93ef, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,6 +133,28 @@ MonoBehaviour:
   ventSysteme: {fileID: 0}
   waitForVent: 0
   "FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiff\xE9": 1
+  spriteClosed: {fileID: 21300000, guid: ac32a71349f55c54889f15e2a040c153, type: 3}
+  spriteOpen: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
+--- !u!95 &1644721873
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16082993}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4bd41e21cc599f4b8f4d2bdef1996ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1507384294
 GameObject:
   m_ObjectHideFlags: 0
@@ -144,9 +167,10 @@ GameObject:
   - component: {fileID: 1507384298}
   - component: {fileID: 1507384297}
   - component: {fileID: 1507384296}
+  - component: {fileID: 1843747636}
   m_Layer: 0
   m_Name: Vent4
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,7 +183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1507384294}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1241, y: -7.6413, z: 0.27948833}
+  m_LocalPosition: {x: 13.5, y: -28.5, z: 0.27948833}
   m_LocalScale: {x: 1.0442, y: 1.0442, z: 1.0442}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -232,8 +256,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d12a5f760fd70dd4abf068f00e3a93ef, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -264,6 +288,28 @@ MonoBehaviour:
   ventSysteme: {fileID: 0}
   waitForVent: 0
   "FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiff\xE9": 1
+  spriteClosed: {fileID: 21300000, guid: ac32a71349f55c54889f15e2a040c153, type: 3}
+  spriteOpen: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
+--- !u!95 &1843747636
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1507384294}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4bd41e21cc599f4b8f4d2bdef1996ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6888564651109797542
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,9 +322,10 @@ GameObject:
   - component: {fileID: 6888564651109790041}
   - component: {fileID: 6888564651109790040}
   - component: {fileID: 6888564651109797543}
+  - component: {fileID: 1833692926}
   m_Layer: 0
   m_Name: Vent1
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -291,7 +338,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6888564651109797542}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -13.045, y: 6.1107, z: 0.27948833}
+  m_LocalPosition: {x: -14.5, y: -5.5, z: 0.27948833}
   m_LocalScale: {x: 1.0442, y: 1.0442, z: 1.0442}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -364,9 +411,9 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d12a5f760fd70dd4abf068f00e3a93ef, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
+  m_Color: {r: 0.19109106, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -396,6 +443,28 @@ MonoBehaviour:
   ventSysteme: {fileID: 0}
   waitForVent: 0
   "FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiff\xE9": 1
+  spriteClosed: {fileID: 21300000, guid: ac32a71349f55c54889f15e2a040c153, type: 3}
+  spriteOpen: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
+--- !u!95 &1833692926
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888564651109797542}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4bd41e21cc599f4b8f4d2bdef1996ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6888564651719965389
 GameObject:
   m_ObjectHideFlags: 0
@@ -408,9 +477,10 @@ GameObject:
   - component: {fileID: 6888564651719965376}
   - component: {fileID: 6888564651719965391}
   - component: {fileID: 6888564651719965390}
+  - component: {fileID: 76809920}
   m_Layer: 0
   m_Name: Vent2
-  m_TagString: Untagged
+  m_TagString: Vent
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -423,7 +493,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6888564651719965389}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.1241, y: 6.1107, z: 0.27948833}
+  m_LocalPosition: {x: 11.5, y: -5.5, z: 0.27948833}
   m_LocalScale: {x: 1.0442, y: 1.0442, z: 1.0442}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -496,8 +566,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: d12a5f760fd70dd4abf068f00e3a93ef, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -528,6 +598,28 @@ MonoBehaviour:
   ventSysteme: {fileID: 0}
   waitForVent: 0
   "FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiff\xE9": 1
+  spriteClosed: {fileID: 21300000, guid: ac32a71349f55c54889f15e2a040c153, type: 3}
+  spriteOpen: {fileID: 21300000, guid: 169da6058df16c14e826c41be602c928, type: 3}
+--- !u!95 &76809920
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6888564651719965389}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b4bd41e21cc599f4b8f4d2bdef1996ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6888564652483396701
 GameObject:
   m_ObjectHideFlags: 0
