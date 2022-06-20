@@ -19,8 +19,14 @@ namespace OutFoxeedTutorial.States
         public override void OnStateUpdate()
         {
             base.OnStateUpdate();
-            if(playerGridController.gridPosition == finalGridPos)
-                EndState();
+
+            if (playerGridController == null)
+                playerGridController = PlayerManager.Instance.Player.gridController;
+            if (playerGridController != null)
+            {
+                if(playerGridController.gridPosition == finalGridPos)
+                    EndState();
+            }
         }
     }
 }

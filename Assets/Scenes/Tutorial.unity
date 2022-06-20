@@ -21360,7 +21360,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 277661372}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.61, y: 3.2511625, z: -5}
+  m_LocalPosition: {x: -8.62, y: 4.28, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -24821,7 +24821,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 617390078}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5, y: -2.93, z: -5}
+  m_LocalPosition: {x: 8.55, y: -4.94, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -91301,8 +91301,10 @@ MonoBehaviour:
     texts:
     - Well done! The night has just fallen...
     - During the night you turn into bleeding mode. Thanks to this transformation
-      you can move faster than your enemies and also kill them. To be able to transform
-      you must kill/frighten the enemy leaders surrounded by a green aura
+      you can move faster than your enemies and also kill them.
+    - To be able to transform you must kill/frighten the enemy leaders surrounded
+      by a green aura
+    - Kill an enemy to finish the tutorial!
     enemiesSpawnPoints:
     - {fileID: 277661373}
     - {fileID: 1974606510}
@@ -91413,7 +91415,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1974606509}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.26, y: -4.66, z: -5}
+  m_LocalPosition: {x: -9.76, y: 1.4, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

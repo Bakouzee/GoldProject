@@ -1,4 +1,5 @@
-﻿using Enemies;
+﻿using System.Collections.Generic;
+using Enemies;
 using GridSystem;
 using UnityEngine;
 
@@ -21,12 +22,14 @@ namespace OutFoxeedTutorial.States
             player.Transform();
             
             // Spawn enemies
+            List<EnemyBase> enemiesList = new List<EnemyBase>();
             foreach (var enemiesSpawnPoint in enemiesSpawnPoints)
             {
                 EnemyBase enemyInstance = Object.Instantiate(enemyPrefab, enemiesSpawnPoint.position, Quaternion.identity);
+                enemiesList.Add(enemyInstance);
                 // enemyInstance.enabled = false;
             }
-            enemies = Object.FindObjectsOfType<EnemyBase>(true);
+            enemies = enemiesList.ToArray();
             
             // Set tuto highlights
             gridManager = GridManager.Instance;
