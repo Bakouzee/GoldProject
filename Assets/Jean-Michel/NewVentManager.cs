@@ -26,7 +26,7 @@ public class NewVentManager : SingletonBase<NewVentManager>
 
     public void FirstRoomVent()
     {
-        player.gridController.SetPosition(ventOne.transform.position);
+        player.gridController.SetPosition(ventOne.transform.position + Vector3.left);
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
@@ -34,14 +34,14 @@ public class NewVentManager : SingletonBase<NewVentManager>
 
     public void SecondRoomVent()
     {
-        player.gridController.SetPosition(ventTwo.transform.position);
+        player.gridController.SetPosition(ventTwo.transform.position + Vector3.left);
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
     }
     public void ThirdRoomVent()
     {
-        player.gridController.SetPosition(ventThree.transform.position);
+        player.gridController.SetPosition(ventThree.transform.position + Vector3.left);
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;
@@ -49,7 +49,7 @@ public class NewVentManager : SingletonBase<NewVentManager>
 
     public void FourthRoomVent()
     {
-        player.gridController.SetPosition(ventFour.transform.position);
+        player.gridController.SetPosition(ventFour.transform.position + Vector3.left);
         gameObject.SetActive(false);
         PlayerManager.Instance.arrowToMovePlayer.SetActive(true);
         choosingVent = false;

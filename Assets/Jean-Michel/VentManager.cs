@@ -35,7 +35,9 @@ public class VentManager : MonoBehaviour, IInteractable
     private void Start()
     {
         // Snap position to grid
-        transform.position = GridManager.Instance.GetTileAtPosition(transform.position).transform.position;
+        Vector2 newWorldPos = transform.position;
+        newWorldPos = new Vector2(Mathf.Floor(newWorldPos.x), Mathf.Floor(newWorldPos.y)) + Vector2.one * 0.5f;
+        transform.position = newWorldPos; 
 
         FreddyWithTwoRingOnHisHandBecauseOfCeWeekendDeFolieOuIlAGraveKiffé = true;
         player = PlayerManager.Instance.Player;
