@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 0327f61c33878c646ba6963a62dd85bf, type: 3}
+    - target: {fileID: 1351950458, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: ac71cff19fa19ac43917e89a37a1a751, type: 2}
     - target: {fileID: 1351950459, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Controller
       value: 
@@ -71,23 +75,9 @@ PrefabInstance:
       propertyPath: detectionRangeForGarlic
       value: 3
       objectReference: {fileID: 0}
-      propertyPath: health
-      value: 
-      objectReference: {fileID: 7177330006921849738}
     - target: {fileID: 2110391225984441420, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
       propertyPath: m_Name
       value: Hunter
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
---- !u!114 &7177330006921849738 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1260435834159056000, guid: a10ff56f5b22604448d1ffecf1334b83, type: 3}
-  m_PrefabInstance: {fileID: 8279595423797964554}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02274b8b32d246fba0567e314484da17, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
