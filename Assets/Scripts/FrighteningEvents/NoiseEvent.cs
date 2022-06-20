@@ -16,6 +16,7 @@ public class NoiseEvent : FrighteningEventBase
     
     [SerializeField]
     private SpriteRenderer[] srMap;
+    [SerializeField] private SpriteRenderer minimapCircle;
 
     public string animationTrigger;
 
@@ -30,6 +31,9 @@ public class NoiseEvent : FrighteningEventBase
 
         if(srMap == null)
             srMap = GetComponentsInChildren<SpriteRenderer>();
+
+        if (minimapCircle)
+            minimapCircle.transform.localScale = Vector3.one * distanceToBeScared * 2f;
 
         PlayerManager.Instance.onShowMap += () => needToBeInRange = PlayerManager.mapSeen;
     }

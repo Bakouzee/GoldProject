@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 1257766532372563069}
   - component: {fileID: 8711288472158676259}
   m_Layer: 3
-  m_Name: Circle
+  m_Name: Minimap Trap Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,7 +175,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 0.6745098, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0.6981132, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -383,5 +383,6 @@ MonoBehaviour:
   sr: {fileID: 5617688337050221382}
   srMap:
   - {fileID: 1857251501522842495}
+  minimapCircle: {fileID: 8711288472158676259}
   animationTrigger: Ghost
   canBeSeen: 1

@@ -12,6 +12,7 @@ public class KnightEvent : FrighteningEventBase
     private List<EnemyBase> afraidEnemies = new List<EnemyBase>();
     [SerializeField]
     private SpriteRenderer[] srMap;
+    [SerializeField] private SpriteRenderer minimapCircle;
     [SerializeField]
     private Animator animKnight;
 
@@ -34,6 +35,9 @@ public class KnightEvent : FrighteningEventBase
 
         knightPos = GridManager.Instance.GetGridPosition(transform.position);
 
+        if (minimapCircle)
+            minimapCircle.transform.localScale = Vector3.one * distanceToBeScared * 2f;
+        
         if(!animKnight)
             animKnight = GetComponentInChildren<Animator>();
 
