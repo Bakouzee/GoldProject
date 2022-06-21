@@ -190,25 +190,25 @@ public class GameManager : SingletonBase<GameManager>
 
     public void LaunchTurn()
     {
-#if !UNITY_EDITOR
+// #if !UNITY_EDITOR
         try
         {
-#endif
+// #endif
         // Enemies make their turn
         foreach (var enemy in EnemyManager.enemies)
         {
-#if !UNITY_EDITOR
+// #if !UNITY_EDITOR
                 try
                 {
-#endif
+// #endif
             enemy.DoAction();
-#if !UNITY_EDITOR
+// #if !UNITY_EDITOR
                 }
                 catch
                 {
                     Debug.LogError($"{enemy} DoAction method crashed", enemy);
                 }
-#endif
+// #endif
         }
 
         // Knight too
@@ -239,14 +239,14 @@ public class GameManager : SingletonBase<GameManager>
             else if (dayState == DayState.NIGHT)
                 StartDay();
         }
-#if !UNITY_EDITOR
+// #if !UNITY_EDITOR
         }
         catch
         {
             Debug.LogError("Something went wrong during LaunchTurn", this);
             // ignored
         }
-#endif
+// #endif
 
         // Cooldown of turn
 
